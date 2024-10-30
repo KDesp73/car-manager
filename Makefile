@@ -2,7 +2,7 @@
 MVN = mvn
 JAVA = java
 JAR_FILE = target/car-manager-0.0.1.jar
-MAIN_CLASS = com.mycompany.App
+MAIN_CLASS = io.github.dmgtechlabs.App
 
 # Default goal
 .DEFAULT_GOAL := help
