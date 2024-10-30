@@ -1,15 +1,13 @@
 package com.mycompany.app.db;
 
-import java.util.regex.Pattern;
-
 import kdesp73.databridge.connections.DatabaseConnection;
-import kdesp73.databridge.connections.SQLiteConnection;
+import kdesp73.databridge.connections.PostgresConnection;
 
 public class Database {
 
-    private static final String FILEPATH = System.getProperty("user.dir").replaceAll(Pattern.quote("\\"), "/")
-            + "/data/your_database";
-
+    private static final String URL = "";
+    private static String username = "";
+    private static String password = "";
     private static DatabaseConnection instance;
 
     private Database() {
@@ -19,11 +17,9 @@ public class Database {
     public static DatabaseConnection connection() {
         synchronized (DatabaseConnection.class) {
             try {
-                // Initialize the database connection here
-                String url = "jdbc:sqlite://" + FILEPATH; // if you are using an sqlite database
-                String username = "";
-                String password = "";
-                instance = new SQLiteConnection();
+                String url = "jdbc:postgresql://" + URL;
+
+                instance = new PostgresConnection();
                 instance.connect(url, username, password);
             } catch (RuntimeException e) {
                 e.printStackTrace();
