@@ -1,13 +1,14 @@
-package com.mycompany.app.db;
+package io.github.dmgtechlabs.db;
 
+import io.github.dmgtechlabs.files.Environment;
 import kdesp73.databridge.connections.DatabaseConnection;
 import kdesp73.databridge.connections.PostgresConnection;
 
 public class Database {
 
     private static final String URL = "";
-    private static String username = "";
-    private static String password = "";
+    private static String username = Environment.getDblabsUsername();
+    private static String password = Environment.getDblabsPassword();
     private static DatabaseConnection instance;
 
     private Database() {

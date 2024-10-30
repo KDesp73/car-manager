@@ -1,6 +1,6 @@
-package com.mycompany.app;
+package io.github.dmgtechlabs;
 
-import com.mycompany.app.gui.MainFrame;
+import io.github.dmgtechlabs.gui.MainFrame;
 import javax.swing.UIManager;
 
 public class App {
