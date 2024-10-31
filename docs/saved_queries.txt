@@ -1,0 +1,37 @@
+SAVED QUERIES EXAMPLES
+
+-Save SELECT query and call it
+
+    Example: Total count of users
+
+    *Saving query into a function
+     ----------------------------
+    create or replace function count_app_users()
+        returns table
+                (
+                    total bigint
+                )
+        language plpgsql
+    as
+    $$
+    begin
+        return query (
+            select count(*) from app_user
+        );
+    end;
+    $$;
+
+    *Call it by its name
+     -------------------
+    SELECT * FROM count_app_users();
+
+
+    You don't call it like
+
+        call count_app_users();
+
+        OR
+
+        SELECT count_app_users();
+
+    because the query returns a table and not a single value
