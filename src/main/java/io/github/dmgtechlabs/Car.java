@@ -13,10 +13,10 @@ public class Car implements Dao {
 	private int hp;
 	private String licence_plate;
 	private int wd;
-	private Manufacturer m_id;
-	private Service s_id;
+	private Manufacturer manufacturer;
+	private Service service;
 
-	public Car(String model, int type, int year, float price, int hp, String licence_plate, int wd, Manufacturer m_id, Service s_id) {
+	public Car(String model, int type, int year, float price, int hp, String licence_plate, int wd, Manufacturer manufacturer, Service service) {
 		this.model = model;
 		this.type = type;
 		this.year = year;
@@ -24,8 +24,8 @@ public class Car implements Dao {
 		this.hp = hp;
 		this.licence_plate = licence_plate;
 		this.wd = wd;
-		this.m_id = m_id;
-		this.s_id = s_id;
+		this.manufacturer = manufacturer;
+		this.service = service;
 	}
 
 	public String getModel() {
@@ -57,11 +57,11 @@ public class Car implements Dao {
 	}
 
 	public Manufacturer getM_id() {
-		return m_id;
+		return manufacturer;
 	}
 
 	public Service getS_id() {
-		return s_id;
+		return service;
 	}
 
 	@Override
