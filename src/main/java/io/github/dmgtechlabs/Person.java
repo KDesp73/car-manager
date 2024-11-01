@@ -6,7 +6,7 @@ import exceptions.InvalidEmailException;
  *
  * @author kdesp73
  */
-public class Person {
+public class Person implements Dao {
 
 	public static enum Gender {
 		MALE, FEMALE, OTHER
@@ -57,6 +57,21 @@ public class Person {
 			}
 		}
 		return null;
+	}
+
+	@Override
+	public void insert(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	@Override
+	public void update(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	@Override
+	public void delete(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override

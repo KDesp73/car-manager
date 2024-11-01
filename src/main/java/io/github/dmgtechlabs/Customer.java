@@ -4,7 +4,7 @@ package io.github.dmgtechlabs;
  *
  * @author kdesp73
  */
-public class Customer extends Person {
+public class Customer extends Person implements Dao {
 
 	private String uuid;
 
@@ -20,6 +20,21 @@ public class Customer extends Person {
 	@Override
 	public String toString() {
 		return "Customer{" + "uuid=" + uuid + '}';
+	}
+
+	@Override
+	public void insert(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	@Override
+	public void update(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	@Override
+	public void delete(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 }
