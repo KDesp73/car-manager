@@ -1,5 +1,9 @@
 package io.github.dmgtechlabs;
 
+import io.github.dmgtechlabs.db.Database;
+import kdesp73.databridge.connections.DatabaseConnection;
+import kdesp73.databridge.helpers.QueryBuilder;
+
 /**
  *
  * @author thanasis
@@ -26,18 +30,28 @@ public class Manufacturer implements Dao {
 	}
 
 	@Override
-	public void insert(Object obj) {
+	public void insert() {
+		DatabaseConnection db = Database.connection();
+
+		String query = new QueryBuilder().insertInto("Manufacturer").columns(this.columns()).values(this.name, this.location).build();
+		System.out.println(query);
+		db.executeUpdate(query);
+
+		db.close();
+	}
+
+	@Override
+	public void update() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override
-	public void update(Object obj) {
+	public void delete() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override
-	public void delete(Object obj) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public String[] columns() {
+		return new String[]{"name", "location"};
 	}
-
 }

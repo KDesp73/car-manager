@@ -11,10 +11,11 @@ package io.github.dmgtechlabs;
  */
 public interface Dao<T> {
 
-	public void insert(T obj);
+	public void insert();
 
-	public void update(T obj);
+	public void update();
 
-	public void delete(T obj);
+	public void delete();
 
+	public String[] columns();
 }

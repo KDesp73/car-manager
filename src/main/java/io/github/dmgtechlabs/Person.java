@@ -50,7 +50,7 @@ public class Person implements Dao {
 		return email.address;
 	}
 
-	public Gender int2Gender(int gender) {
+	public static Gender int2Gender(int gender) {
 		for (Gender g : Gender.values()) {
 			if (gender == g.ordinal()) {
 				return g;
@@ -60,17 +60,17 @@ public class Person implements Dao {
 	}
 
 	@Override
-	public void insert(Object obj) {
+	public void insert() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override
-	public void update(Object obj) {
+	public void update() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override
-	public void delete(Object obj) {
+	public void delete() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
@@ -79,4 +79,8 @@ public class Person implements Dao {
 		return "Person{" + "fname=" + fname + ", lname=" + lname + ", birthYear=" + birthYear + ", gender=" + gender + ", email=" + email + '}';
 	}
 
+	@Override
+	public String[] columns() {
+		return new String[]{"fname", "lname", "birth_year", "gender", "email"};
+	}
 }

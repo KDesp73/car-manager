@@ -2,22 +2,25 @@ package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.gui.MainFrame;
 import javax.swing.UIManager;
+import io.github.dmgtechlabs.Manufacturer;
 
 public class App {
 
 	public static void main(String[] args) {
-		System.setProperty("sun.java2d.uiScale", "1");
-		try {
-			UIManager.setLookAndFeel(new com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme());
-		} catch (Exception ex) {
-			System.err.println("Failed to initialize LaF");
-		}
-
-		java.awt.EventQueue.invokeLater(new Runnable() {
-			public void run() {
-				new MainFrame().setVisible(true);
-			}
-		});
+		new Manufacturer("Ford", "USA").insert();
+//
+//		System.setProperty("sun.java2d.uiScale", "1");
+//		try {
+//			UIManager.setLookAndFeel(new com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme());
+//		} catch (Exception ex) {
+//			System.err.println("Failed to initialize LaF");
+//		}
+//
+//		java.awt.EventQueue.invokeLater(new Runnable() {
+//			public void run() {
+//				new MainFrame().setVisible(true);
+//			}
+//		});
 	}
 
 }

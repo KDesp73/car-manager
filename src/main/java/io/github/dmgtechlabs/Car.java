@@ -65,18 +65,22 @@ public class Car implements Dao {
 	}
 
 	@Override
-	public void insert(Object obj) {
+	public void insert() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override
-	public void update(Object obj) {
+	public void update() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override
-	public void delete(Object obj) {
+	public void delete() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
+	@Override
+	public String[] columns() {
+		return new String[]{"model", "type", "year", "price", "hp", "license_plate", "wd"};
+	}
 }
