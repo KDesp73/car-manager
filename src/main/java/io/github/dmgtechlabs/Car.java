@@ -62,4 +62,12 @@ public class Car {
 		return wd;
 	}
 
+	public Manufacturer getM_id() {
+		return m_id;
+	}
+
+	public Service getS_id() {
+		return s_id;
+	}
+
 }
