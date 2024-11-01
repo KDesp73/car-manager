@@ -1,6 +1,6 @@
 package io.github.dmgtechlabs;
 
-import exceptions.InvalidEmailException;
+import io.github.dmgtechlabs.exceptions.InvalidEmailException;
 
 /**
  *
