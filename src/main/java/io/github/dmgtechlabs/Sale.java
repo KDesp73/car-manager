@@ -4,17 +4,25 @@ package io.github.dmgtechlabs;
  *
  * @author kdesp73
  */
-public class Employee extends Person implements Dao {
+public class Sale implements Dao {
 
-	private float salary;
+	private Employee salesman;
+	private Customer customer;
+	private Car car;
+	private float discount;
+	private float finalPrice;
 
-	public Employee(float salary, String fname, String lname, String email, int birthYear, Gender gender) {
-		super(fname, lname, email, birthYear, gender);
-		this.salary = salary;
+	public Sale(Employee salesman, Customer customer, Car car, float discount) {
+		this.salesman = salesman;
+		this.customer = customer;
+		this.car = car;
+		this.discount = discount;
+
+		this.calculateFinalPrice();
 	}
 
-	public float getSalary() {
-		return salary;
+	public void calculateFinalPrice() {
+		this.finalPrice = car.getPrice() - car.getPrice() * this.discount;
 	}
 
 	@Override

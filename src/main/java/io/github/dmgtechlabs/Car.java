@@ -4,7 +4,7 @@ package io.github.dmgtechlabs;
  *
  * @author thanasis
  */
-public class Car {
+public class Car implements Dao {
 
 	private String model;
 	private int type;
@@ -62,6 +62,21 @@ public class Car {
 
 	public Service getS_id() {
 		return s_id;
+	}
+
+	@Override
+	public void insert(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	@Override
+	public void update(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	@Override
+	public void delete(Object obj) {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 }
