@@ -6,17 +6,38 @@ package io.github.dmgtechlabs;
  */
 public class Car implements Dao {
 
+	public static enum Type {
+		SUV,
+		Sedan,
+		Hatchback,
+		Truck,
+		Minivan,
+		Luxury,
+		Sports,
+		Hybrid,
+		Electric,
+		Compact
+	}
+
+	public static enum WheelDrive {
+		_2WD,
+		_4WD,
+		_6WD,
+		_8WD,
+		_AWD
+	}
+
 	private String model;
-	private int type;
+	private Type type;
 	private int year;
 	private float price;
 	private int hp;
 	private String licence_plate;
-	private int wd;
+	private WheelDrive wd;
 	private Manufacturer manufacturer;
 	private Service service;
 
-	public Car(String model, int type, int year, float price, int hp, String licence_plate, int wd, Manufacturer manufacturer, Service service) {
+	public Car(String model, Type type, int year, float price, int hp, String licence_plate, WheelDrive wd, Manufacturer manufacturer, Service service) {
 		this.model = model;
 		this.type = type;
 		this.year = year;
@@ -32,7 +53,7 @@ public class Car implements Dao {
 		return model;
 	}
 
-	public int getType() {
+	public Type getType() {
 		return type;
 	}
 
@@ -52,7 +73,7 @@ public class Car implements Dao {
 		return licence_plate;
 	}
 
-	public int getWd() {
+	public WheelDrive getWd() {
 		return wd;
 	}
 
@@ -62,6 +83,24 @@ public class Car implements Dao {
 
 	public Service getS_id() {
 		return service;
+	}
+
+	public static Type int2Type(int type) {
+		for (Type t : Type.values()) {
+			if (type == t.ordinal()) {
+				return t;
+			}
+		}
+		return null;
+	}
+
+	public static WheelDrive int2WheelDrive(int wheelDrive) {
+		for (WheelDrive wd : WheelDrive.values()) {
+			if (wheelDrive == wd.ordinal()) {
+				return wd;
+			}
+		}
+		return null;
 	}
 
 	@Override
