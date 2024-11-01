@@ -6,15 +6,13 @@ package io.github.dmgtechlabs;
  */
 public class Service {
 
-	private int id;
 	private boolean tires;
 	private boolean engine;
 	private boolean brakes;
 	private boolean oil;
 	private boolean battery;
 
-	public Service(int id, boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery) {
-		this.id = id;
+	public Service(boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery) {
 		this.tires = tires;
 		this.engine = engine;
 		this.brakes = brakes;
@@ -22,27 +20,23 @@ public class Service {
 		this.battery = battery;
 	}
 
-	public int getId() {
-		return id;
-	}
-
-	public boolean isTires() {
+	public boolean tiresChecked() {
 		return tires;
 	}
 
-	public boolean isEngine() {
+	public boolean engineChecked() {
 		return engine;
 	}
 
-	public boolean isBrakes() {
+	public boolean brakesChecked() {
 		return brakes;
 	}
 
-	public boolean isOil() {
+	public boolean oilChecked() {
 		return oil;
 	}
 
-	public boolean isBattery() {
+	public boolean batteryChecked() {
 		return battery;
 	}
 

@@ -6,21 +6,15 @@ package io.github.dmgtechlabs;
  */
 public class Manufacturer {
 
-	private int id;
 	private String name;
 	private String location;
 
 	public Manufacturer() {
 	}
 
-	public Manufacturer(int id, String name, String location) {
-		this.id = id;
+	public Manufacturer(String name, String location) {
 		this.name = name;
 		this.location = location;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getName() {

@@ -6,7 +6,6 @@ package io.github.dmgtechlabs;
  */
 public class Car {
 
-	private int id;
 	private String model;
 	private int type;
 	private int year;
@@ -17,8 +16,7 @@ public class Car {
 	private Manufacturer m_id;
 	private Service s_id;
 
-	public Car(int id, String model, int type, int year, float price, int hp, String licence_plate, int wd, Manufacturer m_id, Service s_id) {
-		this.id = id;
+	public Car(String model, int type, int year, float price, int hp, String licence_plate, int wd, Manufacturer m_id, Service s_id) {
 		this.model = model;
 		this.type = type;
 		this.year = year;
@@ -28,10 +26,6 @@ public class Car {
 		this.wd = wd;
 		this.m_id = m_id;
 		this.s_id = s_id;
-	}
-
-	public int getId() {
-		return id;
 	}
 
 	public String getModel() {
