@@ -1,5 +1,7 @@
 package io.github.dmgtechlabs;
 
+import exceptions.InvalidEmailException;
+
 /**
  *
  * @author kdesp73
@@ -14,14 +16,18 @@ public class Person {
 	private String lname;
 	private int birthYear;
 	private Gender gender;
-	private String email; // FIXME: Email class
+	private Email email;
 
 	public Person(String fname, String lname, String email, int birthYear, Gender gender) {
 		this.fname = fname;
 		this.lname = lname;
 		this.birthYear = birthYear;
 		this.gender = gender;
-		this.email = email;
+		this.email = new Email(email);
+
+		if (!this.email.validate()) {
+			throw new InvalidEmailException("'" + email + "' is not valid");
+		}
 	}
 
 	public String getFname() {
@@ -41,7 +47,7 @@ public class Person {
 	}
 
 	public String getEmail() {
-		return email;
+		return email.address;
 	}
 
 	public Gender int2Gender(int gender) {
