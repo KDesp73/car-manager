@@ -3,10 +3,13 @@ package io.github.dmgtechlabs;
 import io.github.dmgtechlabs.gui.MainFrame;
 import javax.swing.UIManager;
 import io.github.dmgtechlabs.Manufacturer;
+import io.github.dmgtechlabs.db.Database;
+import kdesp73.databridge.connections.DatabaseConnection;
 
 public class App {
 
 	public static void main(String[] args) {
+
 		new Manufacturer("Ford", "USA").insert();
 //
 //		System.setProperty("sun.java2d.uiScale", "1");

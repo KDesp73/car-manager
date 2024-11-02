@@ -22,6 +22,7 @@ public class Database {
 
 				instance = new PostgresConnection();
 				instance.connect(url, username, password);
+				instance.execute("SET search_path TO 'CarManager-DB';"); // Specify the schema
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 				throw new RuntimeException("Failed to create the database connection.");

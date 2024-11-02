@@ -32,7 +32,6 @@ public class Manufacturer implements Dao {
 	@Override
 	public void insert() {
 		DatabaseConnection db = Database.connection();
-
 		String query = new QueryBuilder().insertInto("Manufacturer").columns(this.columns()).values(this.name, this.location).build();
 		System.out.println(query);
 		db.executeUpdate(query);
