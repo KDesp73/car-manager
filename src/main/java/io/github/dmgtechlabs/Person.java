@@ -79,8 +79,4 @@ public class Person implements Dao {
 		return "Person{" + "fname=" + fname + ", lname=" + lname + ", birthYear=" + birthYear + ", gender=" + gender + ", email=" + email + '}';
 	}
 
-	@Override
-	public String[] columns() {
-		return new String[]{"fname", "lname", "birth_year", "gender", "email"};
-	}
 }

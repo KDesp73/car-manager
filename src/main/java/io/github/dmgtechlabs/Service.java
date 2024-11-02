@@ -55,8 +55,4 @@ public class Service implements Dao {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
-	@Override
-	public String[] columns() {
-		return new String[]{"tires", "engine", "brakes", "oil", "battery"};
-	}
 }

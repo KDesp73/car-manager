@@ -32,10 +32,9 @@ public class Manufacturer implements Dao {
 	@Override
 	public void insert() {
 		DatabaseConnection db = Database.connection();
-		String query = new QueryBuilder().insertInto("Manufacturer").columns(this.columns()).values(this.name, this.location).build();
+		String query = new QueryBuilder().insertInto("Manufacturer").columns("name", "location").values(this.name, this.location).build();
 		System.out.println(query);
 		db.executeUpdate(query);
-
 		db.close();
 	}
 
@@ -49,8 +48,4 @@ public class Manufacturer implements Dao {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
-	@Override
-	public String[] columns() {
-		return new String[]{"name", "location"};
-	}
 }

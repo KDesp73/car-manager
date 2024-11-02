@@ -117,9 +117,4 @@ public class Car implements Dao {
 	public void delete() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
-
-	@Override
-	public String[] columns() {
-		return new String[]{"model", "type", "year", "price", "hp", "license_plate", "wd"};
-	}
 }
