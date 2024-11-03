@@ -64,7 +64,7 @@ public class Manufacturer implements Dao {
 	public void update(Object... values) {
 		PostgresConnection db = Database.connection();
 
-		db.callProcedure(Functions.update("manufacturer"), Utils.appendBack(id, values));
+		db.callProcedure(Functions.update("manufacturer"), Utils.appendFront(id, values));
 
 		db.close();
 	}
