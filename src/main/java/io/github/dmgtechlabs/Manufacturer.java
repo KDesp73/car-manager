@@ -1,6 +1,7 @@
 package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.db.Database;
+import io.github.dmgtechlabs.db.Functions;
 import java.sql.CallableStatement;
 import java.sql.SQLException;
 import kdesp73.databridge.connections.DatabaseConnection;
@@ -16,6 +17,7 @@ import java.util.logging.Logger;
  */
 public class Manufacturer implements Dao {
 
+	private int id;
 	private String name;
 	private String location;
 
@@ -35,18 +37,26 @@ public class Manufacturer implements Dao {
 		return location;
 	}
 
+	public int getId() {
+		return id;
+	}
+
 	@Override
 	public void insert() {
 		PostgresConnection db = (PostgresConnection) Database.connection();
 
-		db.callProcedure(Database.SCHEMA + ".insert_manufacturer", Database.quote(name), Database.quote(location));
+		db.callProcedure(Functions.insert("manufacturer"), Database.quote(name), Database.quote(location));
 
 		db.close();
 	}
 
 	@Override
 	public void update() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = (PostgresConnection) Database.connection();
+
+		db.callProcedure(Functions.update("manufacturer"), Database.quote(name), Database.quote(location));
+
+		db.close();
 	}
 
 	@Override
@@ -57,7 +67,7 @@ public class Manufacturer implements Dao {
 	public static void populate() {
 		PostgresConnection db = (PostgresConnection) Database.connection();
 
-		db.callProcedure(Database.SCHEMA + ".populate_manufacturer");
+		db.callProcedure(Functions.POPULATE_MANUFACTURER);
 
 		db.close();
 	}
