@@ -27,10 +27,6 @@ public class App {
 
 //		m.insert();
 		m.update("changed_name", "changed_location");
-		 << << << < HEAD
-			== == ==
-			= //		runGUI();
-			 >>> >>> > 3ab3323
 	}
 
 }

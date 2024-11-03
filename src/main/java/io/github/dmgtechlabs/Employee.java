@@ -6,19 +6,12 @@ package io.github.dmgtechlabs;
  */
 public class Employee extends Person implements Dao {
 
-	<<<<<<< HEAD
 	private int id;
-	=======
-	private int employeeId;
-	>>>>>>> 3ab3323
 	private float salary;
 
 	public Employee(int employeeId, float salary, int id, String fname, String lname, String email, int birthYear, Gender gender) {
 		super(id, fname, lname, email, birthYear, gender);
-		 << << << < HEAD this.id = employeeId;
-		 == == ==
-			= this.employeeId = employeeId;
-		 >>> >>> > 3ab3323
+		this.id = employeeId;
 		this.salary = salary;
 	}
 
@@ -27,11 +20,7 @@ public class Employee extends Person implements Dao {
 	}
 
 	public int getEmployeeId() {
-		 << << << < HEAD
 		return id;
-		 == == == =
-		return employeeId;
-		 >>> >>> > 3ab3323
 	}
 
 	@Override
