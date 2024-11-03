@@ -26,4 +26,8 @@ public class Functions {
 		return Database.SCHEMA + ".delete_" + table;
 	}
 
+	public static String select(String table) {
+		return Database.SCHEMA + ".select_" + table;
+	}
+
 }

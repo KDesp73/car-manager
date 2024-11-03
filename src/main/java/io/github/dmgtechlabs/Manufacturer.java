@@ -54,31 +54,27 @@ public class Manufacturer implements Dao {
 	@Override
 	public void insert() {
 		PostgresConnection db = Database.connection();
-
 		db.callProcedure(Functions.insert("manufacturer"), name, location);
-
 		db.close();
 	}
 
 	@Override
 	public void update(Object... values) {
 		PostgresConnection db = Database.connection();
-
 		db.callProcedure(Functions.update("manufacturer"), Utils.appendFront(id, values));
-
 		db.close();
 	}
 
 	@Override
 	public void delete() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.delete("manufacturer"), this.name);
+		db.close();
 	}
 
 	public static void populate() {
 		PostgresConnection db = Database.connection();
-
 		db.callProcedure(Functions.POPULATE_MANUFACTURER);
-
 		db.close();
 	}
 

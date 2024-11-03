@@ -23,10 +23,8 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		var m = new Manufacturer(90, "test_name", "test_location");
-
-//		m.insert();
-		m.update("changed_name", "changed_location");
+		var m = new Manufacturer("test_name", "test_location");
+		m.delete();
 	}
 
 }
