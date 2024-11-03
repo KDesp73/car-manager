@@ -8,6 +8,8 @@ import kdesp73.databridge.connections.DatabaseConnection;
 import kdesp73.databridge.connections.PostgresConnection;
 import kdesp73.databridge.helpers.QueryBuilder;
 import java.sql.Types;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -24,6 +26,13 @@ public class Manufacturer implements Dao {
 	public Manufacturer() {
 	}
 
+	// For adding
+	public Manufacturer(String name, String location) {
+		this.name = name;
+		this.location = location;
+	}
+
+	// For loading
 	public Manufacturer(int id, String name, String location) {
 		this.id = id;
 		this.name = name;
@@ -44,18 +53,18 @@ public class Manufacturer implements Dao {
 
 	@Override
 	public void insert() {
-		PostgresConnection db = (PostgresConnection) Database.connection();
+		PostgresConnection db = Database.connection();
 
-		db.callProcedure(Functions.insert("manufacturer"), Database.quote(name), Database.quote(location));
+		db.callProcedure(Functions.insert("manufacturer"), name, location);
 
 		db.close();
 	}
 
 	@Override
-	public void update() {
-		PostgresConnection db = (PostgresConnection) Database.connection();
+	public void update(Object... values) {
+		PostgresConnection db = Database.connection();
 
-		db.callProcedure(Functions.update("manufacturer"), Database.quote(name), Database.quote(location));
+		db.callProcedure(Functions.update("manufacturer"), Utils.appendBack(id, values));
 
 		db.close();
 	}
@@ -66,7 +75,7 @@ public class Manufacturer implements Dao {
 	}
 
 	public static void populate() {
-		PostgresConnection db = (PostgresConnection) Database.connection();
+		PostgresConnection db = Database.connection();
 
 		db.callProcedure(Functions.POPULATE_MANUFACTURER);
 

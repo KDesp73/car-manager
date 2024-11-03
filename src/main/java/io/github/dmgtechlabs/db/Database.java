@@ -16,7 +16,7 @@ public class Database {
 		// Private constructor to prevent external instantiation
 	}
 
-	public static DatabaseConnection connection() {
+	public static PostgresConnection connection() {
 		synchronized (DatabaseConnection.class) {
 			try {
 				String url = "jdbc:postgresql://" + URL;
@@ -29,10 +29,7 @@ public class Database {
 				throw new RuntimeException("Failed to create the database connection.");
 			}
 		}
-		return instance;
+		return (PostgresConnection) instance;
 	}
 
-	public static String quote(String str) {
-		return "\'" + str + "\'";
-	}
 }

@@ -11,7 +11,7 @@ public interface Dao<T> {
 
 	public void insert();
 
-	public void update();
+	public void update(Object... values);
 
 	public void delete();
 

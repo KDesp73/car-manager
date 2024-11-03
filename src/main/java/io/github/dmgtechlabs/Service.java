@@ -52,7 +52,7 @@ public class Service implements Dao {
 	}
 
 	@Override
-	public void update() {
+	public void update(Object... values) {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
