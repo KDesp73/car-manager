@@ -23,8 +23,12 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		var m = new Manufacturer("test_name", "test_location");
-		m.delete();
+		var manufacturers = Manufacturer.selectAll();
+
+		for (Manufacturer m : manufacturers) {
+			System.out.println(m.toString());
+		}
+
 	}
 
 }

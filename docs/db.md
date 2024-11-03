@@ -1,5 +1,16 @@
 # db
 
+## Saved Queries
+
+- [ ] Car
+- [ ] Customer
+- [ ] Employee
+- [x] Manufacturer
+- [ ] Model
+- [ ] Person
+- [ ] Sale
+- [ ] Service
+
 ## Requirements
 
 - [ ] 5 tables

@@ -3,6 +3,7 @@ package io.github.dmgtechlabs;
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
 import java.sql.CallableStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import kdesp73.databridge.connections.DatabaseConnection;
 import kdesp73.databridge.connections.PostgresConnection;
@@ -22,9 +23,6 @@ public class Manufacturer implements Dao {
 	private int id;
 	private String name;
 	private String location;
-
-	public Manufacturer() {
-	}
 
 	// For adding
 	public Manufacturer(String name, String location) {
@@ -76,6 +74,36 @@ public class Manufacturer implements Dao {
 		PostgresConnection db = Database.connection();
 		db.callProcedure(Functions.POPULATE_MANUFACTURER);
 		db.close();
+	}
+
+	public static List<Manufacturer> selectAll() {
+		PostgresConnection db = Database.connection();
+
+		ResultSet rs = db.callFunction(Database.SCHEMA + ".select_all_manufacturers");
+
+		List<Manufacturer> result = new ArrayList<>();
+		try {
+			if (rs.isClosed()) {
+				return null;
+			}
+
+			while (rs.next()) {
+				Manufacturer m = new Manufacturer(rs.getInt("id"), rs.getString("name"), rs.getString("location"));
+				result.add(m);
+			}
+			rs.close();
+		} catch (SQLException ex) {
+			Logger.getLogger(Manufacturer.class.getName()).log(Level.SEVERE, null, ex);
+		}
+
+		db.close();
+
+		return result;
+	}
+
+	@Override
+	public String toString() {
+		return "Manufacturer{" + "id=" + id + ", name=" + name + ", location=" + location + '}';
 	}
 
 }
