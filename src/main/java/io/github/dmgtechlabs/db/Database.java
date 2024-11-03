@@ -10,6 +10,7 @@ public class Database {
 	private static String username = Environment.getDblabsUsername();
 	private static String password = Environment.getDblabsPassword();
 	private static DatabaseConnection instance;
+	public static String SCHEMA = "\"CarManager-DB\"";
 
 	private Database() {
 		// Private constructor to prevent external instantiation

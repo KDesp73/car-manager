@@ -2,7 +2,9 @@ package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.db.Database;
 import kdesp73.databridge.connections.DatabaseConnection;
+import kdesp73.databridge.connections.PostgresConnection;
 import kdesp73.databridge.helpers.QueryBuilder;
+import java.sql.Types;
 
 /**
  *
@@ -49,10 +51,13 @@ public class Manufacturer implements Dao {
 	}
 
 	public static int populate() {
-		DatabaseConnection db = Database.connection();
-		String sql = "{ ? = call \"CarManager-DB\".insertmanufacturers() }";
+		PostgresConnection db = (PostgresConnection) Database.connection();
+
+		Object r = db.callFunction(Database.SCHEMA + ".insertmanufacturers()", Types.INTEGER);
 
 		db.close();
+
+		return (r == null) ? -1 : (int) r;
 	}
 
 }
