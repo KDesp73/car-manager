@@ -12,13 +12,15 @@ public class Person implements Dao {
 		MALE, FEMALE, OTHER
 	};
 
+	private int id;
 	private String fname;
 	private String lname;
 	private int birthYear;
 	private Gender gender;
 	private Email email;
 
-	public Person(String fname, String lname, String email, int birthYear, Gender gender) {
+	public Person(int id, String fname, String lname, String email, int birthYear, Gender gender) {
+		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
 		this.birthYear = birthYear;
@@ -48,6 +50,10 @@ public class Person implements Dao {
 
 	public String getEmail() {
 		return email.address;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public static Gender int2Gender(int gender) {
