@@ -6,15 +6,21 @@ package io.github.dmgtechlabs;
  */
 public class Employee extends Person implements Dao {
 
+	private int employeeId;
 	private float salary;
 
-	public Employee(float salary, String fname, String lname, String email, int birthYear, Gender gender) {
-		super(fname, lname, email, birthYear, gender);
+	public Employee(int employeeId, float salary, int id, String fname, String lname, String email, int birthYear, Gender gender) {
+		super(id, fname, lname, email, birthYear, gender);
+		this.employeeId = employeeId;
 		this.salary = salary;
 	}
 
 	public float getSalary() {
 		return salary;
+	}
+
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
 	@Override

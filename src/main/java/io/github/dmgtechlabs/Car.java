@@ -27,6 +27,7 @@ public class Car implements Dao {
 		_AWD
 	}
 
+	private int id;
 	private String model;
 	private Type type;
 	private int year;
@@ -37,7 +38,8 @@ public class Car implements Dao {
 	private Manufacturer manufacturer;
 	private Service service;
 
-	public Car(String model, Type type, int year, float price, int hp, String licence_plate, WheelDrive wd, Manufacturer manufacturer, Service service) {
+	public Car(int id, String model, Type type, int year, float price, int hp, String licence_plate, WheelDrive wd, Manufacturer manufacturer, Service service) {
+		this.id = id;
 		this.model = model;
 		this.type = type;
 		this.year = year;
@@ -83,6 +85,10 @@ public class Car implements Dao {
 
 	public Service getS_id() {
 		return service;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	public static Type int2Type(int type) {

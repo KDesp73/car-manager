@@ -16,13 +16,15 @@ import java.util.logging.Logger;
  */
 public class Manufacturer implements Dao {
 
+	private int id;
 	private String name;
 	private String location;
 
 	public Manufacturer() {
 	}
 
-	public Manufacturer(String name, String location) {
+	public Manufacturer(int id, String name, String location) {
+		this.id = id;
 		this.name = name;
 		this.location = location;
 	}
@@ -33,6 +35,10 @@ public class Manufacturer implements Dao {
 
 	public String getLocation() {
 		return location;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override

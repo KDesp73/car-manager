@@ -6,13 +6,15 @@ package io.github.dmgtechlabs;
  */
 public class Service implements Dao {
 
+	private int id;
 	private boolean tires;
 	private boolean engine;
 	private boolean brakes;
 	private boolean oil;
 	private boolean battery;
 
-	public Service(boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery) {
+	public Service(int id, boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery) {
+		this.id = id;
 		this.tires = tires;
 		this.engine = engine;
 		this.brakes = brakes;
@@ -38,6 +40,10 @@ public class Service implements Dao {
 
 	public boolean batteryChecked() {
 		return battery;
+	}
+
+	public int getId() {
+		return id;
 	}
 
 	@Override

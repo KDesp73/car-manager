@@ -7,14 +7,20 @@ package io.github.dmgtechlabs;
 public class Customer extends Person implements Dao {
 
 	private String uuid;
+	private int personId;
 
-	public Customer(String email, String fname, String lname, int birthYear, Gender gender) {
-		super(fname, lname, email, birthYear, gender);
+	public Customer(int customerId, String email, int id, String fname, String lname, int birthYear, Gender gender) {
+		super(id, fname, lname, email, birthYear, gender);
+		this.personId = personId;
 		// TODO: generate uuid
 	}
 
 	public String getUuid() {
 		return uuid;
+	}
+
+	public int getPersonId() {
+		return personId;
 	}
 
 	@Override
