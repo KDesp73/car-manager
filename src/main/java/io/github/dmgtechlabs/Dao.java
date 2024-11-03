@@ -1,5 +1,7 @@
 package io.github.dmgtechlabs;
 
+import java.util.List;
+
 /**
  *
  * @author kdesp73
@@ -13,4 +15,7 @@ public interface Dao<T> {
 
 	public void delete();
 
+	public static <T> List<T> select(String condition) {
+		throw new UnsupportedOperationException("TODO: implement for each class that supports the Dao");
+	}
 }

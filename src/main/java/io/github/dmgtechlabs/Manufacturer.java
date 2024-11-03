@@ -31,11 +31,11 @@ public class Manufacturer implements Dao {
 
 	@Override
 	public void insert() {
-		DatabaseConnection db = Database.connection();
+//		DatabaseConnection db = Database.connection();
 		String query = new QueryBuilder().insertInto("Manufacturer").columns("name", "location").values(this.name, this.location).build();
 		System.out.println(query);
-		db.executeUpdate(query);
-		db.close();
+//		db.executeUpdate(query);
+//		db.close();
 	}
 
 	@Override
@@ -46,6 +46,13 @@ public class Manufacturer implements Dao {
 	@Override
 	public void delete() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	public static int populate() {
+		DatabaseConnection db = Database.connection();
+		String sql = "{ ? = call \"CarManager-DB\".insertmanufacturers() }";
+
+		db.close();
 	}
 
 }
