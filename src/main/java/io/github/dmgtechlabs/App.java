@@ -67,8 +67,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		App.manufacturersInsertStatements();
-		Manufacturer.populate();
+		new Manufacturer("test_name", "test_location").insert();
 //		runGUI();
 	}
 

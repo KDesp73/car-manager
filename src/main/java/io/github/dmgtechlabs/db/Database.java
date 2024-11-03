@@ -10,7 +10,7 @@ public class Database {
 	private static String username = Environment.getDblabsUsername();
 	private static String password = Environment.getDblabsPassword();
 	private static DatabaseConnection instance;
-	public static String SCHEMA = "\"CarManager-DB\"";
+	public static String SCHEMA = "\"CarManager_DB\"";
 
 	private Database() {
 		// Private constructor to prevent external instantiation
@@ -23,7 +23,7 @@ public class Database {
 
 				instance = new PostgresConnection();
 				instance.connect(url, username, password);
-				instance.execute("SET search_path TO 'CarManager-DB';"); // Specify the schema
+				instance.execute("SET search_path TO " + SCHEMA + ";"); // Specify the schema
 			} catch (RuntimeException e) {
 				e.printStackTrace();
 				throw new RuntimeException("Failed to create the database connection.");
@@ -32,4 +32,7 @@ public class Database {
 		return instance;
 	}
 
+	public static String quote(String str) {
+		return "\'" + str + "\'";
+	}
 }
