@@ -7,12 +7,19 @@ package io.github.dmgtechlabs;
 public class Customer extends Person implements Dao {
 
 	private String uuid;
+	<<<<<<< HEAD
 	private int id;
 
 	public Customer(int customerId, String email, int id, String fname, String lname, int birthYear, Gender gender) {
 		super(id, fname, lname, email, birthYear, gender);
 		this.id = customerId;
-		// TODO: generate uuid
+		 == == == =
+	private int personId;
+
+	public Customer(int customerId, String email, int id, String fname, String lname, int birthYear, Gender gender) {
+		super(id, fname, lname, email, birthYear, gender);
+		this.personId = personId;
+		 >>> >>> > 3ab3323 // TODO: generate uuid
 	}
 
 	public String getUuid() {
@@ -20,7 +27,11 @@ public class Customer extends Person implements Dao {
 	}
 
 	public int getPersonId() {
+		 << << << < HEAD
 		return id;
+		 == == == =
+		return personId;
+		 >>> >>> > 3ab3323
 	}
 
 	@Override

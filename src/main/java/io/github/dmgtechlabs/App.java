@@ -2,7 +2,6 @@ package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.gui.MainFrame;
 import javax.swing.UIManager;
-import io.github.dmgtechlabs.Manufacturer;
 import io.github.dmgtechlabs.db.Database;
 import kdesp73.databridge.connections.DatabaseConnection;
 
@@ -28,6 +27,10 @@ public class App {
 
 //		m.insert();
 		m.update("changed_name", "changed_location");
+		 << << << < HEAD
+			== == ==
+			= //		runGUI();
+			 >>> >>> > 3ab3323
 	}
 
 }
