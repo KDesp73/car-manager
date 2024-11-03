@@ -1,37 +1,49 @@
-SAVED QUERIES EXAMPLES
+SAVED QUERIES
 
--Save SELECT query and call it
+-SELECT ALL TABLES FROM A SPECIFC SCHEMA-
 
-    Example: Total count of users
-
-    *Saving query into a function
-     ----------------------------
-    create or replace function count_app_users()
-        returns table
-                (
-                    total bigint
-                )
-        language plpgsql
-    as
-    $$
-    begin
-        return query (
-            select count(*) from app_user
-        );
-    end;
-    $$;
-
-    *Call it by its name
-     -------------------
-    SELECT * FROM count_app_users();
+create or replace function "CarManager-DB".get_tables()
+returns table
+	(
+		table_name text
+	)
+as $$
+begin
+	select table_name from information_schema.tables where table_schema = 'CarManager-DB'
+end;
+$$ language plpgsql;
 
 
-    You don't call it like
+-SELECT SPECIFIC TABLE-
 
-        call count_app_users();
+-First record
 
-        OR
+create or replace function "CarManager-DB".get_first_table()
+return text as $$
+begin
+    select * from get_tables() LIMIT 1
+end;
+$$ language plpsql;
 
-        SELECT count_app_users();
+-Any record
 
-    because the query returns a table and not a single value
+create or replace function "CarManager-DB".get_specific_table(index int)
+return text as $$
+begin
+	select * from get_tables() LIMIT 1 OFFSET index - 1
+end;
+$$ language plpgsql;
+
+
+-SELECT ALL COLUMNS FROM A SPECIFIC TABLE-
+
+create or replace function "CarManager-DB".get_columns(t_name text)
+returns table
+	(
+		column_name text
+	)
+as $$
+begin
+	select column_name from information_schema.columns where table_name = t_name
+end;
+$$ language plpgsql;
