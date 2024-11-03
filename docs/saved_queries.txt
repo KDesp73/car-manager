@@ -9,7 +9,9 @@ returns table
 	)
 as $$
 begin
-	select table_name from information_schema.tables where table_schema = 'CarManager-DB'
+    return query (
+        select table_name from information_schema.tables where table_schema = 'CarManager-DB'
+    );
 end;
 $$ language plpgsql;
 
@@ -19,18 +21,18 @@ $$ language plpgsql;
 -First record
 
 create or replace function "CarManager-DB".get_first_table()
-return text as $$
+returns text as $$
 begin
-    select * from get_tables() LIMIT 1
+    select * from get_tables() LIMIT 1;
 end;
-$$ language plpsql;
+$$ language plpgsql;
 
 -Any record
 
 create or replace function "CarManager-DB".get_specific_table(index int)
-return text as $$
+returns text as $$
 begin
-	select * from get_tables() LIMIT 1 OFFSET index - 1
+    select * from get_tables() LIMIT 1 OFFSET index - 1;
 end;
 $$ language plpgsql;
 
@@ -44,6 +46,8 @@ returns table
 	)
 as $$
 begin
-	select column_name from information_schema.columns where table_name = t_name
+	return query (
+        select column_name from information_schema.columns where table_name = t_name
+    );
 end;
 $$ language plpgsql;
