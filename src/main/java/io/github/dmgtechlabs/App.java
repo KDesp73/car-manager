@@ -23,11 +23,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		var manufacturers = Manufacturer.selectAll();
-
-		for (Manufacturer m : manufacturers) {
-			System.out.println(m.toString());
-		}
+		new Manufacturer("test", "test").insert();
 //		runGUI();
 	}
 

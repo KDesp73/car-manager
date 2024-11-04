@@ -2,6 +2,7 @@ package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
+import io.github.dmgtechlabs.files.SQLogger;
 import java.sql.CallableStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -54,6 +55,8 @@ public class Manufacturer implements Dao {
 		PostgresConnection db = Database.connection();
 		db.callProcedure(Functions.INSERT_MANUFACTURER, name, location);
 		db.close();
+		
+		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.INSERT, this);
 	}
 
 	@Override
@@ -61,6 +64,8 @@ public class Manufacturer implements Dao {
 		PostgresConnection db = Database.connection();
 		db.callProcedure(Functions.UPDATE_MANUFACTURER, Utils.appendFront(id, values));
 		db.close();
+	
+		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.UPDATE, this);
 	}
 
 	@Override
@@ -77,10 +82,11 @@ public class Manufacturer implements Dao {
 	}
 
 	public static List<Manufacturer> selectAll() {
+		
+		SQLogger.printSelf();
 		PostgresConnection db = Database.connection();
 
 		ResultSet rs = db.callFunction(Functions.SELECT_ALL_MANUFACTURERS);
-
 		List<Manufacturer> result = new ArrayList<>();
 		try {
 			if (rs.isClosed()) {
@@ -92,8 +98,9 @@ public class Manufacturer implements Dao {
 				result.add(m);
 			}
 			rs.close();
+			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).logSQL("select all manufacturers", SQLogger.SQLOperation.SELECT, null);
 		} catch (SQLException ex) {
-			Logger.getLogger(Manufacturer.class.getName()).log(Level.SEVERE, null, ex);
+			SQLogger.getLogger(SQLogger.LogLevel.ALL).log("selectAll failed", ex);
 		}
 
 		db.close();
