@@ -14,14 +14,24 @@ import kdesp73.databridge.connections.PostgresConnection;
  */
 public class Customer extends Person implements Dao {
 
+	private Person p;
 	private String uuid;
 	private int id;
 
-	public Customer(int customerId, String email, int id, String fname, String lname, int birthYear, Gender gender) {
-		super(id, fname, lname, email, birthYear, gender);
+	public Customer(int customerId, String uuid, Person p) {
+		super(p.getId(), p.getFname(), p.getLname(), p.getEmail(), p.getBirthYear(), p.getGender());
+		this.p = p;
 		this.id = customerId;
+		this.uuid = uuid;
 		// TODO: generate uuid
 	}
+	
+//	public Customer(int customerId, String uuid, String email, int id, String fname, String lname, int birthYear, Gender gender) {
+//		super(id, fname, lname, email, birthYear, gender);
+//		this.id = customerId;
+//		this.uuid = uuid;
+//		// TODO: generate uuid
+//	}
 
 	public String getUuid() {
 		return uuid;
