@@ -29,6 +29,7 @@ public class App {
 //		c1.insert();
 //		c2.insert();
 		
+		Manufacturer.populate();
 //		runGUI();
 	}
 
