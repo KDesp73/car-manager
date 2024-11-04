@@ -1,5 +1,13 @@
 package io.github.dmgtechlabs;
 
+import io.github.dmgtechlabs.db.Database;
+import io.github.dmgtechlabs.db.Functions;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import kdesp73.databridge.connections.PostgresConnection;
+
 /**
  *
  * @author kdesp73
@@ -30,17 +38,43 @@ public class Customer extends Person implements Dao {
 
 	@Override
 	public void insert() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.INSERT_CUSTOMER, uuid, id);
+		db.close();
 	}
 
 	@Override
 	public void update(Object... values) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.UPDATE_CUSTOMER, Utils.appendFront(id, values));
+		db.close();
 	}
 
 	@Override
 	public void delete() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.DELETE_CUSTOMER, this.id);
+		db.close();
 	}
+	
+//	public static List<Customer> selectAll(){
+//		PostgresConnection db = Database.connection();
+//		
+//		ResultSet rs = db.callFunction(Functions.SELECT_ALL_CUSTOMERS);
+//		
+//		List<Customer> result = new ArrayList<>();
+//		try {
+//			if (rs.isClosed()) {
+//				return null;
+//			}
+//			
+//			while (rs.next()) {
+//				Customer c = new Customer(rs.getString("id"), rs.getString(""));
+//			}
+//			
+//		} catch (SQLException ex) {
+//			
+//		}
+//	}
 
 }
