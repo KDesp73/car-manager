@@ -28,7 +28,7 @@ public class App {
 		for (Manufacturer m : manufacturers) {
 			System.out.println(m.toString());
 		}
-
+//		runGUI();
 	}
 
 }
