@@ -52,21 +52,21 @@ public class Manufacturer implements Dao {
 	@Override
 	public void insert() {
 		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.insert("manufacturer"), name, location);
+		db.callProcedure(Functions.INSERT_MANUFACTURER, name, location);
 		db.close();
 	}
 
 	@Override
 	public void update(Object... values) {
 		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.update("manufacturer"), Utils.appendFront(id, values));
+		db.callProcedure(Functions.UPDATE_MANUFACTURER, Utils.appendFront(id, values));
 		db.close();
 	}
 
 	@Override
 	public void delete() {
 		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.delete("manufacturer"), this.name);
+		db.callProcedure(Functions.DELETE_MANUFACTURER, this.name);
 		db.close();
 	}
 
@@ -79,7 +79,7 @@ public class Manufacturer implements Dao {
 	public static List<Manufacturer> selectAll() {
 		PostgresConnection db = Database.connection();
 
-		ResultSet rs = db.callFunction(Database.SCHEMA + ".select_all_manufacturers");
+		ResultSet rs = db.callFunction(Functions.SELECT_ALL_MANUFACTURERS);
 
 		List<Manufacturer> result = new ArrayList<>();
 		try {
@@ -88,7 +88,7 @@ public class Manufacturer implements Dao {
 			}
 
 			while (rs.next()) {
-				Manufacturer m = new Manufacturer(rs.getInt("id"), rs.getString("name"), rs.getString("location"));
+				Manufacturer m = new Manufacturer(rs.getInt(3), rs.getString(1), rs.getString(2));
 				result.add(m);
 			}
 			rs.close();
