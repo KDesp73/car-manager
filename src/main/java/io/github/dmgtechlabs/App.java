@@ -23,7 +23,7 @@ public class App {
 	}
 
 	public static void main(String[] args) {
-		new Manufacturer("test", "test").insert();
+		Manufacturer.populate();
 //		runGUI();
 	}
 
