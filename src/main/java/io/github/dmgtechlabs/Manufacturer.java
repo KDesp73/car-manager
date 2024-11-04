@@ -25,6 +25,12 @@ public class Manufacturer implements Dao {
 	private String name;
 	private String location;
 
+	public Manufacturer() {}
+	
+	public Manufacturer(int id){
+		this.id = id;
+	}
+	
 	// For adding
 	public Manufacturer(String name, String location) {
 		this.name = name;

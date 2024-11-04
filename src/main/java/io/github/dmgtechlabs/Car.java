@@ -3,6 +3,7 @@ package io.github.dmgtechlabs;
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
 import kdesp73.databridge.connections.PostgresConnection;
+import kdesp73.databridge.helpers.SQLogger;
 
 /**
  *
@@ -11,21 +12,21 @@ import kdesp73.databridge.connections.PostgresConnection;
 public class Car extends Model implements Dao {
 
 	private int id;
-	private String licence_plate;
+	private String license_plate;
 	private float price;
 	private Service service;
 
-	public Car(String licence_plate, float price, Service service, String modelName, Type modelType, int modelYear, int modelHp, WheelDrive modelWd, String manufacturerName, String manufacturerLocation) {
-		super(modelName, modelType, modelYear, modelHp, modelWd, manufacturerName, manufacturerLocation);
-		this.licence_plate = licence_plate;
+	public Car(String licence_plate, float price, int modelId) {
+		super(modelId);
+		this.license_plate = licence_plate;
 		this.price = price;
-		this.service = service;
+		this.service = null;
 	}
 
 	public Car(int id, String licence_plate, float price, Service service, int modelId, String modelName, Type modelType, int modelYear, int modelHp, WheelDrive modelWd, int manufacturerId, String manufacturerName, String manufacturerLocation) {
 		super(modelId, modelName, modelType, modelYear, modelHp, modelWd, manufacturerId, manufacturerName, manufacturerLocation);
 		this.id = id;
-		this.licence_plate = licence_plate;
+		this.license_plate = licence_plate;
 		this.price = price;
 		this.service = service;
 	}
@@ -36,7 +37,7 @@ public class Car extends Model implements Dao {
 	}
 
 	public String getLicence_plate() {
-		return licence_plate;
+		return license_plate;
 	}
 
 	public float getPrice() {
@@ -50,8 +51,10 @@ public class Car extends Model implements Dao {
 	@Override
 	public void insert() {
 		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_CAR, null);
+		db.callProcedure(Functions.INSERT_CAR, license_plate, price, super.getId());
 		db.close();
+		
+		SQLogger.getLogger(SQLogger.LogLevel.INFO).logSQL(null, SQLogger.SQLOperation.INSERT, this);
 	}
 
 	@Override

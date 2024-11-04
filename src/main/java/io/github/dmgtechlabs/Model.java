@@ -43,8 +43,12 @@ public class Model extends Manufacturer implements Dao {
 	private int hp;
 	private WheelDrive wd;
 
-	public Model(String name, Type type, int year, int hp, WheelDrive wd, String manufacturerName, String manufacturerLocation) {
-		super(manufacturerName, manufacturerLocation);
+	public Model(int id) {
+		this.id = id;
+	}
+
+	public Model(String name, Type type, int year, int hp, WheelDrive wd, int manufacturerId) {
+		super(manufacturerId);
 		this.name = name;
 		this.type = type;
 		this.year = year;
@@ -70,6 +74,7 @@ public class Model extends Manufacturer implements Dao {
 		this.hp = hp;
 		this.wd = wd;
 	}
+
 	public Model(int id, String name, int year, int hp, int manufacturerId, String manufacturerName, String manufacturerLocation) {
 		super(manufacturerId, manufacturerName, manufacturerLocation);
 		this.id = id;
@@ -105,7 +110,7 @@ public class Model extends Manufacturer implements Dao {
 	public WheelDrive getWd() {
 		return wd;
 	}
-	
+
 	public static Type int2Type(int type) {
 		for (Type t : Type.values()) {
 			if (type == t.ordinal()) {
@@ -123,23 +128,31 @@ public class Model extends Manufacturer implements Dao {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public void insert() {
 		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_MODEL, name, type.ordinal(), year, hp, wd.ordinal(), super.getId());
+		try {
+			System.out.println(super.getId());
+			db.callProcedure(Functions.INSERT_MODEL, name, type.ordinal(), year, hp, wd.ordinal(), super.getId());
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.INSERT, this);
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Insert Model failed", ex);
+		}
 		db.close();
-		
-		SQLogger.getLogger(SQLogger.LogLevel.INFO).logSQL(null, SQLogger.SQLOperation.INSERT, this);
 	}
 
 	@Override
 	public void update(Object... values) {
 		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.UPDATE_MODEL, Utils.appendFront(id, values));
+		try {
+			db.callProcedure(Functions.UPDATE_MODEL, Utils.appendFront(id, values));
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Model failed", ex);
+		}
 		db.close();
-		
-		SQLogger.getLogger(SQLogger.LogLevel.INFO).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+
 	}
 
 	@Override
@@ -147,7 +160,13 @@ public class Model extends Manufacturer implements Dao {
 		PostgresConnection db = Database.connection();
 		db.callProcedure(Functions.DELETE_MODEL, this.id);
 		db.close();
-		
-		SQLogger.getLogger(SQLogger.LogLevel.INFO).logSQL(null, SQLogger.SQLOperation.DELETE, this);
+
+		SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.DELETE, this);
 	}
+
+	@Override
+	public String toString() {
+		return "Model{" + "id=" + id + ", name=" + name + ", type=" + type + ", year=" + year + ", hp=" + hp + ", wd=" + wd + '}' + super.toString();
+	}
+
 }

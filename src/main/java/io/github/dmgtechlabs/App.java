@@ -29,7 +29,12 @@ public class App {
 //		c1.insert();
 //		c2.insert();
 		
-		Manufacturer.populate();
+
+		var model = new Model("Focus", Model.Type.Sedan, 2008, 140, Model.WheelDrive._2WD, 51);
+		System.out.println(model);
+		model.insert();
+		
+
 //		runGUI();
 	}
 
