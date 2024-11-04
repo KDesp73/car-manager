@@ -16,7 +16,10 @@ public class Functions {
 	private static String MANUFACTURER_TABLE = "manufacturer";
 	private static String MODEL_TABLE = "model";
 	private static String CAR_TABLE = "car";
+	private static String SERVICE_TABLE = "service";
 
+	public static String UPDATE_SERVICE = update(SERVICE_TABLE);
+	
 	public static String INSERT_CUSTOMER = insert(CUSTOMER_TABLE);
 	public static String UPDATE_CUSTOMER = update(CUSTOMER_TABLE);
 	public static String DELETE_CUSTOMER = delete(CUSTOMER_TABLE);

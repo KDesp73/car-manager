@@ -1,5 +1,9 @@
 package io.github.dmgtechlabs;
 
+import io.github.dmgtechlabs.db.Database;
+import io.github.dmgtechlabs.db.Functions;
+import kdesp73.databridge.helpers.SQLogger;
+
 /**
  *
  * @author thanasis
@@ -48,17 +52,22 @@ public class Service implements Dao {
 
 	@Override
 	public boolean insert() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		throw new RuntimeException("Service should not be inserted independently from a Car");
 	}
 
 	@Override
 	public boolean update(Object... values) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.UPDATE, 
+			Functions.UPDATE_SERVICE, 
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
 	public boolean delete() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		throw new RuntimeException("Service should not be deleted independently from a Car");
 	}
 
 }
