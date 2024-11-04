@@ -30,38 +30,32 @@ public class Employee extends Person implements Dao {
 
 	@Override
 	public boolean insert() {
-		try(PostgresConnection db = Database.connection()) {
-			db.callProcedure(Functions.INSERT_EMPLOYEE, id, salary);
-			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.INSERT, this);
-			return true;
-		} catch (RuntimeException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Insert Employee failed", ex);
-			return false;
-		}
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.INSERT, 
+			Functions.INSERT_EMPLOYEE,
+			id, salary
+		);
 	}
 
 	@Override
 	public boolean update(Object... values) {
-		try(PostgresConnection db = Database.connection()){
-			db.callProcedure(Functions.UPDATE_EMPLOYEE, Utils.appendFront(id, values));
-			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
-			return true;
-		} catch (RuntimeException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Employee failed", ex);
-			return false;
-		}
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.UPDATE, 
+			Functions.UPDATE_EMPLOYEE,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
 	public boolean delete() {
-		try(PostgresConnection db = Database.connection()){
-			db.callProcedure(Functions.DELETE_EMPLOYEE, this.id);
-			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.DELETE, this);
-			return true;
-		} catch (RuntimeException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Delete Employee failed", ex);
-			return false;
-		}
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_EMPLOYEE,
+			this.id
+		);
 	}
 
 }

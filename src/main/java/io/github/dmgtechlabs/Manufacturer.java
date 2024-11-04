@@ -59,39 +59,32 @@ public class Manufacturer implements Dao {
 
 	@Override
 	public boolean insert() {
-		try (PostgresConnection db = Database.connection()) {
-			db.callProcedure(Functions.INSERT_MANUFACTURER, name, location);
-			SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.INSERT, this);
-			return true;
-		} catch (RuntimeException ex) {
-			SQLogger.getLogger().log("Insert Car failed", ex);
-			return false;
-		}
+		return Database.DaoFunctionWrapper(
+			this,
+			SQLogger.SQLOperation.INSERT,
+			Functions.INSERT_MANUFACTURER,
+			name, location
+		);
 	}
 
 	@Override
 	public boolean update(Object... values) {
-		try(PostgresConnection db = Database.connection()) {
-			db.callProcedure(Functions.UPDATE_MANUFACTURER, Utils.appendFront(id, values));
-			SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.UPDATE, this);
-			return true;
-		} catch(RuntimeException ex) {
-			SQLogger.getLogger().log("Update Car failed", ex);
-			return false;
-		}
-
+		return Database.DaoFunctionWrapper(
+			this,
+			SQLogger.SQLOperation.UPDATE,
+			Functions.UPDATE_MANUFACTURER,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
 	public boolean delete() {
-		try(PostgresConnection db = Database.connection()){
-			db.callProcedure(Functions.DELETE_MANUFACTURER, this.name);
-			SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.DELETE, this);
-			return true;
-		} catch(RuntimeException ex) {
-			SQLogger.getLogger().log("Delete Car failed", ex);
-			return false;
-		}
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_MANUFACTURER,
+			name
+		);
 	}
 
 	public static void populate() {

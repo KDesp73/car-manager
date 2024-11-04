@@ -31,7 +31,7 @@ public class App {
 		
 
 		var car = new Car("license_plate", 5000, 3);
-		car.insert();
+		System.out.println(car.insert());
 
 //		runGUI();
 	}
