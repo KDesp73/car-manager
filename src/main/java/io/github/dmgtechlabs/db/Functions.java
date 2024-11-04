@@ -14,6 +14,8 @@ public class Functions {
 	private static String EMPLOYEE_TABLE = "employee";
 	private static String PERSON_TABLE = "person";
 	private static String MANUFACTURER_TABLE = "manufacturer";
+	private static String MODEL_TABLE = "model";
+	private static String CAR_TABLE = "car";
 
 	public static String INSERT_CUSTOMER = insert(CUSTOMER_TABLE);
 	public static String UPDATE_CUSTOMER = update(CUSTOMER_TABLE);
@@ -24,11 +26,22 @@ public class Functions {
 	public static String UPDATE_EMPLOYEE = update(EMPLOYEE_TABLE);
 	public static String DELETE_EMPLOYEE = delete(EMPLOYEE_TABLE);
 	public static String SELECT_ALL_EMPLOYEES = Database.SCHEMA + ".select_all_employees";
-	
+
 	public static String INSERT_PERSON = insert(PERSON_TABLE);
 	public static String UPDATE_PERSON = update(PERSON_TABLE);
 	public static String DELETE_PERSON = delete(PERSON_TABLE);
 	public static String SELECT_ALL_PERSONS = Database.SCHEMA + ".select_all_persons";
+
+	public static String INSERT_CAR = insert(CAR_TABLE);
+	public static String UPDATE_CAR = update(CAR_TABLE);
+	public static String DELETE_CAR = delete(CAR_TABLE);
+	public static String SELECT_ALL_CARS = Database.SCHEMA + ".select_all_cars";
+
+	public static String INSERT_MODEL = insert(MODEL_TABLE);
+	public static String UPDATE_MODEL = update(MODEL_TABLE);
+	public static String DELETE_MODEL = delete(MODEL_TABLE);
+	public static String POPULATE_MODEL = Database.SCHEMA + ".populate_model";
+	public static String SELECT_ALL_MODELS = Database.SCHEMA + ".select_all_models";
 
 	public static String INSERT_MANUFACTURER = insert(MANUFACTURER_TABLE);
 	public static String UPDATE_MANUFACTURER = update(MANUFACTURER_TABLE);

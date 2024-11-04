@@ -1,117 +1,57 @@
 package io.github.dmgtechlabs;
 
+import io.github.dmgtechlabs.db.Database;
+import io.github.dmgtechlabs.db.Functions;
+import kdesp73.databridge.connections.PostgresConnection;
+
 /**
  *
  * @author thanasis
  */
-public class Car implements Dao {
-
-	public static enum Type {
-		SUV,
-		Sedan,
-		Hatchback,
-		Truck,
-		Minivan,
-		Luxury,
-		Sports,
-		Hybrid,
-		Electric,
-		Compact
-	}
-
-	public static enum WheelDrive {
-		_2WD,
-		_4WD,
-		_6WD,
-		_8WD,
-		_AWD
-	}
+public class Car extends Model implements Dao {
 
 	private int id;
-	private String model;
-	private Type type;
-	private int year;
-	private float price;
-	private int hp;
 	private String licence_plate;
-	private WheelDrive wd;
-	private Manufacturer manufacturer;
+	private float price;
 	private Service service;
 
-	public Car(int id, String model, Type type, int year, float price, int hp, String licence_plate, WheelDrive wd, Manufacturer manufacturer, Service service) {
-		this.id = id;
-		this.model = model;
-		this.type = type;
-		this.year = year;
-		this.price = price;
-		this.hp = hp;
+	public Car(String licence_plate, float price, Service service, String modelName, Type modelType, int modelYear, int modelHp, WheelDrive modelWd, String manufacturerName, String manufacturerLocation) {
+		super(modelName, modelType, modelYear, modelHp, modelWd, manufacturerName, manufacturerLocation);
 		this.licence_plate = licence_plate;
-		this.wd = wd;
-		this.manufacturer = manufacturer;
+		this.price = price;
 		this.service = service;
 	}
 
-	public String getModel() {
-		return model;
+	public Car(int id, String licence_plate, float price, Service service, int modelId, String modelName, Type modelType, int modelYear, int modelHp, WheelDrive modelWd, int manufacturerId, String manufacturerName, String manufacturerLocation) {
+		super(modelId, modelName, modelType, modelYear, modelHp, modelWd, manufacturerId, manufacturerName, manufacturerLocation);
+		this.id = id;
+		this.licence_plate = licence_plate;
+		this.price = price;
+		this.service = service;
 	}
 
-	public Type getType() {
-		return type;
-	}
-
-	public int getYear() {
-		return year;
-	}
-
-	public float getPrice() {
-		return price;
-	}
-
-	public int getHp() {
-		return hp;
+	@Override
+	public int getId() {
+		return id;
 	}
 
 	public String getLicence_plate() {
 		return licence_plate;
 	}
 
-	public WheelDrive getWd() {
-		return wd;
+	public float getPrice() {
+		return price;
 	}
 
-	public Manufacturer getM_id() {
-		return manufacturer;
-	}
-
-	public Service getS_id() {
+	public Service getService() {
 		return service;
 	}
-
-	public int getId() {
-		return id;
-	}
-
-	public static Type int2Type(int type) {
-		for (Type t : Type.values()) {
-			if (type == t.ordinal()) {
-				return t;
-			}
-		}
-		return null;
-	}
-
-	public static WheelDrive int2WheelDrive(int wheelDrive) {
-		for (WheelDrive wd : WheelDrive.values()) {
-			if (wheelDrive == wd.ordinal()) {
-				return wd;
-			}
-		}
-		return null;
-	}
-
+	
 	@Override
 	public void insert() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.INSERT_CAR, null);
+		db.close();
 	}
 
 	@Override
