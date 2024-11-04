@@ -130,38 +130,41 @@ public class Model extends Manufacturer implements Dao {
 	}
 
 	@Override
-	public void insert() {
+	public boolean insert() {
 		PostgresConnection db = Database.connection();
 		try {
 			System.out.println(super.getId());
 			db.callProcedure(Functions.INSERT_MODEL, name, type.ordinal(), year, hp, wd.ordinal(), super.getId());
 			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.INSERT, this);
+			return true;
 		} catch (RuntimeException ex) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Insert Model failed", ex);
+			return false;
 		}
-		db.close();
 	}
 
 	@Override
-	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		try {
+	public boolean update(Object... values) {
+		try(PostgresConnection db = Database.connection()) {
 			db.callProcedure(Functions.UPDATE_MODEL, Utils.appendFront(id, values));
 			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+			return true;
 		} catch (RuntimeException ex) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Model failed", ex);
+			return false;
 		}
-		db.close();
-
 	}
 
 	@Override
-	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_MODEL, this.id);
-		db.close();
-
-		SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.DELETE, this);
+	public boolean delete() {
+		try(PostgresConnection db = Database.connection()) {
+			db.callProcedure(Functions.DELETE_MODEL, this.id);
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.DELETE, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Delete Model failed", ex);
+			return false;
+		}
 	}
 
 	@Override

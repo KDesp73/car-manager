@@ -25,12 +25,13 @@ public class Manufacturer implements Dao {
 	private String name;
 	private String location;
 
-	public Manufacturer() {}
-	
-	public Manufacturer(int id){
+	public Manufacturer() {
+	}
+
+	public Manufacturer(int id) {
 		this.id = id;
 	}
-	
+
 	// For adding
 	public Manufacturer(String name, String location) {
 		this.name = name;
@@ -57,42 +58,52 @@ public class Manufacturer implements Dao {
 	}
 
 	@Override
-	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_MANUFACTURER, name, location);
-		db.close();
-		
-		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.INSERT, this);
+	public boolean insert() {
+		try (PostgresConnection db = Database.connection()) {
+			db.callProcedure(Functions.INSERT_MANUFACTURER, name, location);
+			SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.INSERT, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger().log("Insert Car failed", ex);
+			return false;
+		}
 	}
 
 	@Override
-	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.UPDATE_MANUFACTURER, Utils.appendFront(id, values));
-		db.close();
-	
-		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+	public boolean update(Object... values) {
+		try(PostgresConnection db = Database.connection()) {
+			db.callProcedure(Functions.UPDATE_MANUFACTURER, Utils.appendFront(id, values));
+			SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+			return true;
+		} catch(RuntimeException ex) {
+			SQLogger.getLogger().log("Update Car failed", ex);
+			return false;
+		}
+
 	}
 
 	@Override
-	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_MANUFACTURER, this.name);
-		db.close();
-		
-		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.DELETE, this);
+	public boolean delete() {
+		try(PostgresConnection db = Database.connection()){
+			db.callProcedure(Functions.DELETE_MANUFACTURER, this.name);
+			SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.DELETE, this);
+			return true;
+		} catch(RuntimeException ex) {
+			SQLogger.getLogger().log("Delete Car failed", ex);
+			return false;
+		}
 	}
 
 	public static void populate() {
 		PostgresConnection db = Database.connection();
 		db.callProcedure(Functions.POPULATE_MANUFACTURER);
 		db.close();
-		
+
 		SQLogger.getLogger().logSQL("Populating Manufacturer", SQLogger.SQLOperation.INSERT, null);
 	}
 
 	public static List<Manufacturer> selectAll() {
-		
+
 		SQLogger.printSelf();
 		PostgresConnection db = Database.connection();
 

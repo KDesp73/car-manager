@@ -47,23 +47,26 @@ public class Car extends Model implements Dao {
 	public Service getService() {
 		return service;
 	}
-	
+
 	@Override
-	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_CAR, license_plate, price, super.getId());
-		db.close();
-		
-		SQLogger.getLogger(SQLogger.LogLevel.INFO).logSQL(null, SQLogger.SQLOperation.INSERT, this);
+	public boolean insert() {
+		try(PostgresConnection db = Database.connection()) {
+			db.callProcedure(Functions.INSERT_CAR, license_plate, price, super.getId());
+			SQLogger.getLogger(SQLogger.LogLevel.INFO).logSQL(null, SQLogger.SQLOperation.INSERT, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("Insert Car failed", ex);
+			return false;
+		}
 	}
 
 	@Override
-	public void update(Object... values) {
+	public boolean update(Object... values) {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 	@Override
-	public void delete() {
+	public boolean delete() {
 		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 }

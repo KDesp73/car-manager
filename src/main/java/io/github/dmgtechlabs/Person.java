@@ -4,6 +4,7 @@ import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
 import io.github.dmgtechlabs.exceptions.InvalidEmailException;
 import kdesp73.databridge.connections.PostgresConnection;
+import kdesp73.databridge.helpers.SQLogger;
 
 /**
  *
@@ -69,24 +70,39 @@ public class Person implements Dao {
 	}
 
 	@Override
-	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_PERSON, fname, lname, birthYear, gender, email, id);
-		db.close();
+	public boolean insert() {
+		try(PostgresConnection db = Database.connection()) {
+			db.callProcedure(Functions.INSERT_PERSON, fname, lname, birthYear, gender, email, id);
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.INSERT, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Insert Person failed", ex);
+			return false;
+		}
 	}
 
 	@Override
-	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.UPDATE_PERSON, Utils.appendFront(id, values));
-		db.close();
+	public boolean update(Object... values) {
+		try(PostgresConnection db = Database.connection()){
+			db.callProcedure(Functions.UPDATE_PERSON, Utils.appendFront(id, values));
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Person failed", ex);
+			return false;
+		}
 	}
 
 	@Override
-	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_PERSON, this.id);
-		db.close();
+	public boolean delete() {
+		try(PostgresConnection db = Database.connection()){
+			db.callProcedure(Functions.DELETE_PERSON, this.id);
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.DELETE, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Delete Person failed", ex);
+			return false;
+		}
 	}
 
 	@Override

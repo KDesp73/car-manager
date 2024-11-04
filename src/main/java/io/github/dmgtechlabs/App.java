@@ -30,10 +30,8 @@ public class App {
 //		c2.insert();
 		
 
-		var model = new Model("Focus", Model.Type.Sedan, 2008, 140, Model.WheelDrive._2WD, 51);
-		System.out.println(model);
-		model.insert();
-		
+		var car = new Car("license_plate", 5000, 3);
+		car.insert();
 
 //		runGUI();
 	}

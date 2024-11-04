@@ -3,6 +3,7 @@ package io.github.dmgtechlabs;
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
 import kdesp73.databridge.connections.PostgresConnection;
+import kdesp73.databridge.helpers.SQLogger;
 
 /**
  *
@@ -28,24 +29,39 @@ public class Employee extends Person implements Dao {
 	}
 
 	@Override
-	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_EMPLOYEE, id, salary);
-		db.close();
+	public boolean insert() {
+		try(PostgresConnection db = Database.connection()) {
+			db.callProcedure(Functions.INSERT_EMPLOYEE, id, salary);
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.INSERT, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Insert Employee failed", ex);
+			return false;
+		}
 	}
 
 	@Override
-	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.UPDATE_EMPLOYEE, Utils.appendFront(id, values));
-		db.close();
+	public boolean update(Object... values) {
+		try(PostgresConnection db = Database.connection()){
+			db.callProcedure(Functions.UPDATE_EMPLOYEE, Utils.appendFront(id, values));
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Employee failed", ex);
+			return false;
+		}
 	}
 
 	@Override
-	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_EMPLOYEE, this.id);
-		db.close();
+	public boolean delete() {
+		try(PostgresConnection db = Database.connection()){
+			db.callProcedure(Functions.DELETE_EMPLOYEE, this.id);
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.DELETE, this);
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Delete Employee failed", ex);
+			return false;
+		}
 	}
 
 }
