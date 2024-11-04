@@ -1,5 +1,9 @@
 package io.github.dmgtechlabs;
 
+import io.github.dmgtechlabs.db.Database;
+import io.github.dmgtechlabs.db.Functions;
+import kdesp73.databridge.connections.PostgresConnection;
+
 /**
  *
  * @author kdesp73
@@ -25,17 +29,23 @@ public class Employee extends Person implements Dao {
 
 	@Override
 	public void insert() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.INSERT_EMPLOYEE, id, salary);
+		db.close();
 	}
 
 	@Override
 	public void update(Object... values) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.UPDATE_EMPLOYEE, Utils.appendFront(id, values));
+		db.close();
 	}
 
 	@Override
 	public void delete() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Functions.DELETE_EMPLOYEE, this.id);
+		db.close();
 	}
 
 }

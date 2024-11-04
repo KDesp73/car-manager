@@ -10,7 +10,25 @@ package io.github.dmgtechlabs.db;
  */
 public class Functions {
 
+	private static String CUSTOMER_TABLE = "customer";
+	private static String EMPLOYEE_TABLE = "employee";
+	private static String PERSON_TABLE = "person";
 	private static String MANUFACTURER_TABLE = "manufacturer";
+
+	public static String INSERT_CUSTOMER = insert(CUSTOMER_TABLE);
+	public static String UPDATE_CUSTOMER = update(CUSTOMER_TABLE);
+	public static String DELETE_CUSTOMER = delete(CUSTOMER_TABLE);
+	public static String SELECT_ALL_CUSTOMERS = Database.SCHEMA + ".select_all_customers";
+
+	public static String INSERT_EMPLOYEE = insert(EMPLOYEE_TABLE);
+	public static String UPDATE_EMPLOYEE = update(EMPLOYEE_TABLE);
+	public static String DELETE_EMPLOYEE = delete(EMPLOYEE_TABLE);
+	public static String SELECT_ALL_EMPLOYEES = Database.SCHEMA + ".select_all_employees";
+	
+	public static String INSERT_PERSON = insert(PERSON_TABLE);
+	public static String UPDATE_PERSON = update(PERSON_TABLE);
+	public static String DELETE_PERSON = delete(PERSON_TABLE);
+	public static String SELECT_ALL_PERSONS = Database.SCHEMA + ".select_all_persons";
 
 	public static String INSERT_MANUFACTURER = insert(MANUFACTURER_TABLE);
 	public static String UPDATE_MANUFACTURER = update(MANUFACTURER_TABLE);
