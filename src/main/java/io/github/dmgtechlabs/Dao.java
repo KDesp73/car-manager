@@ -9,13 +9,9 @@ import java.util.List;
  */
 public interface Dao<T> {
 
-	public void insert();
+	public boolean insert();
 
-	public void update(Object... values);
+	public boolean update(Object... values);
 
-	public void delete();
-
-	public static <T> List<T> select(String condition) {
-		throw new UnsupportedOperationException("TODO: implement for each class that supports the Dao");
-	}
+	public boolean delete();
 }

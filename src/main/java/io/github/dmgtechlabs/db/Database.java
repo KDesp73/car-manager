@@ -1,8 +1,11 @@
 package io.github.dmgtechlabs.db;
 
 import io.github.dmgtechlabs.files.Environment;
+import java.util.function.BiFunction;
+import java.util.function.Function;
 import kdesp73.databridge.connections.DatabaseConnection;
 import kdesp73.databridge.connections.PostgresConnection;
+import kdesp73.databridge.helpers.SQLogger;
 
 public class Database {
 
@@ -32,4 +35,19 @@ public class Database {
 		return (PostgresConnection) instance;
 	}
 
+	public static boolean DaoFunctionWrapper(Object instance, SQLogger.SQLOperation operation, String procedureName, Object... params) {
+		try (PostgresConnection db = Database.connection()) {
+			// Call the provided function
+			db.callProcedure(procedureName, params);
+
+			// Logging
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL)
+				.logSQL("Called " + procedureName, operation, instance);
+
+			return true;
+		} catch (RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log(operation + " failed for " + instance.toString(), ex);
+			return false;
+		}
+	}
 }

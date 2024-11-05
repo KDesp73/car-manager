@@ -25,12 +25,13 @@ public class Manufacturer implements Dao {
 	private String name;
 	private String location;
 
-	public Manufacturer() {}
-	
-	public Manufacturer(int id){
+	public Manufacturer() {
+	}
+
+	public Manufacturer(int id) {
 		this.id = id;
 	}
-	
+
 	// For adding
 	public Manufacturer(String name, String location) {
 		this.name = name;
@@ -57,42 +58,45 @@ public class Manufacturer implements Dao {
 	}
 
 	@Override
-	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_MANUFACTURER, name, location);
-		db.close();
-		
-		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.INSERT, this);
+	public boolean insert() {
+		return Database.DaoFunctionWrapper(
+			this,
+			SQLogger.SQLOperation.INSERT,
+			Functions.INSERT_MANUFACTURER,
+			name, location
+		);
 	}
 
 	@Override
-	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.UPDATE_MANUFACTURER, Utils.appendFront(id, values));
-		db.close();
-	
-		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+	public boolean update(Object... values) {
+		return Database.DaoFunctionWrapper(
+			this,
+			SQLogger.SQLOperation.UPDATE,
+			Functions.UPDATE_MANUFACTURER,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
-	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_MANUFACTURER, this.name);
-		db.close();
-		
-		SQLogger.getLogger().logSQL(null, SQLogger.SQLOperation.DELETE, this);
+	public boolean delete() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_MANUFACTURER,
+			name
+		);
 	}
 
 	public static void populate() {
 		PostgresConnection db = Database.connection();
 		db.callProcedure(Functions.POPULATE_MANUFACTURER);
 		db.close();
-		
+
 		SQLogger.getLogger().logSQL("Populating Manufacturer", SQLogger.SQLOperation.INSERT, null);
 	}
 
 	public static List<Manufacturer> selectAll() {
-		
+
 		SQLogger.printSelf();
 		PostgresConnection db = Database.connection();
 

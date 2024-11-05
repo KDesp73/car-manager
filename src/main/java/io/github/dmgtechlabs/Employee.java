@@ -30,18 +30,33 @@ public class Employee extends Person implements Dao {
 	}
 
 	@Override
-	public void insert() {
-		//TODO
+	public boolean insert() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.INSERT, 
+			Functions.INSERT_EMPLOYEE,
+			id, salary
+		);
 	}
 
 	@Override
-	public void update(Object... values) {
-		//TODO
+	public boolean update(Object... values) {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.UPDATE, 
+			Functions.UPDATE_EMPLOYEE,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
-	public void delete() {
-		//TODO
+	public boolean delete() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_EMPLOYEE,
+			this.id
+		);
 	}
 
 }

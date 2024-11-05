@@ -130,38 +130,33 @@ public class Model extends Manufacturer implements Dao {
 	}
 
 	@Override
-	public void insert() {
-		PostgresConnection db = Database.connection();
-		try {
-			System.out.println(super.getId());
-			db.callProcedure(Functions.INSERT_MODEL, name, type.ordinal(), year, hp, wd.ordinal(), super.getId());
-			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.INSERT, this);
-		} catch (RuntimeException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Insert Model failed", ex);
-		}
-		db.close();
+	public boolean insert() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.INSERT, 
+			Functions.INSERT_MODEL,
+			name, type.ordinal(), year, hp, wd.ordinal(), super.getId()
+		);
 	}
 
 	@Override
-	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		try {
-			db.callProcedure(Functions.UPDATE_MODEL, Utils.appendFront(id, values));
-			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
-		} catch (RuntimeException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Model failed", ex);
-		}
-		db.close();
-
+	public boolean update(Object... values) {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.UPDATE, 
+			Functions.UPDATE_MODEL,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
-	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_MODEL, this.id);
-		db.close();
-
-		SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.DELETE, this);
+	public boolean delete() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_MODEL,
+			this.id
+		);
 	}
 
 	@Override

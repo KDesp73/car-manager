@@ -48,6 +48,8 @@ public class App {
 //		System.out.println(model);
 //		model.insert();
 		
+		var car = new Car(4, "license_plate", 5000, 3);
+		car.delete();
 
 //		runGUI();
 	}

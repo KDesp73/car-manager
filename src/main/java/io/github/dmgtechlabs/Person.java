@@ -77,27 +77,33 @@ public class Person implements Dao {
 		return null;
 	}
 
-	@Override
-	public void insert() {
-		
+	public boolean insert() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.INSERT, 
+			Functions.INSERT_PERSON,
+			fname, lname, birthYear, gender, email, id
+		);
 	}
 
 	@Override
-	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		try {
-			db.callProcedure(Functions.UPDATE_PERSON, Utils.appendFront(id, values));
-			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
-		} catch(RuntimeException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Person failed", ex);
-		}
-		
-		db.close();
+	public boolean update(Object... values) {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.UPDATE, 
+			Functions.UPDATE_PERSON,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
-	public void delete() {
-		
+	public boolean delete() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_PERSON,
+			this.id
+		);
 	}
 
 	@Override

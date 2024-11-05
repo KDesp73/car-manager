@@ -12,21 +12,28 @@ import kdesp73.databridge.helpers.SQLogger;
 public class Car extends Model implements Dao {
 
 	private int id;
-	private String license_plate;
+	private String licensePlate;
 	private float price;
 	private Service service;
 
-	public Car(String licence_plate, float price, int modelId) {
+	public Car(String licencePlate, float price, int modelId) {
 		super(modelId);
-		this.license_plate = licence_plate;
+		this.licensePlate = licencePlate;
 		this.price = price;
 		this.service = null;
 	}
 
-	public Car(int id, String licence_plate, float price, Service service, int modelId, String modelName, Type modelType, int modelYear, int modelHp, WheelDrive modelWd, int manufacturerId, String manufacturerName, String manufacturerLocation) {
+	public Car(int id, String licensePlate, float price, int modelId) {
+		super(modelId);
+		this.licensePlate = licensePlate;
+		this.price = price;
+		this.id = id;
+	}
+	
+	public Car(int id, String licencePlate, float price, Service service, int modelId, String modelName, Type modelType, int modelYear, int modelHp, WheelDrive modelWd, int manufacturerId, String manufacturerName, String manufacturerLocation) {
 		super(modelId, modelName, modelType, modelYear, modelHp, modelWd, manufacturerId, manufacturerName, manufacturerLocation);
 		this.id = id;
-		this.license_plate = licence_plate;
+		this.licensePlate = licencePlate;
 		this.price = price;
 		this.service = service;
 	}
@@ -36,8 +43,8 @@ public class Car extends Model implements Dao {
 		return id;
 	}
 
-	public String getLicence_plate() {
-		return license_plate;
+	public String getLicencePlate() {
+		return licensePlate;
 	}
 
 	public float getPrice() {
@@ -47,23 +54,34 @@ public class Car extends Model implements Dao {
 	public Service getService() {
 		return service;
 	}
-	
+
 	@Override
-	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_CAR, license_plate, price, super.getId());
-		db.close();
-		
-		SQLogger.getLogger(SQLogger.LogLevel.INFO).logSQL(null, SQLogger.SQLOperation.INSERT, this);
+	public boolean insert() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.INSERT, 
+			Functions.INSERT_CAR, 
+			licensePlate, price, super.getId()
+		);
 	}
 
 	@Override
-	public void update(Object... values) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public boolean update(Object... values) {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.UPDATE, 
+			Functions.UPDATE_CAR, 
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
-	public void delete() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	public boolean delete() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_CAR,
+			this.licensePlate
+		);
 	}
 }

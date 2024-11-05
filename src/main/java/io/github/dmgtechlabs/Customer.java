@@ -32,6 +32,13 @@ public class Customer extends Person implements Dao {
 		this.id = id;
 	}
 
+//	public Customer(int customerId, String uuid, String email, int id, String fname, String lname, int birthYear, Gender gender) {
+//		super(id, fname, lname, email, birthYear, gender);
+//		this.id = customerId;
+//		this.uuid = uuid;
+//		// TODO: generate uuid
+//	}
+
 	public String getUuid() {
 		return uuid;
 	}
@@ -44,22 +51,37 @@ public class Customer extends Person implements Dao {
 	public String toString() {
 		return "Customer{" + "uuid=" + uuid + '}';
 	}
-
+	
 	@Override
-	public void insert() {
-		//TODO	
+	public boolean insert() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.INSERT, 
+			Functions.INSERT_CUSTOMER,
+			uuid, id
+		);
 	}
 
 	@Override
-	public void update(Object... values) {
-		//TODO
+	public boolean update(Object... values) {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.UPDATE, 
+			Functions.UPDATE_CUSTOMER,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
-	public void delete() {
-		//TODO
+	public boolean delete() {
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.DELETE, 
+			Functions.DELETE_CUSTOMER,
+			this.id
+		);
 	}
-
+	
 	public static List<Customer> selectAll() {
 		PostgresConnection db = Database.connection();
 
@@ -85,5 +107,4 @@ public class Customer extends Person implements Dao {
 
 		return result;
 	}
-
 }
