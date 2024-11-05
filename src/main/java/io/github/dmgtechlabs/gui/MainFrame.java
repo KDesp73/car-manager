@@ -9,7 +9,9 @@ public class MainFrame extends javax.swing.JFrame {
 
 	private HelpFrame helpFrame;
 	private AboutFrame aboutFrame;
+	private LogsFrame logsFrame;
 	private CardLayout cardLayout;
+
 	/**
 	 * Creates new form MainFrame
 	 */
@@ -20,15 +22,15 @@ public class MainFrame extends javax.swing.JFrame {
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
 		this.aboutFrame = new AboutFrame();
-		
+		this.logsFrame = null;
+
 		this.formList.setFixedCellHeight(40);
 		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers"});
 		this.cardLayout.addLayoutComponent(this.salesPanel, "Sales");
 		this.cardLayout.addLayoutComponent(this.carsPanel, "Cars");
 		this.cardLayout.addLayoutComponent(this.employeesPanel, "Employees");
 		this.cardLayout.addLayoutComponent(this.customersPanel, "Customers");
-		
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -232,15 +234,20 @@ public class MainFrame extends javax.swing.JFrame {
 	}//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void formListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formListMouseClicked
-		if(evt.getButton() == MouseEvent.BUTTON1){
+		if (evt.getButton() == MouseEvent.BUTTON1) {
 			String selected = this.formList.getSelectedValue();
-		
+
 			this.cardLayout.show(this.cardContainer, selected);
 		}
     }//GEN-LAST:event_formListMouseClicked
 
     private void carsLogsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsLogsMenuItemActionPerformed
-        
+		if (this.logsFrame != null && this.logsFrame.isShowing()) {
+			return;
+		}
+
+		this.logsFrame = new LogsFrame(LogsFrame.LogType.CARS);
+		this.logsFrame.setVisible(true);
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
 
 	/**

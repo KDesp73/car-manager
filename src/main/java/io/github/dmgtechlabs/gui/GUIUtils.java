@@ -7,6 +7,7 @@ package io.github.dmgtechlabs.gui;
 import java.awt.Font;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
+import javax.swing.UnsupportedLookAndFeelException;
 
 /**
  *
@@ -14,13 +15,6 @@ import javax.swing.UIManager;
  */
 public class GUIUtils {
 	public static void commonSetup(JFrame frame) {
-		System.setProperty("sun.java2d.uiScale", "1");
-		try {
-			UIManager.setLookAndFeel(new com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme());
-		} catch (Exception ex) {
-			System.err.println("Failed to initialize LaF");
-		}
-		
 		frame.setLocationRelativeTo(null);
 		GUIMethods.setFontFamilyRecursively(frame, "sans-serif", Font.PLAIN);
 	}

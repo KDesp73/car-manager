@@ -6,6 +6,7 @@ package io.github.dmgtechlabs.gui;
 
 import io.github.dmgtechlabs.Car;
 import io.github.dmgtechlabs.CarLog;
+import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -64,12 +65,13 @@ public class LogsFrame extends javax.swing.JFrame {
 	 * Creates new form LogsFrame
 	 */
 	public LogsFrame(LogType type) {
-		this.type = type;
 		initComponents();
 		GUIUtils.commonSetup(this);
 		
+		this.type = type;
 		this.table.setModel(this.getModel(type));
 		this.table.setRowHeight(20);
+		this.setResizable(false);
 	}
 
 	/**
