@@ -3,6 +3,7 @@ package io.github.dmgtechlabs;
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
 import kdesp73.databridge.connections.PostgresConnection;
+import kdesp73.databridge.helpers.SQLogger;
 
 /**
  *
@@ -12,10 +13,11 @@ public class Employee extends Person implements Dao {
 
 	private int id;
 	private float salary;
+	private int personId;
 
-	public Employee(int employeeId, float salary, int id, String fname, String lname, String email, int birthYear, Gender gender) {
-		super(id, fname, lname, email, birthYear, gender);
-		this.id = employeeId;
+	public Employee(int id, float salary, int personId, String fname, String lname, String email, int birthYear, Gender gender) {
+		super(personId, fname, lname, email, birthYear, gender);
+		this.id = id;
 		this.salary = salary;
 	}
 
@@ -29,23 +31,17 @@ public class Employee extends Person implements Dao {
 
 	@Override
 	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_EMPLOYEE, id, salary);
-		db.close();
+		//TODO
 	}
 
 	@Override
 	public void update(Object... values) {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.UPDATE_EMPLOYEE, Utils.appendFront(id, values));
-		db.close();
+		//TODO
 	}
 
 	@Override
 	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_EMPLOYEE, this.id);
-		db.close();
+		//TODO
 	}
 
 }

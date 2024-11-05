@@ -4,6 +4,7 @@ import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
 import io.github.dmgtechlabs.exceptions.InvalidEmailException;
 import kdesp73.databridge.connections.PostgresConnection;
+import kdesp73.databridge.helpers.SQLogger;
 
 /**
  *
@@ -15,13 +16,17 @@ public class Person implements Dao {
 		MALE, FEMALE, OTHER
 	};
 
-	private int id;
+	public int id;
 	private String fname;
 	private String lname;
 	private int birthYear;
 	private Gender gender;
 	private Email email;
 
+	public Person(int personId) {
+		id = personId;
+	}
+	
 	public Person(int id, String fname, String lname, String email, int birthYear, Gender gender) {
 		this.id = id;
 		this.fname = fname;
@@ -33,6 +38,10 @@ public class Person implements Dao {
 		if (!this.email.validate()) {
 			throw new InvalidEmailException("'" + email + "' is not valid");
 		}
+	}
+	
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getFname() {
@@ -70,23 +79,25 @@ public class Person implements Dao {
 
 	@Override
 	public void insert() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.INSERT_PERSON, fname, lname, birthYear, gender, email, id);
-		db.close();
+		
 	}
 
 	@Override
 	public void update(Object... values) {
 		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.UPDATE_PERSON, Utils.appendFront(id, values));
+		try {
+			db.callProcedure(Functions.UPDATE_PERSON, Utils.appendFront(id, values));
+			SQLogger.getLogger(SQLogger.LogLevel.INFO, SQLogger.LogType.ALL).logSQL(null, SQLogger.SQLOperation.UPDATE, this);
+		} catch(RuntimeException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Update Person failed", ex);
+		}
+		
 		db.close();
 	}
 
 	@Override
 	public void delete() {
-		PostgresConnection db = Database.connection();
-		db.callProcedure(Functions.DELETE_PERSON, this.id);
-		db.close();
+		
 	}
 
 	@Override
