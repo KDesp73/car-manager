@@ -19,8 +19,8 @@ public class Customer extends Person implements Dao {
 	private int id;
 	private int personId;
 
-	public Customer(int id, String uuid, int personId, String fname, String lname, String email, int birthYear, Gender gender) {
-		super(personId, fname, lname, email, birthYear, gender);
+	public Customer(int id, String uuid, int personId, String fname, String lname, String birthYear, Gender gender, String email) {
+		super(personId, fname, lname, birthYear, gender, email);
 		this.id = id;
 		this.uuid = uuid;
 		// TODO: generate uuid
@@ -58,7 +58,7 @@ public class Customer extends Person implements Dao {
 			this, 
 			SQLogger.SQLOperation.INSERT, 
 			Functions.INSERT_CUSTOMER,
-			uuid, id
+			id, uuid, super.getId()
 		);
 	}
 
@@ -78,7 +78,7 @@ public class Customer extends Person implements Dao {
 			this, 
 			SQLogger.SQLOperation.DELETE, 
 			Functions.DELETE_CUSTOMER,
-			this.id
+			this.id, super.getId()
 		);
 	}
 	
@@ -94,7 +94,7 @@ public class Customer extends Person implements Dao {
 			}
 
 			while (rs.next()) {
-				Customer c = new Customer(rs.getString(2), rs.getInt(1), rs.getInt(3));
+				Customer c = new Customer(rs.getString(1), rs.getInt(2), rs.getInt(3));
 				result.add(c);
 			}
 			rs.close();
