@@ -31,6 +31,11 @@ public class Manufacturer implements Dao {
 	public Manufacturer(int id) {
 		this.id = id;
 	}
+	
+	
+	public Manufacturer(String name) {
+		this.name = name;
+	}
 
 	// For adding
 	public Manufacturer(String name, String location) {
@@ -112,7 +117,7 @@ public class Manufacturer implements Dao {
 		return result;
 	}
 
-	public static List<Manufacturer> selectAll() {
+	public static List<Manufacturer> selectAllManufacturers() {
 		PostgresConnection db = Database.connection();
 
 		ResultSet rs = db.callFunction(Functions.SELECT_ALL_MANUFACTURERS);

@@ -18,6 +18,10 @@ public class Service implements Dao {
 	private boolean battery;
 	private String date;
 
+	public Service(int id) {
+		this.id = id;
+	}
+	
 	public Service(int id, boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery, String date) {
 		this.id = id;
 		this.tires = tires;

@@ -2,6 +2,10 @@ package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 import kdesp73.databridge.connections.PostgresConnection;
 import kdesp73.databridge.helpers.SQLogger;
 
@@ -23,19 +27,31 @@ public class Car extends Model implements Dao {
 		this.service = null;
 	}
 
-	public Car(int id, String licensePlate, float price, int modelId) {
+	public Car(int id) {
+		this.id = id;
+	}
+	
+	
+	public Car(int id, String licensePlate, float price, int modelId, int serviceId) {
 		super(modelId);
 		this.licensePlate = licensePlate;
 		this.price = price;
 		this.id = id;
+		this.service = new Service(serviceId);
 	}
 	
-	public Car(int id, String licencePlate, float price, Service service, int modelId, String modelName, Type modelType, int modelYear, int modelHp, WheelDrive modelWd, int manufacturerId, String manufacturerName, String manufacturerLocation) {
-		super(modelId, modelName, modelType, modelYear, modelHp, modelWd, manufacturerId, manufacturerName, manufacturerLocation);
+	public Car(
+		int id,
+		String licensePlate,
+		float price,
+		String modelName,
+		int modelYear,
+		String manufacturerName
+	) {
+		super(modelName, modelYear, manufacturerName);
 		this.id = id;
-		this.licensePlate = licencePlate;
+		this.licensePlate = licensePlate;
 		this.price = price;
-		this.service = service;
 	}
 
 	@Override
@@ -83,5 +99,27 @@ public class Car extends Model implements Dao {
 			Functions.DELETE_CAR,
 			this.licensePlate
 		);
+	}
+	
+	public static List<Car> selectAllCars() {
+		List<Car> result = new ArrayList<>();
+		try(PostgresConnection db = Database.connection()) {
+			ResultSet rs = db.callFunction(Functions.SELECT_ALL_CARS);
+			if(rs.isClosed()) return null;
+			
+			while(rs.next()) {
+				result.add(new Car(
+					rs.getInt("id"),
+					rs.getString("license_plate"),
+					rs.getFloat("price"),
+					rs.getInt("car_model_fk"),
+					rs.getInt("car_service_fk")
+				));
+			}
+			rs.close();
+		} catch(RuntimeException | SQLException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select All Cars failed", ex);
+		}
+		return result;
 	}
 }

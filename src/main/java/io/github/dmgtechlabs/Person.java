@@ -27,6 +27,16 @@ public class Person implements Dao {
 	private Gender gender;
 	private Email email;
 
+	public Person() {}
+	public Person(String name, String email) {
+		this.fname = name.split(" ")[0];
+		this.lname = name.split(" ")[1];
+		this.email = new Email(email);
+		
+		if (!this.email.validate()) {
+			throw new InvalidEmailException("'" + email + "' is not valid");
+		}
+	}
 	public Person(int personId) {
 		id = personId;
 	}

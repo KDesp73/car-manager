@@ -6,6 +6,7 @@ package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
+import java.util.List;
 import kdesp73.databridge.connections.PostgresConnection;
 import kdesp73.databridge.helpers.SQLogger;
 
@@ -42,6 +43,8 @@ public class Model extends Manufacturer implements Dao {
 	private int year;
 	private int hp;
 	private WheelDrive wd;
+	
+	public Model() {}
 
 	public Model(int id) {
 		this.id = id;
@@ -63,6 +66,12 @@ public class Model extends Manufacturer implements Dao {
 		this.year = year;
 		this.hp = hp;
 		this.wd = WheelDrive._2WD;
+	}
+	
+	public Model(String name, int year, String manufacturerName) {
+		super(manufacturerName);
+		this.name = name;
+		this.year = year;
 	}
 
 	public Model(int id, String name, Type type, int year, int hp, WheelDrive wd, int manufacturerId, String manufacturerName, String manufacturerLocation) {
@@ -159,6 +168,10 @@ public class Model extends Manufacturer implements Dao {
 		);
 	}
 
+	public static List<Model> selectAllModels() {
+		return null;
+	}
+	
 	@Override
 	public String toString() {
 		return "Model{" + "id=" + id + ", name=" + name + ", type=" + type + ", year=" + year + ", hp=" + hp + ", wd=" + wd + '}' + super.toString();

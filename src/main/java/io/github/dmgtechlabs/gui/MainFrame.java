@@ -1,8 +1,12 @@
 package io.github.dmgtechlabs.gui;//GEN-LINE:variables//GEN-LINE:variables//GEN-LINE:variables//GEN-LINE:variables
 
+import io.github.dmgtechlabs.Sale;
 import java.awt.CardLayout;
 import java.awt.Font;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.util.List;
 import javax.swing.UIManager;
 
 public class MainFrame extends javax.swing.JFrame {
@@ -11,6 +15,9 @@ public class MainFrame extends javax.swing.JFrame {
 	private AboutFrame aboutFrame;
 	private LogsFrame logsFrame;
 	private CardLayout cardLayout;
+	
+	// Sales Card
+	private List<Sale> sales;
 
 	/**
 	 * Creates new form MainFrame
@@ -31,6 +38,9 @@ public class MainFrame extends javax.swing.JFrame {
 		this.cardLayout.addLayoutComponent(this.employeesPanel, "Employees");
 		this.cardLayout.addLayoutComponent(this.customersPanel, "Customers");
 
+		// Sales Card
+		this.salesList.setFixedCellHeight(25);
+		this.sales = Sale.selectAll();
 	}
 
 	@SuppressWarnings("unchecked")
@@ -41,6 +51,8 @@ public class MainFrame extends javax.swing.JFrame {
         formList = new javax.swing.JList<>();
         cardContainer = new javax.swing.JPanel();
         salesPanel = new javax.swing.JPanel();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        salesList = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         carsPanel = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
@@ -75,23 +87,38 @@ public class MainFrame extends javax.swing.JFrame {
 
         cardContainer.setLayout(new java.awt.CardLayout());
 
-        jLabel1.setText("Sales");
+        salesList.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jScrollPane1.setViewportView(salesList);
+
+        jLabel1.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel1.setText("SALES");
 
         javax.swing.GroupLayout salesPanelLayout = new javax.swing.GroupLayout(salesPanel);
         salesPanel.setLayout(salesPanelLayout);
         salesPanelLayout.setHorizontalGroup(
             salesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(salesPanelLayout.createSequentialGroup()
-                .addGap(352, 352, 352)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, salesPanelLayout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel1)
-                .addContainerGap(410, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 476, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         salesPanelLayout.setVerticalGroup(
             salesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(salesPanelLayout.createSequentialGroup()
-                .addGap(220, 220, 220)
-                .addComponent(jLabel1)
-                .addContainerGap(450, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(salesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(salesPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel1)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE))
+                .addContainerGap())
         );
 
         cardContainer.add(salesPanel, "card2");
@@ -236,7 +263,7 @@ public class MainFrame extends javax.swing.JFrame {
     private void formListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formListMouseClicked
 		if (evt.getButton() == MouseEvent.BUTTON1) {
 			String selected = this.formList.getSelectedValue();
-
+			
 			this.cardLayout.show(this.cardContainer, selected);
 		}
     }//GEN-LAST:event_formListMouseClicked
@@ -280,7 +307,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu logsMenu;
+    private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;
     // End of variables declaration//GEN-END:variables
 }
