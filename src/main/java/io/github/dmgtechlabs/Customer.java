@@ -15,16 +15,21 @@ import kdesp73.databridge.helpers.SQLogger;
  */
 public class Customer extends Person implements Dao {
 
-	private Person p;
 	private String uuid;
 	private int id;
+	private int personId;
 
-	public Customer(int customerId, String uuid, Person p) {
-		super(p.getId(), p.getFname(), p.getLname(), p.getEmail(), p.getBirthYear(), p.getGender());
-		this.p = p;
-		this.id = customerId;
+	public Customer(int id, String uuid, int personId, String fname, String lname, String birthYear, Gender gender, String email) {
+		super(personId, fname, lname, birthYear, gender, email);
+		this.id = id;
 		this.uuid = uuid;
 		// TODO: generate uuid
+	}
+	
+	public Customer(String uuid, int id, int personId) {
+		super(personId);
+		this.uuid = uuid;
+		this.id = id;
 	}
 
 //	public Customer(int customerId, String uuid, String email, int id, String fname, String lname, int birthYear, Gender gender) {
@@ -38,7 +43,7 @@ public class Customer extends Person implements Dao {
 		return uuid;
 	}
 
-	public int getPersonId() {
+	public int getId() {
 		return id;
 	}
 
@@ -46,14 +51,14 @@ public class Customer extends Person implements Dao {
 	public String toString() {
 		return "Customer{" + "uuid=" + uuid + '}';
 	}
-
+	
 	@Override
 	public boolean insert() {
 		return Database.DaoFunctionWrapper(
 			this, 
 			SQLogger.SQLOperation.INSERT, 
 			Functions.INSERT_CUSTOMER,
-			uuid, id
+			id, uuid, super.getId()
 		);
 	}
 
@@ -73,28 +78,33 @@ public class Customer extends Person implements Dao {
 			this, 
 			SQLogger.SQLOperation.DELETE, 
 			Functions.DELETE_CUSTOMER,
-			this.id
+			this.id, super.getId()
 		);
 	}
+	
+	public static List<Customer> selectAll() {
+		PostgresConnection db = Database.connection();
 
-//	public static List<Customer> selectAll(){
-//		PostgresConnection db = Database.connection();
-//
-//		ResultSet rs = db.callFunction(Functions.SELECT_ALL_CUSTOMERS);
-//
-//		List<Customer> result = new ArrayList<>();
-//		try {
-//			if (rs.isClosed()) {
-//				return null;
-//			}
-//
-//			while (rs.next()) {
-//				Customer c = new Customer(rs.getString("id"), rs.getString(""));
-//			}
-//
-//		} catch (SQLException ex) {
-//
-//		}
-//	}
+		ResultSet rs = db.callFunction(Functions.SELECT_ALL_CUSTOMERS);
 
+		List<Customer> result = new ArrayList<>();
+		try {
+			if (rs.isClosed()) {
+				return null;
+			}
+
+			while (rs.next()) {
+				Customer c = new Customer(rs.getString(1), rs.getInt(2), rs.getInt(3));
+				result.add(c);
+			}
+			rs.close();
+			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select all customers", SQLogger.SQLOperation.SELECT, null);
+		} catch (SQLException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
+		}
+
+		db.close();
+
+		return result;
+	}
 }
