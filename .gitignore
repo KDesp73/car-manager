@@ -28,3 +28,4 @@ dependency-reduced-pom.xml
 .env
 sqlogger.log
 .idea
+*.log
