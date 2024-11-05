@@ -1,3 +1,4 @@
-TODO: saved queries
-TODO: logger
 TODO: forms (ui)
+TODO: logfile on ui with triggers
+DONE: saved queries
+DONE: logger

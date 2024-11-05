@@ -30,7 +30,7 @@ public class App {
 //		c2.insert();
 		
 
-		var car = new Car(4, "license_plate", 5000, 3);
+		var car = new Car(8, "license_plate", 4500, 3);
 		car.delete();
 
 //		runGUI();
