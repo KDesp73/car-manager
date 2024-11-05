@@ -1,5 +1,14 @@
 package io.github.dmgtechlabs;
 
+import io.github.dmgtechlabs.db.Database;
+import io.github.dmgtechlabs.db.Functions;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
+import kdesp73.databridge.connections.PostgresConnection;
+import kdesp73.databridge.helpers.SQLogger;
+
 /**
  *
  * @author kdesp73
@@ -7,36 +16,47 @@ package io.github.dmgtechlabs;
 public class Sale implements Dao {
 
 	private int id;
-	private Employee salesman;
-	private Customer customer;
-	private Car car;
-	private float discount;
+	private int carId;
+	private int employeeId;
+	private int customerId;
+ 	private float discount;
 	private float finalPrice;
+	private String date;
 
-	public Sale(int id, Employee salesman, Customer customer, Car car, float discount) {
+	public Sale(){}
+	
+	public Sale(int id, float price, float discount, int carId, int employeeId, int customerId, String date) {
 		this.id = id;
-		this.salesman = salesman;
-		this.customer = customer;
-		this.car = car;
+		this.finalPrice = price;
 		this.discount = discount;
-
-		this.calculateFinalPrice();
+		this.carId = carId;
+		this.employeeId = employeeId;
+		this.customerId = customerId;
+		this.date = date;
 	}
-
+	
+	public Sale(float finalPrice, float discount, int carId, int employeeId, int customerId){
+		this.finalPrice = finalPrice;
+		this.discount = discount;
+		this.carId = carId;
+		this.employeeId = employeeId;
+		this.customerId = customerId;
+	}
+	
 	public int getId() {
 		return id;
 	}
 
-	public Employee getSalesman() {
-		return salesman;
+	public int getCarId() {
+		return carId;
 	}
 
-	public Customer getCustomer() {
-		return customer;
+	public int getEmployeeId() {
+		return employeeId;
 	}
 
-	public Car getCar() {
-		return car;
+	public int getCustomerId() {
+		return customerId;
 	}
 
 	public float getDiscount() {
@@ -47,23 +67,62 @@ public class Sale implements Dao {
 		return finalPrice;
 	}
 
-	public void calculateFinalPrice() {
-		this.finalPrice = car.getPrice() - car.getPrice() * this.discount;
-	}
-
+	
+	
 	@Override
 	public boolean insert() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		return Database.DaoFunctionWrapper(
+			this, 
+			SQLogger.SQLOperation.INSERT,
+			Functions.INSERT_SALE,
+			this.finalPrice, this.discount, this.carId, this.employeeId, this.customerId
+		);
 	}
 
 	@Override
 	public boolean update(Object... values) {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		return Database.DaoFunctionWrapper(
+			this,
+			SQLogger.SQLOperation.UPDATE,
+			Functions.UPDATE_SALE,
+			Utils.appendFront(id, values)
+		);
 	}
 
 	@Override
 	public boolean delete() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		return Database.DaoFunctionWrapper(
+			this,
+			SQLogger.SQLOperation.DELETE,
+			Functions.DELETE_SALE,
+			id
+		);
+	}
+	
+	public List<Sale> selectAll() {
+		List<Sale> result = new ArrayList<>();
+		try(PostgresConnection db = Database.connection()) {
+			ResultSet rs = db.callFunction(Functions.SELECT_ALL_SALES);
+			if(rs.isClosed()) return null;
+			
+			while(rs.next()) {
+				result.add(new Sale(
+					rs.getInt("id"), 
+					rs.getFloat("price"), 
+					rs.getFloat("discount"), 
+					rs.getInt("sales_car_fk"), 
+					rs.getInt("sales_employee_fk"), 
+					rs.getInt("sales_customer_fk"), 
+					rs.getDate("date").toString())
+				);
+			}
+			rs.close();
+			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).logSQL("Select All Sales", SQLogger.SQLOperation.SELECT, null);
+		} catch(RuntimeException | SQLException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO, SQLogger.LogType.STDERR).log("Sales select all failed", ex);
+		}
+		
+		return result;
 	}
 
 }

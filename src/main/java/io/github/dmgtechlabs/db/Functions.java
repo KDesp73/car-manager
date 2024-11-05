@@ -17,9 +17,15 @@ public class Functions {
 	private static String MODEL_TABLE = "model";
 	private static String CAR_TABLE = "car";
 	private static String SERVICE_TABLE = "service";
+	private static String SALES_TABLE = "sales";
+
+	public static String INSERT_SALE = Database.SCHEMA + ".insert_sale";
+	public static String UPDATE_SALE = Database.SCHEMA + ".update_sale";
+	public static String DELETE_SALE = Database.SCHEMA + ".delete_sale";
+	public static String SELECT_ALL_SALES = Database.SCHEMA + ".select_all_sales";
 
 	public static String UPDATE_SERVICE = update(SERVICE_TABLE);
-	
+
 	public static String INSERT_CUSTOMER = insert(CUSTOMER_TABLE);
 	public static String UPDATE_CUSTOMER = update(CUSTOMER_TABLE);
 	public static String DELETE_CUSTOMER = delete(CUSTOMER_TABLE);
@@ -51,6 +57,7 @@ public class Functions {
 	public static String DELETE_MANUFACTURER = delete(MANUFACTURER_TABLE);
 	public static String POPULATE_MANUFACTURER = Database.SCHEMA + ".populate_manufacturer";
 	public static String SELECT_ALL_MANUFACTURERS = Database.SCHEMA + ".select_all_manufacturers";
+	public static String SELECT_MANUFACTURERS_BY_LOCATION = Database.SCHEMA + ".select_manufacturers_by_location";
 
 	private static String insert(String table) {
 		return Database.SCHEMA + ".insert_" + table;

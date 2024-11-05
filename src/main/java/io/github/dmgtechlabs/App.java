@@ -23,18 +23,10 @@ public class App {
 	}
 
 	public static void main(String[] args) {	
-//		Customer c2 = new Customer("poi987-nf5ql8-zy345q", 200, 5678);
-//		c2.delete();
-
-
-//		var model = new Model("Focus", Model.Type.Sedan, 2008, 140, Model.WheelDrive._2WD, 51);
-//		System.out.println(model);
-//		model.insert();
-		
-//		var car = new Car(4, "license_plate", 5000, 3);
-//		car.delete();
-
-//		runGUI();
+		var list = Manufacturer.selectByLocation("Germany");
+		for(Manufacturer m : list) {
+			System.out.println(m);
+		}
 	}
 
 }

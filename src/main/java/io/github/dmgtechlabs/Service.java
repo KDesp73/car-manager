@@ -16,14 +16,16 @@ public class Service implements Dao {
 	private boolean brakes;
 	private boolean oil;
 	private boolean battery;
+	private String date;
 
-	public Service(int id, boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery) {
+	public Service(int id, boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery, String date) {
 		this.id = id;
 		this.tires = tires;
 		this.engine = engine;
 		this.brakes = brakes;
 		this.oil = oil;
 		this.battery = battery;
+		this.date = date;
 	}
 
 	public boolean tiresChecked() {
@@ -48,6 +50,10 @@ public class Service implements Dao {
 
 	public int getId() {
 		return id;
+	}
+
+	public String getDate() {
+		return date;
 	}
 
 	@Override

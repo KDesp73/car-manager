@@ -94,10 +94,25 @@ public class Manufacturer implements Dao {
 
 		SQLogger.getLogger().logSQL("Populating Manufacturer", SQLogger.SQLOperation.INSERT, null);
 	}
+	
+	public static List<Manufacturer> selectByLocation(String location) {
+		List<Manufacturer> result = new ArrayList<>();
+		try(PostgresConnection db = Database.connection()){
+			ResultSet rs = db.callFunction(Functions.SELECT_MANUFACTURERS_BY_LOCATION, location);
+			if(rs.isClosed()) return null;
+			
+			while(rs.next()){
+				result.add(new Manufacturer(rs.getInt("id"), rs.getString("name"), rs.getString("location")));
+			}
+			rs.close();
+			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select manufacturers by location", SQLogger.SQLOperation.SELECT, null);
+		} catch (RuntimeException | SQLException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectByLocation failed", ex);
+		}
+		return result;
+	}
 
 	public static List<Manufacturer> selectAll() {
-
-		SQLogger.printSelf();
 		PostgresConnection db = Database.connection();
 
 		ResultSet rs = db.callFunction(Functions.SELECT_ALL_MANUFACTURERS);
@@ -108,7 +123,7 @@ public class Manufacturer implements Dao {
 			}
 
 			while (rs.next()) {
-				Manufacturer m = new Manufacturer(rs.getInt(3), rs.getString(1), rs.getString(2));
+				Manufacturer m = new Manufacturer(rs.getInt("id"), rs.getString("name"), rs.getString("location"));
 				result.add(m);
 			}
 			rs.close();
