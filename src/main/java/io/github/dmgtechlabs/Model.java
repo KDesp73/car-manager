@@ -115,13 +115,22 @@ public class Model extends Manufacturer implements Dao {
 		this.hp = hp;
 		this.wd = WheelDrive._2WD;
 	}
+	
+	public Model(int modelId, String modelName, Type modelType, int modelYear, WheelDrive modelWd, int modelHp, int manufacturerId, String manufacturerName, String manufacturerLocation) {
+		super(manufacturerId, manufacturerName, manufacturerLocation);
+		this.id = modelId;
+		this.name = modelName;
+		this.type = modelType;
+		this.year = modelYear;
+		this.wd = modelWd;
+		this.hp = modelHp;
+	}
 
 	@Override
 	public int getId() {
 		return id;
 	}
 
-	@Override
 	public String getName() {
 		return name;
 	}
