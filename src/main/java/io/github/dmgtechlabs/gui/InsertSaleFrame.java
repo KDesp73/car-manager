@@ -16,7 +16,7 @@ import java.util.List;
  *
  * @author kdesp73
  */
-public class InsertSaleFrame extends InsertFrame {
+public class InsertSaleFrame extends javax.swing.JFrame {
 
 	private List<Car> cars;
 	private List<Employee> employees;

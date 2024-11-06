@@ -52,12 +52,9 @@ public class Customer extends Person implements Dao {
 		this.id = id;
 	}
 
-//	public Customer(int customerId, String uuid, String email, int id, String fname, String lname, int birthYear, Gender gender) {
-//		super(id, fname, lname, email, birthYear, gender);
-//		this.id = customerId;
-//		this.uuid = uuid;
-//		// TODO: generate uuid
-//	}
+	public Customer(String fname, String lname, int birthYear, Gender gender, String email) {
+		super(fname, lname, birthYear, gender, email);
+	}
 
 	public String getUuid() {
 		return uuid;

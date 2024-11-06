@@ -35,7 +35,7 @@ public class Person implements Dao {
 		this.birthYear = birthYear;
 		this.gender = gender;
 		this.email = new Email(email);
-	}
+}
 	
 	public Person(String name, String email) {
 		this.fname = name.split(" ", 2)[0];
