@@ -19,7 +19,16 @@ public class Customer extends Person implements Dao {
 	private int id;
 	private int personId;
 
-	public Customer(int id, String uuid, int personId, String fname, String lname, String birthYear, Gender gender, String email) {
+	public Customer(
+		int id, 
+		String uuid, 
+		int personId, 
+		String fname,
+		String lname, 
+		int birthYear, 
+		String email,
+		Gender gender
+	) {
 		super(personId, fname, lname, birthYear, gender, email);
 		this.id = id;
 		this.uuid = uuid;
@@ -96,7 +105,7 @@ public class Customer extends Person implements Dao {
 	public static List<Customer> selectAll() {
 		PostgresConnection db = Database.connection();
 
-		ResultSet rs = db.callFunction(Functions.SELECT_ALL_CUSTOMERS);
+		ResultSet rs = db.callFunction(Functions.SELECT_ALL_CUSTOMERS + "__");
 
 		List<Customer> result = new ArrayList<>();
 		try {
@@ -105,7 +114,16 @@ public class Customer extends Person implements Dao {
 			}
 
 			while (rs.next()) {
-				Customer c = new Customer(rs.getString(1), rs.getInt(2), rs.getInt(3));
+				Customer c = new Customer(
+					rs.getInt("id"),
+					rs.getString("uuid"),
+					rs.getInt("customer_person_fk"),
+					rs.getString("fname"),
+					rs.getString("lname"),
+					rs.getInt("birth_year"),
+					rs.getString("email"),
+					int2Gender(rs.getInt("gender"))
+				);
 				result.add(c);
 			}
 			rs.close();

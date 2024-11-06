@@ -23,14 +23,14 @@ public class Person implements Dao {
 	private int id;
 	private String fname;
 	private String lname;
-	private String birthYear;
+	private int birthYear;
 	private Gender gender;
 	private Email email;
 
 	public Person() {}
 	public Person(String name, String email) {
-		this.fname = name.split(" ")[0];
-		this.lname = name.split(" ")[1];
+		this.fname = name.split(" ", 2)[0];
+		this.lname = name.split(" ", 2)[1];
 		this.email = new Email(email);
 		
 		if (!this.email.validate()) {
@@ -41,7 +41,7 @@ public class Person implements Dao {
 		id = personId;
 	}
 
-	public Person(int id, String fname, String lname, String birthYear, Gender gender, String email) {
+	public Person(int id, String fname, String lname, int birthYear, Gender gender, String email) {
 		this.id = id;
 		this.fname = fname;
 		this.lname = lname;
@@ -66,7 +66,7 @@ public class Person implements Dao {
 		return lname;
 	}
 
-	public String getBirthYear() {
+	public int getBirthYear() {
 		return birthYear;
 	}
 
@@ -151,4 +151,7 @@ public class Person implements Dao {
 		return "Person{" + "fname=" + fname + ", lname=" + lname + ", birthYear=" + birthYear + ", gender=" + gender + ", email=" + email + '}';
 	}
 
+	public String UIString() {
+		return this.getFname() + " " + this.getLname();
+	}
 }

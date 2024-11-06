@@ -10,12 +10,13 @@ import java.util.List;
 import javax.swing.UIManager;
 
 public class MainFrame extends javax.swing.JFrame {
-
+	
 	private HelpFrame helpFrame;
 	private AboutFrame aboutFrame;
 	private LogsFrame logsFrame;
 	private CardLayout cardLayout;
-	
+	private InsertSaleFrame insertSaleFrame;
+
 	// Sales Card
 	private List<Sale> sales;
 
@@ -25,12 +26,13 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
-
+		
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
 		this.aboutFrame = new AboutFrame();
 		this.logsFrame = null;
-
+		this.insertSaleFrame = new InsertSaleFrame();
+		
 		this.formList.setFixedCellHeight(40);
 		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers"});
 		this.cardLayout.addLayoutComponent(this.salesPanel, "Sales");
@@ -42,7 +44,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.salesList.setFixedCellHeight(25);
 		this.sales = Sale.selectAll();
 	}
-
+	
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -61,7 +63,11 @@ public class MainFrame extends javax.swing.JFrame {
         customersPanel = new javax.swing.JPanel();
         jLabel4 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
-        fileMenu = new javax.swing.JMenu();
+        addMenu = new javax.swing.JMenu();
+        addSaleMenuItem = new javax.swing.JMenuItem();
+        addCarMenuItem = new javax.swing.JMenuItem();
+        addCustomerMenuItem = new javax.swing.JMenuItem();
+        addEmployeeMenuItem = new javax.swing.JMenuItem();
         editMenu = new javax.swing.JMenu();
         logsMenu = new javax.swing.JMenu();
         carsLogsMenuItem = new javax.swing.JMenuItem();
@@ -186,8 +192,26 @@ public class MainFrame extends javax.swing.JFrame {
 
         cardContainer.add(customersPanel, "card5");
 
-        fileMenu.setText("File");
-        jMenuBar1.add(fileMenu);
+        addMenu.setText("Add");
+
+        addSaleMenuItem.setText("Sale");
+        addSaleMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSaleMenuItemActionPerformed(evt);
+            }
+        });
+        addMenu.add(addSaleMenuItem);
+
+        addCarMenuItem.setText("Car");
+        addMenu.add(addCarMenuItem);
+
+        addCustomerMenuItem.setText("Customer");
+        addMenu.add(addCustomerMenuItem);
+
+        addEmployeeMenuItem.setText("Employee");
+        addMenu.add(addEmployeeMenuItem);
+
+        jMenuBar1.add(addMenu);
 
         editMenu.setText("Edit");
         jMenuBar1.add(editMenu);
@@ -248,7 +272,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if (helpFrame.isShowing()) {
 			return;
 		}
-
+		
 		helpFrame.setVisible(true);
 	}//GEN-LAST:event_helpMenuItemActionPerformed
 
@@ -256,7 +280,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if (aboutFrame.isShowing()) {
 			return;
 		}
-
+		
 		aboutFrame.setVisible(true);
 	}//GEN-LAST:event_aboutMenuItemActionPerformed
 
@@ -272,10 +296,18 @@ public class MainFrame extends javax.swing.JFrame {
 		if (this.logsFrame != null && this.logsFrame.isShowing()) {
 			return;
 		}
-
+		
 		this.logsFrame = new LogsFrame(LogsFrame.LogType.CARS);
 		this.logsFrame.setVisible(true);
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
+
+    private void addSaleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleMenuItemActionPerformed
+		if (this.insertSaleFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertSaleFrame.setVisible(true);
+    }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -291,13 +323,17 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JMenuItem addCarMenuItem;
+    private javax.swing.JMenuItem addCustomerMenuItem;
+    private javax.swing.JMenuItem addEmployeeMenuItem;
+    private javax.swing.JMenu addMenu;
+    private javax.swing.JMenuItem addSaleMenuItem;
     private javax.swing.JPanel cardContainer;
     private javax.swing.JMenuItem carsLogsMenuItem;
     private javax.swing.JPanel carsPanel;
     private javax.swing.JPanel customersPanel;
     private javax.swing.JMenu editMenu;
     private javax.swing.JPanel employeesPanel;
-    private javax.swing.JMenu fileMenu;
     private javax.swing.JList<String> formList;
     private javax.swing.JScrollPane formListContainer;
     private javax.swing.JMenu helpMenu;

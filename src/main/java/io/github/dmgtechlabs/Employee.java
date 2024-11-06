@@ -25,7 +25,7 @@ public class Employee extends Person implements Dao {
 		this.id = id;
 	}
 	
-	public Employee(int id, int personId, float salary, String fname, String lname, String birthYear, Gender gender, String email) {
+	public Employee(int id, int personId, float salary, String fname, String lname, int birthYear, Gender gender, String email) {
 		super(personId, fname, lname, birthYear, gender, email);
 		this.id = id;
 		this.salary = salary;
@@ -104,5 +104,5 @@ public class Employee extends Person implements Dao {
 
 		return result;
 	}
-
+	
 }

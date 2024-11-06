@@ -122,4 +122,8 @@ public class Car extends Model implements Dao {
 		}
 		return result;
 	}
+	
+	public String UIString() {
+		return this.licensePlate + " - " + this.price;
+	}
 }
