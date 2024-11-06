@@ -10,6 +10,7 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
+import java.util.Random;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -60,4 +61,10 @@ public class GUIUtils {
             }
         });
     }
+	
+	public static int generateID() {
+		Random rand = new Random();
+		
+		return rand.nextInt(10000);
+	}
 }

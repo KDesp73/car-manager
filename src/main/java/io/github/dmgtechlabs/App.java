@@ -10,11 +10,11 @@ public class App {
 
 	private static void runGUI() {
 		System.setProperty("sun.java2d.uiScale", "1");
-//		try {
-//			UIManager.setLookAndFeel(new com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme());
-//		} catch (UnsupportedLookAndFeelException ex) {
-//			System.err.println("Failed to initialize LaF");
-//		}
+		try {
+			UIManager.setLookAndFeel(new com.formdev.flatlaf.intellijthemes.materialthemeuilite.FlatAtomOneDarkIJTheme());
+		} catch (UnsupportedLookAndFeelException ex) {
+			System.err.println("Failed to initialize LaF");
+		}
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				new MainFrame().setVisible(true);

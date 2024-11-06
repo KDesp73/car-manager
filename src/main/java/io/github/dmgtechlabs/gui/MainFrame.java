@@ -17,6 +17,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private CardLayout cardLayout;
 	private InsertSaleFrame insertSaleFrame;
 	private InsertEmployeeFrame insertEmployeeFrame;
+	private InsertCustomerFrame insertCustomerFrame;
 	private InsertCarFrame insertCarFrame;
 
 	// Sales Card
@@ -35,6 +36,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.logsFrame = null;
 		this.insertSaleFrame = new InsertSaleFrame();
 		this.insertEmployeeFrame = new InsertEmployeeFrame();
+		this.insertCustomerFrame = new InsertCustomerFrame();
 		this.insertCarFrame = new InsertCarFrame();
 		
 		this.formList.setFixedCellHeight(40);
@@ -215,6 +217,11 @@ public class MainFrame extends javax.swing.JFrame {
         addMenu.add(addCarMenuItem);
 
         addCustomerMenuItem.setText("Customer");
+        addCustomerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCustomerMenuItemActionPerformed(evt);
+            }
+        });
         addMenu.add(addCustomerMenuItem);
 
         addEmployeeMenuItem.setText("Employee");
@@ -338,6 +345,14 @@ public class MainFrame extends javax.swing.JFrame {
 		
 		this.insertCarFrame.setVisible(true);
     }//GEN-LAST:event_addCarMenuItemActionPerformed
+
+    private void addCustomerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerMenuItemActionPerformed
+        if (this.insertCustomerFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertCustomerFrame.setVisible(true);
+    }//GEN-LAST:event_addCustomerMenuItemActionPerformed
 
 	/**
 	 * @param args the command line arguments

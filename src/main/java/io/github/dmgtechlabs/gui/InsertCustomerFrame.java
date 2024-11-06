@@ -88,7 +88,7 @@ public class InsertCustomerFrame extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -204,6 +204,7 @@ public class InsertCustomerFrame extends javax.swing.JFrame {
 		if (c.insert()) {
 			JOptionPane.showMessageDialog(this, "Employee " + c.getFname() + " " + c.getLname() + " added successfully");
 			this.clearForm();
+			//this.dispose();
 		} else {
 			JOptionPane.showMessageDialog(this, "Error", "Failed to add employee", JOptionPane.ERROR_MESSAGE);
 		}

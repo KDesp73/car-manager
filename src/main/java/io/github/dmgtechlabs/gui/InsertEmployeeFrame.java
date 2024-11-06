@@ -102,7 +102,7 @@ public class InsertEmployeeFrame extends javax.swing.JFrame {
 
         jButton1.setText("jButton1");
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         addButton.setText("Add");
         addButton.addActionListener(new java.awt.event.ActionListener() {
@@ -198,6 +198,15 @@ public class InsertEmployeeFrame extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+	private void clearForm() {
+		this.fnameTextField.setText("");
+		this.lnameTextField.setText("");
+		this.birthYearSpinner.setValue(0);
+		this.genderComboBox.setSelectedIndex(0);
+		this.emailTextFormattedField.setText("");
+		this.salaryFormattedTextField.setText("");
+	}
+	
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
 		this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
@@ -214,7 +223,8 @@ public class InsertEmployeeFrame extends javax.swing.JFrame {
 
 		if (e.insert()) {
 			JOptionPane.showMessageDialog(this, "Employee " + e.getFname() + " " + e.getLname() + "added successfully");
-			// TODO: clear form
+			this.clearForm();
+			this.dispose();
 		} else {
 			JOptionPane.showMessageDialog(this, "Error", "Failed to add employee", JOptionPane.ERROR_MESSAGE);
 		}

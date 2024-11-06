@@ -75,7 +75,7 @@ public class Employee extends Person implements Dao {
 			this, 
 			SQLogger.SQLOperation.INSERT, 
 			Functions.INSERT_EMPLOYEE,
-			id, super.getId(), salary
+			salary, super.getFname(), super.getLname(), super.getBirthYear(), super.getGender().ordinal(), super.getEmail()
 		);
 	}
 
