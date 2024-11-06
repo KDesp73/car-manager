@@ -130,21 +130,36 @@ public class Sale implements Dao {
 	public static List<Sale> selectAll() {
 		List<Sale> result = new ArrayList<>();
 		try (PostgresConnection db = Database.connection()) {
-			ResultSet rs = db.callFunction(Functions.SELECT_ALL_SALES);
+			ResultSet rs = db.callFunction(Functions.SELECT_ALL_SALES + "__");
 			if (rs.isClosed()) {
 				return null;
 			}
 
 			while (rs.next()) {
 				result.add(new Sale(
-					rs.getInt("id"),
-					rs.getFloat("price"),
-					rs.getFloat("discount"),
-					rs.getInt("sales_car_fk"),
-					rs.getInt("sales_employee_fk"),
-					rs.getInt("sales_customer_fk"),
-					rs.getDate("date").toString())
-				);
+					rs.getInt("sale_id"),
+					rs.getFloat("sale_price"),
+					rs.getFloat("sale_discount"),
+					new Car(
+						rs.getInt("car_id"),
+						rs.getString("car_license_plate"),
+						rs.getFloat("car_price"),
+						rs.getString("car_model_name"),
+						rs.getInt("car_model_year"),
+						rs.getString("car_manufacturer_name")
+					),
+					new Employee(
+						rs.getInt("employee_id"),
+						rs.getString("employee_name"),
+						rs.getString("employee_email")
+					),
+					new Customer(
+						rs.getInt("customer_id"),
+						rs.getString("customer_name"),
+						rs.getString("customer_email")
+					),
+					rs.getDate("sale_date").toString()
+				));
 			}
 			rs.close();
 			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).logSQL("Select All Sales", SQLogger.SQLOperation.SELECT, null);

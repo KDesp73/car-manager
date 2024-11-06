@@ -246,7 +246,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel6.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel6.setText("CARS");
+        jLabel6.setText("EMPLOYEES");
 
         addEmployeeButton.setText("ADD");
         addEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
@@ -273,7 +273,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(employeesPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
                         .addComponent(addEmployeeButton)
                         .addGap(18, 18, 18)
                         .addComponent(editEmployeeButton)
@@ -307,7 +307,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel5.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
-        jLabel5.setText("CARS");
+        jLabel5.setText("CUSTOMERS");
 
         addCustomerButton.setText("ADD");
         addCustomerButton.addActionListener(new java.awt.event.ActionListener() {
@@ -334,7 +334,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(customersPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
                         .addComponent(addCustomerButton)
                         .addGap(18, 18, 18)
                         .addComponent(editCustomerButton)
