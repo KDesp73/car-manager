@@ -18,6 +18,11 @@ public class Employee extends Person implements Dao {
 	private int id;
 	private float salary;
 	private int personId;
+	
+	public Employee(float salary, String fname, String lname, int birthYear, Gender gender, String email) {
+		super(fname, lname, birthYear, gender, email);
+		this.salary = salary;
+	}
 
 	// name = fname + " " + lname
 	public Employee(int id, String name, String email) {

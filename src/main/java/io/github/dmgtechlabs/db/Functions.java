@@ -22,6 +22,7 @@ public class Functions {
 	public static String INSERT_SALE = Database.SCHEMA + ".insert_sale";
 	public static String UPDATE_SALE = Database.SCHEMA + ".update_sale";
 	public static String DELETE_SALE = Database.SCHEMA + ".delete_sale";
+	public static String SELECT_SALE = Database.SCHEMA + ".select_sale";
 	public static String SELECT_ALL_SALES = Database.SCHEMA + ".select_all_sales";
 
 	public static String UPDATE_SERVICE = update(SERVICE_TABLE);

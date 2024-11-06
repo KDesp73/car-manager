@@ -28,6 +28,15 @@ public class Person implements Dao {
 	private Email email;
 
 	public Person() {}
+	
+	public Person(String fname, String lname, int birthYear, Gender gender, String email) {
+		this.fname = fname;
+		this.lname = lname;
+		this.birthYear = birthYear;
+		this.gender = gender;
+		this.email = new Email(email);
+	}
+	
 	public Person(String name, String email) {
 		this.fname = name.split(" ", 2)[0];
 		this.lname = name.split(" ", 2)[1];

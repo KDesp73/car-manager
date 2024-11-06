@@ -16,6 +16,8 @@ public class MainFrame extends javax.swing.JFrame {
 	private LogsFrame logsFrame;
 	private CardLayout cardLayout;
 	private InsertSaleFrame insertSaleFrame;
+	private InsertEmployeeFrame insertEmployeeFrame;
+	private InsertCarFrame insertCarFrame;
 
 	// Sales Card
 	private List<Sale> sales;
@@ -32,6 +34,8 @@ public class MainFrame extends javax.swing.JFrame {
 		this.aboutFrame = new AboutFrame();
 		this.logsFrame = null;
 		this.insertSaleFrame = new InsertSaleFrame();
+		this.insertEmployeeFrame = new InsertEmployeeFrame();
+		this.insertCarFrame = new InsertCarFrame();
 		
 		this.formList.setFixedCellHeight(40);
 		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers"});
@@ -203,12 +207,22 @@ public class MainFrame extends javax.swing.JFrame {
         addMenu.add(addSaleMenuItem);
 
         addCarMenuItem.setText("Car");
+        addCarMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCarMenuItemActionPerformed(evt);
+            }
+        });
         addMenu.add(addCarMenuItem);
 
         addCustomerMenuItem.setText("Customer");
         addMenu.add(addCustomerMenuItem);
 
         addEmployeeMenuItem.setText("Employee");
+        addEmployeeMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmployeeMenuItemActionPerformed(evt);
+            }
+        });
         addMenu.add(addEmployeeMenuItem);
 
         jMenuBar1.add(addMenu);
@@ -308,6 +322,22 @@ public class MainFrame extends javax.swing.JFrame {
 		
 		this.insertSaleFrame.setVisible(true);
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
+
+    private void addEmployeeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeMenuItemActionPerformed
+        if (this.insertEmployeeFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertEmployeeFrame.setVisible(true);
+    }//GEN-LAST:event_addEmployeeMenuItemActionPerformed
+
+    private void addCarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarMenuItemActionPerformed
+        if (this.insertCarFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertCarFrame.setVisible(true);
+    }//GEN-LAST:event_addCarMenuItemActionPerformed
 
 	/**
 	 * @param args the command line arguments

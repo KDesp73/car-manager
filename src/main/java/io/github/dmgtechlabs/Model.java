@@ -6,6 +6,9 @@ package io.github.dmgtechlabs;
 
 import io.github.dmgtechlabs.db.Database;
 import io.github.dmgtechlabs.db.Functions;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import kdesp73.databridge.connections.PostgresConnection;
 import kdesp73.databridge.helpers.SQLogger;
@@ -52,6 +55,25 @@ public class Model extends Manufacturer implements Dao {
 
 	public Model(String name, Type type, int year, int hp, WheelDrive wd, int manufacturerId) {
 		super(manufacturerId);
+		this.name = name;
+		this.type = type;
+		this.year = year;
+		this.hp = hp;
+		this.wd = wd;
+	}
+	
+	public Model(int id, String name, Type type, int year, int hp, WheelDrive wd, String manufacturerName) {
+		super(manufacturerName);
+		this.id = id;
+		this.name = name;
+		this.type = type;
+		this.year = year;
+		this.hp = hp;
+		this.wd = wd;
+	}
+	
+	public Model(String name, Type type, int year, int hp, WheelDrive wd, String manufacturerName) {
+		super(manufacturerName);
 		this.name = name;
 		this.type = type;
 		this.year = year;
@@ -172,9 +194,38 @@ public class Model extends Manufacturer implements Dao {
 		return null;
 	}
 	
+	public static List<Model> selectByManufacturer(String man) {
+		List<Model> result = new ArrayList<>();
+		try(PostgresConnection db = Database.connection()){
+			ResultSet rs = db.callFunction(Database.SCHEMA + ".select_models_by_manufacturer", man);
+			if(rs.isClosed()) return null;
+			
+			while(rs.next()) {
+				result.add(new Model(
+					rs.getInt("model_id"),
+					rs.getString("model_name"),
+					int2Type(rs.getInt("model_type")),
+					rs.getInt("model_year"),
+					rs.getInt("model_hp"),
+					int2WheelDrive(rs.getInt("model_wd")),
+					rs.getString("man_name")
+				));
+			}
+			rs.close();
+			
+		} catch(RuntimeException | SQLException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select models by manufacturer failed", ex);
+		}
+		return result;
+	}
+	
 	@Override
 	public String toString() {
 		return "Model{" + "id=" + id + ", name=" + name + ", type=" + type + ", year=" + year + ", hp=" + hp + ", wd=" + wd + '}' + super.toString();
 	}
 
+	@Override
+	public String UIString(){ 
+		return this.name + " " + this.year + " (" + this.type + " " + this.hp + "hp)";
+	}
 }

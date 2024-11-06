@@ -146,5 +146,9 @@ public class Manufacturer implements Dao {
 	public String toString() {
 		return "Manufacturer{" + "id=" + id + ", name=" + name + ", location=" + location + '}';
 	}
+	
+	public String UIString() {
+		return this.name;
+	}
 
 }
