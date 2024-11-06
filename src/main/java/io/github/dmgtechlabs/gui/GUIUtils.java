@@ -23,6 +23,7 @@ public class GUIUtils {
 	public static void commonSetup(JFrame frame) {
 		frame.setLocationRelativeTo(null);
 		GUIMethods.setFontFamilyRecursively(frame, "sans-serif", Font.PLAIN);
+		frame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	}
 	
 	public static KeyAdapter getFloatFormattedAdapter(String text){

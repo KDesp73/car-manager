@@ -74,8 +74,8 @@ public class Employee extends Person implements Dao {
 		return Database.DaoFunctionWrapper(
 			this,
 			SQLogger.SQLOperation.INSERT,
-			Functions.INSERT_EMPLOYEE,
-			id, super.getId(), salary
+			Functions.INSERT_EMPLOYEE
+			// TODO: correct info
 		);
 	}
 
@@ -129,4 +129,10 @@ public class Employee extends Person implements Dao {
 		return result;
 	}
 
+	@Override
+	public String toString() {
+		return "Employee{" + "id=" + id + ", salary=" + salary + ", personId=" + personId + '}';
+	}
+
+	
 }

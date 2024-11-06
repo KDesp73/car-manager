@@ -12,13 +12,14 @@ import javax.swing.DefaultListModel;
 import javax.swing.UIManager;
 
 public class MainFrame extends javax.swing.JFrame {
-	
+
 	private HelpFrame helpFrame;
 	private AboutFrame aboutFrame;
 	private LogsFrame logsFrame;
 	private CardLayout cardLayout;
 	private InsertSaleFrame insertSaleFrame;
 	private InsertEmployeeFrame insertEmployeeFrame;
+	private InsertCustomerFrame insertCustomerFrame;
 	private InsertCarFrame insertCarFrame;
 
 	// Sales Card
@@ -33,15 +34,16 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
-		
+
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
 		this.aboutFrame = new AboutFrame();
 		this.logsFrame = null;
-//		this.insertSaleFrame = new InsertSaleFrame();
-//		this.insertEmployeeFrame = new InsertEmployeeFrame();
-//		this.insertCarFrame = new InsertCarFrame();
-		
+		this.insertSaleFrame = new InsertSaleFrame();
+		this.insertEmployeeFrame = new InsertEmployeeFrame();
+		this.insertCustomerFrame = new InsertCustomerFrame();
+		this.insertCarFrame = new InsertCarFrame();
+
 		this.formList.setFixedCellHeight(40);
 		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers"});
 		this.cardLayout.addLayoutComponent(this.salesPanel, "Sales");
@@ -53,13 +55,13 @@ public class MainFrame extends javax.swing.JFrame {
 		this.salesList.setFixedCellHeight(25);
 		this.sales = Sale.selectAll();
 		this.salesList.setListData(Sale.listToArray(sales));
-		
+
 		// Cars Card
 		this.carsList.setFixedCellHeight(25);
 		this.cars = Car.selectAllCars();
 		this.carsList.setListData(Car.listToArray(cars));
 	}
-	
+
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -268,6 +270,11 @@ public class MainFrame extends javax.swing.JFrame {
         addMenu.add(addCarMenuItem);
 
         addCustomerMenuItem.setText("Customer");
+        addCustomerMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCustomerMenuItemActionPerformed(evt);
+            }
+        });
         addMenu.add(addCustomerMenuItem);
 
         addEmployeeMenuItem.setText("Employee");
@@ -339,7 +346,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if (helpFrame.isShowing()) {
 			return;
 		}
-		
+
 		helpFrame.setVisible(true);
 	}//GEN-LAST:event_helpMenuItemActionPerformed
 
@@ -347,14 +354,14 @@ public class MainFrame extends javax.swing.JFrame {
 		if (aboutFrame.isShowing()) {
 			return;
 		}
-		
+
 		aboutFrame.setVisible(true);
 	}//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void formListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formListMouseClicked
 		if (evt.getButton() == MouseEvent.BUTTON1) {
 			String selected = this.formList.getSelectedValue();
-			
+
 			this.cardLayout.show(this.cardContainer, selected);
 		}
     }//GEN-LAST:event_formListMouseClicked
@@ -363,7 +370,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if (this.logsFrame != null && this.logsFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.logsFrame = new LogsFrame(LogsFrame.LogType.CARS);
 		this.logsFrame.setVisible(true);
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
@@ -372,25 +379,33 @@ public class MainFrame extends javax.swing.JFrame {
 		if (this.insertSaleFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.insertSaleFrame.setVisible(true);
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
     private void addEmployeeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeMenuItemActionPerformed
-        if (this.insertEmployeeFrame.isShowing()) {
+		if (this.insertEmployeeFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.insertEmployeeFrame.setVisible(true);
     }//GEN-LAST:event_addEmployeeMenuItemActionPerformed
 
     private void addCarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarMenuItemActionPerformed
-        if (this.insertCarFrame.isShowing()) {
+		if (this.insertCarFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.insertCarFrame.setVisible(true);
     }//GEN-LAST:event_addCarMenuItemActionPerformed
+
+    private void addCustomerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerMenuItemActionPerformed
+		if (this.insertCustomerFrame.isShowing()) {
+			return;
+		}
+
+		this.insertCustomerFrame.setVisible(true);
+    }//GEN-LAST:event_addCustomerMenuItemActionPerformed
 
 	/**
 	 * @param args the command line arguments
