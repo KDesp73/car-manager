@@ -1,6 +1,3 @@
-TODO: insert employee form
-TODO: insert customer form
-TODO: insert sale form
 TODO: edit car form
 TODO: edit employee form
 TODO: edit customer form
@@ -18,3 +15,6 @@ DONE: saved queries
 DONE: logger
 DONE: logfile on ui with triggers
 DONE: insert car form
+DONE: insert employee form
+DONE: insert customer form
+DONE: insert sale form
