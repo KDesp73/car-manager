@@ -185,6 +185,13 @@ public class InsertCustomerFrame extends javax.swing.JFrame {
 		this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
+	private void clearForm() {
+		this.fnameTextField.setText("");
+		this.lnameTextField.setText("");
+		this.birthYearSpinner.setValue(0);
+		this.genderComboBox.setSelectedIndex(0);
+	}
+	
     private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
 		Customer c = new Customer(
 			this.fnameTextField.getText(),
@@ -196,7 +203,7 @@ public class InsertCustomerFrame extends javax.swing.JFrame {
 
 		if (c.insert()) {
 			JOptionPane.showMessageDialog(this, "Employee " + c.getFname() + " " + c.getLname() + " added successfully");
-			// TODO: clear form
+			this.clearForm();
 		} else {
 			JOptionPane.showMessageDialog(this, "Error", "Failed to add employee", JOptionPane.ERROR_MESSAGE);
 		}
