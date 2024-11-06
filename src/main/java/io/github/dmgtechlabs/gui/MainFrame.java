@@ -249,6 +249,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel6.setText("CARS");
 
         addEmployeeButton.setText("ADD");
+        addEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmployeeButtonActionPerformed(evt);
+            }
+        });
 
         editEmployeeButton.setText("EDIT");
 
@@ -305,6 +310,11 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel5.setText("CARS");
 
         addCustomerButton.setText("ADD");
+        addCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCustomerButtonActionPerformed(evt);
+            }
+        });
 
         editCustomerButton.setText("EDIT");
 
@@ -508,6 +518,22 @@ public class MainFrame extends javax.swing.JFrame {
 		
 		this.insertCustomerFrame.setVisible(true);
     }//GEN-LAST:event_addCustomerMenuItemActionPerformed
+
+    private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
+        if (this.insertCustomerFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertCustomerFrame.setVisible(true);
+    }//GEN-LAST:event_addCustomerButtonActionPerformed
+
+    private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
+        if (this.insertEmployeeFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertEmployeeFrame.setVisible(true);
+    }//GEN-LAST:event_addEmployeeButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
