@@ -123,4 +123,18 @@ public class Customer extends Person implements Dao {
 
 		return result;
 	}
+	
+	public String UIString() {
+		return this.getFname() + " " + this.getLname() + " " + this.getBirthYear() + " " + this.getGender() + " " + this.getEmail() ;
+	}
+	
+	public static String[] listToArray(List<Customer> list) {
+		String[] result = new String[list.size()];
+		
+		for(int i = 0; i < list.size(); i++){
+			result[i] = list.get(i).UIString();
+		}
+		
+		return result;
+	}
 }

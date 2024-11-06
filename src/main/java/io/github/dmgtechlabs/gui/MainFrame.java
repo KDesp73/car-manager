@@ -1,6 +1,8 @@
 package io.github.dmgtechlabs.gui;//GEN-LINE:variables//GEN-LINE:variables//GEN-LINE:variables//GEN-LINE:variables
 
 import io.github.dmgtechlabs.Car;
+import io.github.dmgtechlabs.Customer;
+import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Sale;
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -22,6 +24,12 @@ public class MainFrame extends javax.swing.JFrame {
 	private InsertCustomerFrame insertCustomerFrame;
 	private InsertCarFrame insertCarFrame;
 
+	// Customers Card
+	private List<Customer> customers;
+	
+	// Employees Card
+	private List<Employee> employees;
+	
 	// Sales Card
 	private List<Sale> sales;
 
@@ -51,6 +59,16 @@ public class MainFrame extends javax.swing.JFrame {
 		this.cardLayout.addLayoutComponent(this.employeesPanel, "Employees");
 		this.cardLayout.addLayoutComponent(this.customersPanel, "Customers");
 
+		//Customers Card
+		this.customerList.setFixedCellHeight(25);
+		this.customers = Customer.selectAll();
+		this.customerList.setListData(Customer.listToArray(customers));
+		
+		//Employees Card
+		this.employeeList.setFixedCellHeight(25);
+		this.employees = Employee.selectAll();
+		this.employeeList.setListData(Employee.listToArray(employees));
+		
 		// Sales Card
 		this.salesList.setFixedCellHeight(25);
 		this.sales = Sale.selectAll();
@@ -83,9 +101,23 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane3 = new javax.swing.JScrollPane();
         carsEditorPane = new javax.swing.JEditorPane();
         employeesPanel = new javax.swing.JPanel();
-        jLabel3 = new javax.swing.JLabel();
+        jScrollPane6 = new javax.swing.JScrollPane();
+        employeeList = new javax.swing.JList<>();
+        jLabel6 = new javax.swing.JLabel();
+        addEmployeeButton = new javax.swing.JButton();
+        editEmployeeButton = new javax.swing.JButton();
+        deleteEmployeeButton = new javax.swing.JButton();
+        jScrollPane7 = new javax.swing.JScrollPane();
+        carsEditorPane2 = new javax.swing.JEditorPane();
         customersPanel = new javax.swing.JPanel();
-        jLabel4 = new javax.swing.JLabel();
+        jScrollPane4 = new javax.swing.JScrollPane();
+        customerList = new javax.swing.JList<>();
+        jLabel5 = new javax.swing.JLabel();
+        addCustomerButton = new javax.swing.JButton();
+        editCustomerButton = new javax.swing.JButton();
+        deleteCustomerButton = new javax.swing.JButton();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        carsEditorPane1 = new javax.swing.JEditorPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
         addSaleMenuItem = new javax.swing.JMenuItem();
@@ -209,47 +241,127 @@ public class MainFrame extends javax.swing.JFrame {
 
         cardContainer.add(carsPanel, "card3");
 
-        jLabel3.setText("employees");
+        employeeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane6.setViewportView(employeeList);
+
+        jLabel6.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel6.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel6.setText("CARS");
+
+        addEmployeeButton.setText("ADD");
+        addEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addEmployeeButtonActionPerformed(evt);
+            }
+        });
+
+        editEmployeeButton.setText("EDIT");
+
+        deleteEmployeeButton.setText("DELETE");
+
+        jScrollPane7.setViewportView(carsEditorPane2);
 
         javax.swing.GroupLayout employeesPanelLayout = new javax.swing.GroupLayout(employeesPanel);
         employeesPanel.setLayout(employeesPanelLayout);
         employeesPanelLayout.setHorizontalGroup(
             employeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, employeesPanelLayout.createSequentialGroup()
-                .addContainerGap(429, Short.MAX_VALUE)
-                .addComponent(jLabel3)
-                .addGap(296, 296, 296))
+                .addGroup(employeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(employeesPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane7))
+                    .addGroup(employeesPanelLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                        .addComponent(addEmployeeButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(editEmployeeButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteEmployeeButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane6, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         employeesPanelLayout.setVerticalGroup(
             employeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(employeesPanelLayout.createSequentialGroup()
-                .addGap(272, 272, 272)
-                .addComponent(jLabel3)
-                .addContainerGap(398, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(employeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(employeesPanelLayout.createSequentialGroup()
+                        .addGroup(employeesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel6)
+                            .addComponent(addEmployeeButton)
+                            .addComponent(editEmployeeButton)
+                            .addComponent(deleteEmployeeButton))
+                        .addGap(106, 106, 106)
+                        .addComponent(jScrollPane7, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
+                    .addComponent(jScrollPane6))
+                .addContainerGap())
         );
 
-        cardContainer.add(employeesPanel, "card4");
+        cardContainer.add(employeesPanel, "card3");
 
-        jLabel4.setText("customers");
+        customerList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane4.setViewportView(customerList);
+
+        jLabel5.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel5.setText("CARS");
+
+        addCustomerButton.setText("ADD");
+        addCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCustomerButtonActionPerformed(evt);
+            }
+        });
+
+        editCustomerButton.setText("EDIT");
+
+        deleteCustomerButton.setText("DELETE");
+
+        jScrollPane5.setViewportView(carsEditorPane1);
 
         javax.swing.GroupLayout customersPanelLayout = new javax.swing.GroupLayout(customersPanel);
         customersPanel.setLayout(customersPanelLayout);
         customersPanelLayout.setHorizontalGroup(
             customersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, customersPanelLayout.createSequentialGroup()
-                .addContainerGap(626, Short.MAX_VALUE)
-                .addComponent(jLabel4)
-                .addGap(102, 102, 102))
+                .addGroup(customersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(customersPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane5))
+                    .addGroup(customersPanelLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                        .addComponent(addCustomerButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(editCustomerButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteCustomerButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane4, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         customersPanelLayout.setVerticalGroup(
             customersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(customersPanelLayout.createSequentialGroup()
-                .addGap(273, 273, 273)
-                .addComponent(jLabel4)
-                .addContainerGap(397, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(customersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(customersPanelLayout.createSequentialGroup()
+                        .addGroup(customersPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel5)
+                            .addComponent(addCustomerButton)
+                            .addComponent(editCustomerButton)
+                            .addComponent(deleteCustomerButton))
+                        .addGap(106, 106, 106)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
+                    .addComponent(jScrollPane4))
+                .addContainerGap())
         );
 
-        cardContainer.add(customersPanel, "card5");
+        cardContainer.add(customersPanel, "card3");
 
         addMenu.setText("Add");
 
@@ -407,6 +519,22 @@ public class MainFrame extends javax.swing.JFrame {
 		this.insertCustomerFrame.setVisible(true);
     }//GEN-LAST:event_addCustomerMenuItemActionPerformed
 
+    private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
+        if (this.insertCustomerFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertCustomerFrame.setVisible(true);
+    }//GEN-LAST:event_addCustomerButtonActionPerformed
+
+    private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
+        if (this.insertEmployeeFrame.isShowing()) {
+			return;
+		}
+		
+		this.insertEmployeeFrame.setVisible(true);
+    }//GEN-LAST:event_addEmployeeButtonActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -423,19 +551,29 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton addCarButton;
     private javax.swing.JMenuItem addCarMenuItem;
+    private javax.swing.JButton addCustomerButton;
     private javax.swing.JMenuItem addCustomerMenuItem;
+    private javax.swing.JButton addEmployeeButton;
     private javax.swing.JMenuItem addEmployeeMenuItem;
     private javax.swing.JMenu addMenu;
     private javax.swing.JMenuItem addSaleMenuItem;
     private javax.swing.JPanel cardContainer;
     private javax.swing.JEditorPane carsEditorPane;
+    private javax.swing.JEditorPane carsEditorPane1;
+    private javax.swing.JEditorPane carsEditorPane2;
     private javax.swing.JList<String> carsList;
     private javax.swing.JMenuItem carsLogsMenuItem;
     private javax.swing.JPanel carsPanel;
+    private javax.swing.JList<String> customerList;
     private javax.swing.JPanel customersPanel;
     private javax.swing.JButton deleteCarButton;
+    private javax.swing.JButton deleteCustomerButton;
+    private javax.swing.JButton deleteEmployeeButton;
     private javax.swing.JButton editCarButton;
+    private javax.swing.JButton editCustomerButton;
+    private javax.swing.JButton editEmployeeButton;
     private javax.swing.JMenu editMenu;
+    private javax.swing.JList<String> employeeList;
     private javax.swing.JPanel employeesPanel;
     private javax.swing.JList<String> formList;
     private javax.swing.JScrollPane formListContainer;
@@ -443,12 +581,16 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem helpMenuItem;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
+    private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JScrollPane jScrollPane6;
+    private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JMenu logsMenu;
     private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;
