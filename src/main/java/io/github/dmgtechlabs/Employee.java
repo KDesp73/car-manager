@@ -37,6 +37,21 @@ public class Employee extends Person implements Dao {
 		this.salary = salary;
 	}
 	
+	public Employee(
+		int id,
+		float salary,
+		int personId,
+		String fname,
+		String lname,
+		String email,
+		int birthYear,
+		Gender gender
+	) {
+		super(personId, fname, lname, birthYear, gender, email);
+		this.id = id;
+		this.salary = salary;
+	}
+	
 	public Employee(int id) {
 		this.id = id;
 	}
@@ -82,7 +97,7 @@ public class Employee extends Person implements Dao {
 	public static List<Employee> selectAll() {
 		PostgresConnection db = Database.connection();
 
-		ResultSet rs = db.callFunction(Functions.SELECT_ALL_EMPLOYEES);
+		ResultSet rs = db.callFunction(Functions.SELECT_ALL_EMPLOYEES + "__"); // TODO: replace method in postgres
 
 		List<Employee> result = new ArrayList<>();
 		try {
@@ -91,7 +106,16 @@ public class Employee extends Person implements Dao {
 			}
 
 			while (rs.next()) {
-				Employee e = new Employee(rs.getInt(1), rs.getInt(2), rs.getFloat(3));
+				Employee e = new Employee(
+					rs.getInt("id"),
+					rs.getFloat("salary"),
+					rs.getInt("employee_person_fk"),
+					rs.getString("fname"),
+					rs.getString("lname"),
+					rs.getString("email"),
+					rs.getInt("birth_year"),
+					int2Gender(rs.getInt("gender"))
+				);
 				result.add(e);
 			}
 			rs.close();
