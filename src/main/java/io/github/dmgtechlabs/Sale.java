@@ -168,7 +168,6 @@ public class Sale implements Dao {
 					),
 					new Customer(
 						rs.getInt("customer_id"),
-						rs.getString("customer_uuid"),
 						rs.getString("customer_name"),
 						rs.getString("customer_email")
 					),

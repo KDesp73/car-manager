@@ -15,13 +15,11 @@ import kdesp73.databridge.helpers.SQLogger;
  */
 public class Customer extends Person implements Dao {
 
-	private String uuid;
 	private int id;
 	private int personId;
 
 	public Customer(
-		int id, 
-		String uuid, 
+		int id,
 		int personId, 
 		String fname,
 		String lname, 
@@ -31,21 +29,17 @@ public class Customer extends Person implements Dao {
 	) {
 		super(personId, fname, lname, birthYear, gender, email);
 		this.id = id;
-		this.uuid = uuid;
-		// TODO: generate uuid
 	}
 	
-	public Customer(String uuid, int id, int personId) {
+	public Customer(int id, int personId) {
 		super(personId);
-		this.uuid = uuid;
 		this.id = id;
 	}
 	
 	// name = fname + " " + lname
-	public Customer(int id, String uuid, String name, String email){
+	public Customer(int id, String name, String email){
 		super(name, email);
 		this.id = id;
-		this.uuid = uuid;
 	}
 	
 	public Customer(int id) {
@@ -56,17 +50,14 @@ public class Customer extends Person implements Dao {
 		super(fname, lname, birthYear, gender, email);
 	}
 
-	public String getUuid() {
-		return uuid;
-	}
-
+	@Override
 	public int getId() {
 		return id;
 	}
 
 	@Override
 	public String toString() {
-		return "Customer{" + "uuid=" + uuid + '}';
+		return "Customer{" + "id=" + id + ", personId=" + personId + '}';
 	}
 	
 	@Override
@@ -75,7 +66,7 @@ public class Customer extends Person implements Dao {
 			this, 
 			SQLogger.SQLOperation.INSERT, 
 			Functions.INSERT_CUSTOMER,
-			id, uuid, super.getId()
+			id, super.getId()
 		);
 	}
 
@@ -113,7 +104,6 @@ public class Customer extends Person implements Dao {
 			while (rs.next()) {
 				Customer c = new Customer(
 					rs.getInt("id"),
-					rs.getString("uuid"),
 					rs.getInt("customer_person_fk"),
 					rs.getString("fname"),
 					rs.getString("lname"),

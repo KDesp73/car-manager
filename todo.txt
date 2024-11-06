@@ -1,4 +1,20 @@
-TODO: forms (ui)
+TODO: insert employee form
+TODO: insert customer form
+TODO: insert sale form
+TODO: edit car form
+TODO: edit employee form
+TODO: edit customer form
+TODO: edit sale form
+TODO: delete car form
+TODO: delete employee form
+TODO: delete customer form
+TODO: delete sale form
+TODO: dynamic queries card
+TODO: sales card
+TODO: employee card
+TODO: customer card
+TODO: cars card
 DONE: saved queries
 DONE: logger
 DONE: logfile on ui with triggers
+DONE: insert car form
