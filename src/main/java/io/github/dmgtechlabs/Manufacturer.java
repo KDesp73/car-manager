@@ -50,7 +50,7 @@ public class Manufacturer implements Dao {
 		this.location = location;
 	}
 
-	public String getName() {
+	public String getManufacturerName() {
 		return name;
 	}
 

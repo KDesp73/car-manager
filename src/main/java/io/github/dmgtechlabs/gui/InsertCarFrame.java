@@ -206,7 +206,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_licensePlateTextFieldActionPerformed
 
     private void manufacturerComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manufacturerComboBoxActionPerformed
-        this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturerComboBox.getSelectedIndex()).getName());
+        this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturerComboBox.getSelectedIndex()).getManufacturerName());
 		
 		this.modelComboBox.removeAllItems();
 		for(Model m : this.models) {

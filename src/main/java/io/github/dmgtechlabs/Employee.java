@@ -18,7 +18,7 @@ public class Employee extends Person implements Dao {
 	private int id;
 	private float salary;
 	private int personId;
-	
+
 	public Employee(float salary, String fname, String lname, int birthYear, Gender gender, String email) {
 		super(fname, lname, birthYear, gender, email);
 		this.salary = salary;
@@ -29,19 +29,19 @@ public class Employee extends Person implements Dao {
 		super(name, email);
 		this.id = id;
 	}
-	
+
 	public Employee(int id, int personId, float salary, String fname, String lname, int birthYear, Gender gender, String email) {
 		super(personId, fname, lname, birthYear, gender, email);
 		this.id = id;
 		this.salary = salary;
 	}
-	
+
 	public Employee(int id, int personId, float salary) {
 		super(personId);
 		this.id = id;
 		this.salary = salary;
 	}
-	
+
 	public Employee(
 		int id,
 		float salary,
@@ -56,7 +56,7 @@ public class Employee extends Person implements Dao {
 		this.id = id;
 		this.salary = salary;
 	}
-	
+
 	public Employee(int id) {
 		this.id = id;
 	}
@@ -82,8 +82,8 @@ public class Employee extends Person implements Dao {
 	@Override
 	public boolean update(Object... values) {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.UPDATE, 
+			this,
+			SQLogger.SQLOperation.UPDATE,
 			Functions.UPDATE_EMPLOYEE,
 			Utils.appendFront(id, values)
 		);
@@ -92,20 +92,17 @@ public class Employee extends Person implements Dao {
 	@Override
 	public boolean delete() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.DELETE, 
+			this,
+			SQLogger.SQLOperation.DELETE,
 			Functions.DELETE_EMPLOYEE,
 			this.id, super.getId()
 		);
 	}
-	
+
 	public static List<Employee> selectAll() {
-		PostgresConnection db = Database.connection();
-
-		ResultSet rs = db.callFunction(Functions.SELECT_ALL_EMPLOYEES + "__"); // TODO: replace method in postgres
-
 		List<Employee> result = new ArrayList<>();
-		try {
+		try (PostgresConnection db = Database.connection()) {
+			ResultSet rs = db.callFunction(Functions.SELECT_ALL_EMPLOYEES + "__"); // TODO: replace method in postgres
 			if (rs.isClosed()) {
 				return null;
 			}
@@ -129,9 +126,13 @@ public class Employee extends Person implements Dao {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
 		}
 
-		db.close();
-
 		return result;
 	}
+
+	@Override
+	public String toString() {
+		return "Employee{" + "id=" + id + ", salary=" + salary + ", personId=" + personId + '}';
+	}
+
 	
 }

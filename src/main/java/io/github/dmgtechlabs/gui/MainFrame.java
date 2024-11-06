@@ -1,5 +1,6 @@
 package io.github.dmgtechlabs.gui;//GEN-LINE:variables//GEN-LINE:variables//GEN-LINE:variables//GEN-LINE:variables
 
+import io.github.dmgtechlabs.Car;
 import io.github.dmgtechlabs.Sale;
 import java.awt.CardLayout;
 import java.awt.Font;
@@ -7,10 +8,11 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.List;
+import javax.swing.DefaultListModel;
 import javax.swing.UIManager;
 
 public class MainFrame extends javax.swing.JFrame {
-	
+
 	private HelpFrame helpFrame;
 	private AboutFrame aboutFrame;
 	private LogsFrame logsFrame;
@@ -23,13 +25,16 @@ public class MainFrame extends javax.swing.JFrame {
 	// Sales Card
 	private List<Sale> sales;
 
+	// Cars Card
+	private List<Car> cars;
+
 	/**
 	 * Creates new form MainFrame
 	 */
 	public MainFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
-		
+
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
 		this.aboutFrame = new AboutFrame();
@@ -38,7 +43,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.insertEmployeeFrame = new InsertEmployeeFrame();
 		this.insertCustomerFrame = new InsertCustomerFrame();
 		this.insertCarFrame = new InsertCarFrame();
-		
+
 		this.formList.setFixedCellHeight(40);
 		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers"});
 		this.cardLayout.addLayoutComponent(this.salesPanel, "Sales");
@@ -49,8 +54,14 @@ public class MainFrame extends javax.swing.JFrame {
 		// Sales Card
 		this.salesList.setFixedCellHeight(25);
 		this.sales = Sale.selectAll();
+		this.salesList.setListData(Sale.listToArray(sales));
+
+		// Cars Card
+		this.carsList.setFixedCellHeight(25);
+		this.cars = Car.selectAllCars();
+		this.carsList.setListData(Car.listToArray(cars));
 	}
-	
+
 	@SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -63,7 +74,14 @@ public class MainFrame extends javax.swing.JFrame {
         salesList = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
         carsPanel = new javax.swing.JPanel();
+        jScrollPane2 = new javax.swing.JScrollPane();
+        carsList = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
+        addCarButton = new javax.swing.JButton();
+        editCarButton = new javax.swing.JButton();
+        deleteCarButton = new javax.swing.JButton();
+        jScrollPane3 = new javax.swing.JScrollPane();
+        carsEditorPane = new javax.swing.JEditorPane();
         employeesPanel = new javax.swing.JPanel();
         jLabel3 = new javax.swing.JLabel();
         customersPanel = new javax.swing.JPanel();
@@ -117,8 +135,8 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, salesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 476, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 238, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         salesPanelLayout.setVerticalGroup(
@@ -135,23 +153,58 @@ public class MainFrame extends javax.swing.JFrame {
 
         cardContainer.add(salesPanel, "card2");
 
-        jLabel2.setText("cars");
+        carsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jScrollPane2.setViewportView(carsList);
+
+        jLabel2.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
+        jLabel2.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        jLabel2.setText("CARS");
+
+        addCarButton.setText("ADD");
+
+        editCarButton.setText("EDIT");
+
+        deleteCarButton.setText("DELETE");
+
+        jScrollPane3.setViewportView(carsEditorPane);
 
         javax.swing.GroupLayout carsPanelLayout = new javax.swing.GroupLayout(carsPanel);
         carsPanel.setLayout(carsPanelLayout);
         carsPanelLayout.setHorizontalGroup(
             carsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, carsPanelLayout.createSequentialGroup()
-                .addContainerGap(582, Short.MAX_VALUE)
-                .addComponent(jLabel2)
-                .addGap(186, 186, 186))
+                .addGroup(carsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(carsPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane3))
+                    .addGroup(carsPanelLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                        .addComponent(addCarButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(editCarButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteCarButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         carsPanelLayout.setVerticalGroup(
             carsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(carsPanelLayout.createSequentialGroup()
-                .addGap(167, 167, 167)
-                .addComponent(jLabel2)
-                .addContainerGap(503, Short.MAX_VALUE))
+                .addContainerGap()
+                .addGroup(carsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(carsPanelLayout.createSequentialGroup()
+                        .addGroup(carsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(addCarButton)
+                            .addComponent(editCarButton)
+                            .addComponent(deleteCarButton))
+                        .addGap(106, 106, 106)
+                        .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
+                    .addComponent(jScrollPane2))
+                .addContainerGap())
         );
 
         cardContainer.add(carsPanel, "card3");
@@ -293,7 +346,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if (helpFrame.isShowing()) {
 			return;
 		}
-		
+
 		helpFrame.setVisible(true);
 	}//GEN-LAST:event_helpMenuItemActionPerformed
 
@@ -301,14 +354,14 @@ public class MainFrame extends javax.swing.JFrame {
 		if (aboutFrame.isShowing()) {
 			return;
 		}
-		
+
 		aboutFrame.setVisible(true);
 	}//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void formListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formListMouseClicked
 		if (evt.getButton() == MouseEvent.BUTTON1) {
 			String selected = this.formList.getSelectedValue();
-			
+
 			this.cardLayout.show(this.cardContainer, selected);
 		}
     }//GEN-LAST:event_formListMouseClicked
@@ -317,7 +370,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if (this.logsFrame != null && this.logsFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.logsFrame = new LogsFrame(LogsFrame.LogType.CARS);
 		this.logsFrame.setVisible(true);
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
@@ -326,23 +379,23 @@ public class MainFrame extends javax.swing.JFrame {
 		if (this.insertSaleFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.insertSaleFrame.setVisible(true);
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
     private void addEmployeeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeMenuItemActionPerformed
-        if (this.insertEmployeeFrame.isShowing()) {
+		if (this.insertEmployeeFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.insertEmployeeFrame.setVisible(true);
     }//GEN-LAST:event_addEmployeeMenuItemActionPerformed
 
     private void addCarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarMenuItemActionPerformed
-        if (this.insertCarFrame.isShowing()) {
+		if (this.insertCarFrame.isShowing()) {
 			return;
 		}
-		
+
 		this.insertCarFrame.setVisible(true);
     }//GEN-LAST:event_addCarMenuItemActionPerformed
 
@@ -368,15 +421,20 @@ public class MainFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JMenuItem aboutMenuItem;
+    private javax.swing.JButton addCarButton;
     private javax.swing.JMenuItem addCarMenuItem;
     private javax.swing.JMenuItem addCustomerMenuItem;
     private javax.swing.JMenuItem addEmployeeMenuItem;
     private javax.swing.JMenu addMenu;
     private javax.swing.JMenuItem addSaleMenuItem;
     private javax.swing.JPanel cardContainer;
+    private javax.swing.JEditorPane carsEditorPane;
+    private javax.swing.JList<String> carsList;
     private javax.swing.JMenuItem carsLogsMenuItem;
     private javax.swing.JPanel carsPanel;
     private javax.swing.JPanel customersPanel;
+    private javax.swing.JButton deleteCarButton;
+    private javax.swing.JButton editCarButton;
     private javax.swing.JMenu editMenu;
     private javax.swing.JPanel employeesPanel;
     private javax.swing.JList<String> formList;
@@ -389,6 +447,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JMenuBar jMenuBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JMenu logsMenu;
     private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;

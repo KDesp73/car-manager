@@ -66,7 +66,7 @@ public class Customer extends Person implements Dao {
 			this, 
 			SQLogger.SQLOperation.INSERT, 
 			Functions.INSERT_CUSTOMER,
-			super.getFname(), super.getLname(), super.getBirthYear(), super.getGender().ordinal(), super.getEmail()
+			this.getFname(), this.getLname(), this.getBirthYear(), this.getGender().ordinal(), this.getEmail()
 		);
 	}
 

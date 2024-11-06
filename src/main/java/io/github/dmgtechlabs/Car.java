@@ -30,8 +30,7 @@ public class Car extends Model implements Dao {
 	public Car(int id) {
 		this.id = id;
 	}
-	
-	
+
 	public Car(int id, String licensePlate, float price, int modelId, int serviceId) {
 		super(modelId);
 		this.licensePlate = licensePlate;
@@ -39,7 +38,7 @@ public class Car extends Model implements Dao {
 		this.id = id;
 		this.service = new Service(serviceId);
 	}
-	
+
 	public Car(
 		int id,
 		String licensePlate,
@@ -53,6 +52,30 @@ public class Car extends Model implements Dao {
 		this.licensePlate = licensePlate;
 		this.price = price;
 	}
+
+	public Car(
+		int carId,
+		String licensePlate,
+		float price,
+		int modelId,
+		String modelName,
+		Type modelType,
+		int modelYear,
+		WheelDrive modelWd,
+		int modelHp,
+		int manufacturerId,
+		String manufacturerName,
+		String manufacturerLocation,
+		Service service
+	) {
+		super(modelId, modelName, modelType, modelYear, modelWd, modelHp, manufacturerId, manufacturerName, manufacturerLocation);
+		this.id  = carId;
+		this.licensePlate = licensePlate;
+		this.price = price;
+		this.service = service;
+	}
+
+	
 
 	@Override
 	public int getId() {
@@ -74,9 +97,9 @@ public class Car extends Model implements Dao {
 	@Override
 	public boolean insert() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.INSERT, 
-			Functions.INSERT_CAR, 
+			this,
+			SQLogger.SQLOperation.INSERT,
+			Functions.INSERT_CAR,
 			licensePlate, price, super.getId()
 		);
 	}
@@ -84,9 +107,9 @@ public class Car extends Model implements Dao {
 	@Override
 	public boolean update(Object... values) {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.UPDATE, 
-			Functions.UPDATE_CAR, 
+			this,
+			SQLogger.SQLOperation.UPDATE,
+			Functions.UPDATE_CAR,
 			Utils.appendFront(id, values)
 		);
 	}
@@ -94,36 +117,65 @@ public class Car extends Model implements Dao {
 	@Override
 	public boolean delete() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.DELETE, 
+			this,
+			SQLogger.SQLOperation.DELETE,
 			Functions.DELETE_CAR,
 			this.licensePlate
 		);
 	}
-	
+
+	public static String[] listToArray(List<Car> cars) {
+		String[] result = new String[cars.size()];
+
+		for (int i = 0; i < cars.size(); i++) {
+			result[i] = cars.get(i).UIString();
+		}
+
+		return result;
+	}
+
 	public static List<Car> selectAllCars() {
 		List<Car> result = new ArrayList<>();
-		try(PostgresConnection db = Database.connection()) {
-			ResultSet rs = db.callFunction(Functions.SELECT_ALL_CARS);
-			if(rs.isClosed()) return null;
-			
-			while(rs.next()) {
+		try (PostgresConnection db = Database.connection()) {
+			ResultSet rs = db.callFunction(Functions.SELECT_ALL_CARS + "__");
+			if (rs.isClosed()) {
+				return null;
+			}
+
+			while (rs.next()) {
 				result.add(new Car(
-					rs.getInt("id"),
-					rs.getString("license_plate"),
-					rs.getFloat("price"),
-					rs.getInt("car_model_fk"),
-					rs.getInt("car_service_fk")
+					rs.getInt("car_id"),
+					rs.getString("car_license_plate"),
+					rs.getFloat("car_price"),
+					rs.getInt("model_id"),
+					rs.getString("model_name"),
+					int2Type(rs.getInt("model_type")),
+					rs.getInt("model_year"),
+					int2WheelDrive(rs.getInt("model_wd")),
+					rs.getInt("model_hp"),
+					rs.getInt("manufacturer_id"),
+					rs.getString("manufacturer_name"),
+					rs.getString("manufacturer_location"),
+					new Service(
+						rs.getInt("service_id"),
+						rs.getBoolean("service_tires"),
+						rs.getBoolean("service_engine"),
+						rs.getBoolean("service_brakes"),
+						rs.getBoolean("service_oil"),
+						rs.getBoolean("service_battery"),
+						(rs.getDate("service_date") == null) ? null : rs.getDate("service_date").toString()
+					)
 				));
 			}
 			rs.close();
-		} catch(RuntimeException | SQLException ex) {
+		} catch (RuntimeException | SQLException ex) {
 			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select All Cars failed", ex);
 		}
 		return result;
 	}
-	
+
+	@Override
 	public String UIString() {
-		return this.licensePlate + " - " + this.price;
+		return this.licensePlate + " - " + this.price + "$ " + this.getManufacturerName() + " " + this.getName();
 	}
 }
