@@ -11,6 +11,7 @@ import io.github.dmgtechlabs.Sale;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -33,18 +34,18 @@ public class InsertSaleFrame extends javax.swing.JFrame {
 		this.employees = Employee.selectAll();
 		this.customers = Customer.selectAll();
 
-		for(Car car : cars) {
+		for (Car car : cars) {
 			this.carComboBox.addItem(car.UIString());
 		}
-		
-		for(Customer customer : customers) {
+
+		for (Customer customer : customers) {
 			this.customerComboBox.addItem(customer.UIString());
 		}
-		
-		for(Employee emp : employees) {
+
+		for (Employee emp : employees) {
 			this.employeeComboBox.addItem(emp.UIString());
 		}
-			
+
 		this.discountTextField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -184,8 +185,42 @@ public class InsertSaleFrame extends javax.swing.JFrame {
 		this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+	private void clearForm() {
+		this.carComboBox.setSelectedIndex(0);
+		this.customerComboBox.setSelectedIndex(0);
+		this.employeeComboBox.setSelectedIndex(0);
+		this.discountTextField.setText("");
+	}
 
+	private void printForm() {
+		System.out.println(this.cars.get(this.carComboBox.getSelectedIndex()));
+		System.out.println(this.employees.get(this.employeeComboBox.getSelectedIndex()));
+		System.out.println(this.customers.get(this.customerComboBox.getSelectedIndex()));
+		System.out.println(this.employees.get(this.employeeComboBox.getSelectedIndex()).getEmployeeId());
+		System.out.println(this.customers.get(this.customerComboBox.getSelectedIndex()).getId());
+
+		System.out.println(this.discountTextField.getText());
+	}
+
+    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+		printForm();
+
+		float price = this.cars.get(this.carComboBox.getSelectedIndex()).getPrice();
+		float discount = Float.parseFloat(this.discountTextField.getText());
+		Sale s = new Sale(
+			price - price * discount,
+			discount,
+			this.cars.get(this.carComboBox.getSelectedIndex()).getId(),
+			this.employees.get(this.employeeComboBox.getSelectedIndex()).getEmployeeId(),
+			this.customers.get(this.customerComboBox.getSelectedIndex()).getId()
+		);
+
+		if (s.insert()) {
+			JOptionPane.showMessageDialog(this, "Sale added successfully");
+			this.clearForm();
+		} else {
+			JOptionPane.showMessageDialog(this, "Failed to add sale", "Error", JOptionPane.ERROR_MESSAGE);
+		}
     }//GEN-LAST:event_addButtonActionPerformed
 
 	/**

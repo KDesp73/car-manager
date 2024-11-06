@@ -131,7 +131,7 @@ public class Employee extends Person implements Dao {
 
 	@Override
 	public String toString() {
-		return "Employee{" + "id=" + id + ", salary=" + salary + ", personId=" + personId + '}';
+		return "Employee{" + "id=" + id + ", salary=" + salary + ", personId=" + personId + '}' + super.toString();
 	}
 
 	

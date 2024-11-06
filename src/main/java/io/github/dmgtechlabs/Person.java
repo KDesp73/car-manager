@@ -157,7 +157,7 @@ public class Person implements Dao {
 
 	@Override
 	public String toString() {
-		return "Person{" + "fname=" + fname + ", lname=" + lname + ", birthYear=" + birthYear + ", gender=" + gender + ", email=" + email + '}';
+		return "Person{" + "fname=" + fname + ", lname=" + lname + ", birthYear=" + birthYear + ", gender=" + gender + ", email=" + email.address + '}';
 	}
 
 	public String UIString() {

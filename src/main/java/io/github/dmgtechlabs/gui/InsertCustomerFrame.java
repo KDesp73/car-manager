@@ -206,7 +206,7 @@ public class InsertCustomerFrame extends javax.swing.JFrame {
 			this.clearForm();
 			//this.dispose();
 		} else {
-			JOptionPane.showMessageDialog(this, "Error", "Failed to add employee", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
 		}
     }//GEN-LAST:event_addButtonActionPerformed
 

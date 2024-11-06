@@ -89,7 +89,7 @@ public class Sale implements Dao {
 			this,
 			SQLogger.SQLOperation.INSERT,
 			Functions.INSERT_SALE,
-			this.finalPrice, this.discount, this.car.getId(), this.employee.getId(), this.customer.getId()
+			this.finalPrice, this.discount, this.car.getId(), this.employee.getEmployeeId(), this.customer.getId()
 		);
 	}
 

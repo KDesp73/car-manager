@@ -197,7 +197,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(this, "Added Car (" + c.getLicencePlate() + ") successfully");
 			this.clearForm();
 		} else { 
-			JOptionPane.showMessageDialog(this, "Error", "Failed adding car", JOptionPane.ERROR_MESSAGE);
+			JOptionPane.showMessageDialog(this, "Failed adding car", "Error", JOptionPane.ERROR_MESSAGE);
 		}
     }//GEN-LAST:event_addButtonActionPerformed
 
