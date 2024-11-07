@@ -13,6 +13,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import kdesp73.databridge.helpers.SQLogger;
 
@@ -22,10 +23,10 @@ public class MainFrame extends javax.swing.JFrame {
 	private AboutFrame aboutFrame;
 	private LogsFrame logsFrame;
 	private CardLayout cardLayout;
-	private InsertSaleFrame insertSaleFrame;
-	private InsertEmployeeFrame insertEmployeeFrame;
-	private InsertCustomerFrame insertCustomerFrame;
-	private InsertCarFrame insertCarFrame;
+	private SaleFrame saleFrame;
+	private EmployeeFrame employeeFrame;
+	private CustomerFrame customerFrame;
+	private CarFrame carFrame;
 
 	// Customers Card
 	private List<Customer> customers;
@@ -604,32 +605,32 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
 
     private void addSaleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleMenuItemActionPerformed
-		GUIUtils.showFrame(this.insertSaleFrame);
+		GUIUtils.showFrame(this.saleFrame);
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
     private void addEmployeeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeMenuItemActionPerformed
-		this.insertEmployeeFrame = new InsertEmployeeFrame();
-		GUIUtils.showFrame(this.insertEmployeeFrame);
+		this.employeeFrame = new EmployeeFrame();
+		GUIUtils.showFrame(this.employeeFrame);
     }//GEN-LAST:event_addEmployeeMenuItemActionPerformed
 
     private void addCarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarMenuItemActionPerformed
-		this.insertCarFrame = new InsertCarFrame();
-		GUIUtils.showFrame(this.insertCarFrame);
+		this.carFrame = new CarFrame();
+		GUIUtils.showFrame(this.carFrame);
     }//GEN-LAST:event_addCarMenuItemActionPerformed
 
     private void addCustomerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerMenuItemActionPerformed
-		this.insertCustomerFrame = new InsertCustomerFrame();
-		GUIUtils.showFrame(this.insertCustomerFrame);
+		this.customerFrame = new CustomerFrame();
+		GUIUtils.showFrame(this.customerFrame);
     }//GEN-LAST:event_addCustomerMenuItemActionPerformed
 
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-		this.insertCustomerFrame = new InsertCustomerFrame();
-		GUIUtils.showFrame(this.insertCustomerFrame);
+		this.customerFrame = new CustomerFrame();
+		GUIUtils.showFrame(this.customerFrame);
     }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
-		this.insertEmployeeFrame = new InsertEmployeeFrame();
-		GUIUtils.showFrame(this.insertEmployeeFrame);
+		this.employeeFrame = new EmployeeFrame();
+		GUIUtils.showFrame(this.employeeFrame);
     }//GEN-LAST:event_addEmployeeButtonActionPerformed
 
     private void addSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleButtonActionPerformed
@@ -637,21 +638,21 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addSaleButtonActionPerformed
 
     private void addCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarButtonActionPerformed
-		this.insertCarFrame = new InsertCarFrame();
-		GUIUtils.showFrame(this.insertCarFrame);
+		this.carFrame = new CarFrame();
+		GUIUtils.showFrame(this.carFrame);
     }//GEN-LAST:event_addCarButtonActionPerformed
 
     private void addSaleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSaleButtonMouseClicked
-		this.insertSaleFrame = new InsertSaleFrame();
-		GUIUtils.showFrame(this.insertSaleFrame);
+		this.saleFrame = new SaleFrame();
+		GUIUtils.showFrame(this.saleFrame);
     }//GEN-LAST:event_addSaleButtonMouseClicked
 
     private void editCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCarButtonActionPerformed
 		if (this.carsList.getSelectedIndex() < 0) {
 			return;
 		}
-		this.insertCarFrame = new InsertCarFrame(this.cars.get(this.carsList.getSelectedIndex()));
-		GUIUtils.showFrame(this.insertCarFrame);
+		this.carFrame = new CarFrame(this.cars.get(this.carsList.getSelectedIndex()));
+		GUIUtils.showFrame(this.carFrame);
     }//GEN-LAST:event_editCarButtonActionPerformed
 
     private void allRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allRefreshMenuItemActionPerformed
@@ -659,6 +660,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.carsRefreshMenuItemActionPerformed(evt);
 		this.employeesRefreshMenuItemActionPerformed(evt);
 		this.customersRefreshMenuItemActionPerformed(evt);
+		JOptionPane.showMessageDialog(this, "Refreshed all lists");
     }//GEN-LAST:event_allRefreshMenuItemActionPerformed
 
     private void salesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesRefreshMenuItemActionPerformed
@@ -683,6 +685,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_customersRefreshMenuItemActionPerformed
 
     private void carsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carsListMouseClicked
+		if (evt.getButton() != MouseEvent.BUTTON1) {
+			return;
+		}
+
 		int index = this.carsList.getSelectedIndex();
 		if (index < 0) {
 			return;
@@ -693,6 +699,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsListMouseClicked
 
     private void salesListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salesListMouseClicked
+		if (evt.getButton() != MouseEvent.BUTTON1) {
+			return;
+		}
+
 		int index = this.salesList.getSelectedIndex();
 		if (index < 0) {
 			return;
@@ -703,7 +713,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_salesListMouseClicked
 
     private void employeeListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeListMouseClicked
-        int index = this.employeeList.getSelectedIndex();
+		if (evt.getButton() != MouseEvent.BUTTON1) {
+			return;
+		}
+
+		int index = this.employeeList.getSelectedIndex();
 		if (index < 0) {
 			return;
 		}
@@ -713,6 +727,10 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_employeeListMouseClicked
 
     private void customerListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerListMouseClicked
+		if (evt.getButton() != MouseEvent.BUTTON1) {
+			return;
+		}
+
 		int index = this.customerList.getSelectedIndex();
 		if (index < 0) {
 			return;

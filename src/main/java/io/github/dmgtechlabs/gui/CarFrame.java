@@ -20,7 +20,7 @@ import kdesp73.databridge.helpers.SQLogger;
  *
  * @author kdesp73
  */
-public class InsertCarFrame extends javax.swing.JFrame {
+public class CarFrame extends javax.swing.JFrame {
 
 	private Car car = null;
 	private List<Manufacturer> manufacturers;
@@ -29,7 +29,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
 	/**
 	 * Creates new form InsertSaleFrame
 	 */
-	public InsertCarFrame() {
+	public CarFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
 		this.setResizable(false);
@@ -56,7 +56,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
 		});
 	}
 
-	public InsertCarFrame(Car car) {
+	public CarFrame(Car car) {
 		this();
 		this.car = car;
 		this.actionButton.setText("Edit");
@@ -265,14 +265,18 @@ public class InsertCarFrame extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(InsertCarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(CarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(InsertCarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(CarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(InsertCarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(CarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(InsertCarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(CarFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
+		//</editor-fold>
+		//</editor-fold>
+		//</editor-fold>
+		//</editor-fold>
 		//</editor-fold>
 		//</editor-fold>
 		//</editor-fold>
@@ -281,7 +285,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new InsertCarFrame().setVisible(true);
+				new CarFrame().setVisible(true);
 			}
 		});
 	}

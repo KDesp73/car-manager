@@ -26,7 +26,7 @@ import javax.swing.SpinnerNumberModel;
  *
  * @author kdesp73
  */
-public class InsertEmployeeFrame extends javax.swing.JFrame {
+public class EmployeeFrame extends javax.swing.JFrame {
 
 	static class EmailVerifier extends InputVerifier {
 
@@ -49,7 +49,7 @@ public class InsertEmployeeFrame extends javax.swing.JFrame {
 	/**
 	 * Creates new form InsertSaleFrame
 	 */
-	public InsertEmployeeFrame() {
+	public EmployeeFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
 		this.setResizable(false);
@@ -248,14 +248,18 @@ public class InsertEmployeeFrame extends javax.swing.JFrame {
 				}
 			}
 		} catch (ClassNotFoundException ex) {
-			java.util.logging.Logger.getLogger(InsertEmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(EmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (InstantiationException ex) {
-			java.util.logging.Logger.getLogger(InsertEmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(EmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (IllegalAccessException ex) {
-			java.util.logging.Logger.getLogger(InsertEmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(EmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		} catch (javax.swing.UnsupportedLookAndFeelException ex) {
-			java.util.logging.Logger.getLogger(InsertEmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+			java.util.logging.Logger.getLogger(EmployeeFrame.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
 		}
+		//</editor-fold>
+		//</editor-fold>
+		//</editor-fold>
+		//</editor-fold>
 		//</editor-fold>
 		//</editor-fold>
 		//</editor-fold>
@@ -264,7 +268,7 @@ public class InsertEmployeeFrame extends javax.swing.JFrame {
 		/* Create and display the form */
 		java.awt.EventQueue.invokeLater(new Runnable() {
 			public void run() {
-				new InsertEmployeeFrame().setVisible(true);
+				new EmployeeFrame().setVisible(true);
 			}
 		});
 	}
