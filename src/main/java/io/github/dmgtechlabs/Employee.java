@@ -95,7 +95,7 @@ public class Employee extends Person implements Dao, UIObject {
 			this,
 			SQLogger.SQLOperation.DELETE,
 			Functions.DELETE_EMPLOYEE,
-			this.id, super.getId()
+			this.id
 		);
 	}
 
@@ -151,6 +151,19 @@ public class Employee extends Person implements Dao, UIObject {
 
 	@Override
 	public String toHTML() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		Person person = (Person) this;
+		
+		StringBuilder sb = new StringBuilder();		
+		sb.append(Utils.HTML.header(1, "Info"));
+		sb.append(Utils.HTML.ul(
+			"First name: " + person.getFname(),
+			"Last name: " + person.getLname(),
+			"Birth Year: " + person.getBirthYear(),
+			"Gender: " + person.getGender().name(),
+			"Email: " + person.getEmail(),
+			"\n",
+			"Salary: " + this.salary + "$"
+		));		
+		return sb.toString();
 	}
 }

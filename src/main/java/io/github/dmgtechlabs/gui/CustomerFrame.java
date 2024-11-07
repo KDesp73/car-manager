@@ -27,6 +27,9 @@ import javax.swing.SpinnerNumberModel;
  * @author kdesp73
  */
 public class CustomerFrame extends javax.swing.JFrame {
+	
+	private Customer customer;
+	private List<Person> person;
 
 	static class EmailVerifier extends InputVerifier {
 
@@ -63,7 +66,21 @@ public class CustomerFrame extends javax.swing.JFrame {
 		this.genderComboBox.setModel(new DefaultComboBoxModel(new String[]{
 			Person.Gender.MALE.toString(),
 			Person.Gender.FEMALE.toString(),
-			Person.Gender.OTHER.toString(),}));
+			Person.Gender.OTHER.toString()
+		}));
+	}
+	
+	public CustomerFrame(Customer customer) {
+		this();
+		this.customer = customer;
+		this.actionButton.setText("Edit");
+		
+		// Load data into form
+		this.fnameTextField.setText(customer.getFname());
+		this.lnameTextField.setText(customer.getLname());
+		this.birthYearSpinner.setModel(new SpinnerNumberModel(customer.getBirthYear(), 1900, Year.now().getValue() - 18, 1));
+		this.genderComboBox.setSelectedItem(customer.getGender().name());
+		this.emailTextFormattedField.setText(customer.getEmail());
 	}
 
 	/**
@@ -77,7 +94,7 @@ public class CustomerFrame extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        addButton = new javax.swing.JButton();
+        actionButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         fnameTextField = new javax.swing.JTextField();
         lnameTextField = new javax.swing.JTextField();
@@ -91,10 +108,10 @@ public class CustomerFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        addButton.setText("Add");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        actionButton.setText("Add");
+        actionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                actionButtonActionPerformed(evt);
             }
         });
 
@@ -121,7 +138,7 @@ public class CustomerFrame extends javax.swing.JFrame {
                         .addContainerGap(259, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addButton))
+                        .addComponent(actionButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -163,7 +180,7 @@ public class CustomerFrame extends javax.swing.JFrame {
                 .addComponent(emailTextFormattedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 228, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
+                    .addComponent(actionButton)
                     .addComponent(cancelButton))
                 .addContainerGap())
         );
@@ -193,23 +210,56 @@ public class CustomerFrame extends javax.swing.JFrame {
 		this.genderComboBox.setSelectedIndex(0);
 	}
 	
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-		Customer c = new Customer(
-			this.fnameTextField.getText(),
-			this.lnameTextField.getText(),
-			(int) this.birthYearSpinner.getValue(),
-			int2Gender(this.genderComboBox.getSelectedIndex()),
-			this.emailTextFormattedField.getText()
-		);
+    private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
+		if (this.actionButton.getText() == "Add") {
+			Customer c = new Customer(
+				this.fnameTextField.getText(),
+				this.lnameTextField.getText(),
+				(int) this.birthYearSpinner.getValue(),
+				int2Gender(this.genderComboBox.getSelectedIndex()),
+				this.emailTextFormattedField.getText()
+			);
 
-		if (c.insert()) {
-			JOptionPane.showMessageDialog(this, "Employee " + c.getFname() + " " + c.getLname() + " added successfully");
-			this.clearForm();
-			//this.dispose();
+			if (c.insert()) {
+				JOptionPane.showMessageDialog(this, "Employee " + c.getFname() + " " + c.getLname() + " added successfully");
+				this.clearForm();
+				//this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		} else {
-			JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
+			List<Customer> customerList = Customer.selectAll();
+			
+//			for (int i = 0; i < customerList.size(); i++) {
+//				if (customerList.get(i).getEmail().equals(this.emailTextFormattedField.getText())) {
+//					id = customerList.get(i).getId();
+//					break;
+//				}
+//			}
+//			
+//			Customer c = new Customer(
+//				id,
+//				this.fnameTextField.getText(),
+//				this.lnameTextField.getText(),
+//				(int) this.birthYearSpinner.getValue(),
+//				int2Gender(this.genderComboBox.getSelectedIndex()),
+//				this.emailTextFormattedField.getText()
+//			);
+//			
+//			if (c.update(
+//					this.fnameTextField.getText(),
+//					this.lnameTextField.getText(),
+//					(int) this.birthYearSpinner.getValue(),
+//					this.genderComboBox.getSelectedIndex()
+//				)) {
+//				JOptionPane.showMessageDialog(this, "Customer " + c.getFname() + " " + c.getLname() + " edited successfully");
+//				//this.clearForm();
+//				this.dispose();
+//			} else {
+//				JOptionPane.showMessageDialog(this, "Failed to edit customer", "Error", JOptionPane.ERROR_MESSAGE);
+//			}
 		}
-    }//GEN-LAST:event_addButtonActionPerformed
+    }//GEN-LAST:event_actionButtonActionPerformed
 
 	/**
 		 * @param args the command line arguments
@@ -262,7 +312,7 @@ public class CustomerFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
+    private javax.swing.JButton actionButton;
     private javax.swing.JSpinner birthYearSpinner;
     private javax.swing.JButton cancelButton;
     private javax.swing.JFormattedTextField emailTextFormattedField;

@@ -49,10 +49,18 @@ public class Customer extends Person implements Dao, UIObject {
 	public Customer(String fname, String lname, int birthYear, Gender gender, String email) {
 		super(fname, lname, birthYear, gender, email);
 	}
+	
+	public Customer(int id, String fname, String lname, int birthYear, Gender gender, String email) {
+		super(id, fname, lname, birthYear, gender, email);
+	}
 
 	@Override
 	public int getId() {
 		return id;
+	}
+	
+	public int getPersonId() {
+		return personId;
 	}
 
 	@Override
@@ -86,7 +94,7 @@ public class Customer extends Person implements Dao, UIObject {
 			this, 
 			SQLogger.SQLOperation.DELETE, 
 			Functions.DELETE_CUSTOMER,
-			this.id, super.getId()
+			this.id
 		);
 	}
 	
@@ -111,6 +119,7 @@ public class Customer extends Person implements Dao, UIObject {
 					rs.getString("email"),
 					int2Gender(rs.getInt("gender"))
 				);
+				System.out.println(c);
 				result.add(c);
 			}
 			rs.close();
@@ -140,6 +149,17 @@ public class Customer extends Person implements Dao, UIObject {
 
 	@Override
 	public String toHTML() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		Person person = (Person) this;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(Utils.HTML.header(1, "Info"));
+		sb.append(Utils.HTML.ul(
+			"First name: " + person.getFname(),
+			"Last name: " + person.getLname(),
+			"Birth Year: " + person.getBirthYear(),
+			"Gender: " + person.getGender().name(),
+			"Email: " + person.getEmail()
+		));		
+		return sb.toString();
 	}
 }

@@ -27,6 +27,8 @@ import javax.swing.SpinnerNumberModel;
  * @author kdesp73
  */
 public class EmployeeFrame extends javax.swing.JFrame {
+	
+	private Employee employee;
 
 	static class EmailVerifier extends InputVerifier {
 
@@ -76,7 +78,22 @@ public class EmployeeFrame extends javax.swing.JFrame {
 		this.genderComboBox.setModel(new DefaultComboBoxModel(new String[]{
 			Person.Gender.MALE.toString(),
 			Person.Gender.FEMALE.toString(),
-			Person.Gender.OTHER.toString(),}));
+			Person.Gender.OTHER.toString()
+		}));
+	}
+	
+	public EmployeeFrame(Employee employee) {
+		this();
+		this.employee = employee;
+		this.actionButton.setText("Edit");
+		
+		// Load data into form
+		this.fnameTextField.setText(employee.getFname());
+		this.lnameTextField.setText(employee.getFname());
+		this.birthYearSpinner.setModel(new SpinnerNumberModel(employee.getBirthYear(), 1900, Year.now().getValue() - 18, 1));
+		this.genderComboBox.setSelectedItem(employee.getGender().name());
+		this.emailTextFormattedField.setText(employee.getEmail());
+		this.salaryFormattedTextField.setText(employee.getSalary() + "");
 	}
 
 	/**
@@ -90,7 +107,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        addButton = new javax.swing.JButton();
+        actionButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         fnameTextField = new javax.swing.JTextField();
         lnameTextField = new javax.swing.JTextField();
@@ -105,10 +122,10 @@ public class EmployeeFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        addButton.setText("Add");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        actionButton.setText("Add");
+        actionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                actionButtonActionPerformed(evt);
             }
         });
 
@@ -135,7 +152,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
                         .addContainerGap(259, Short.MAX_VALUE)
                         .addComponent(cancelButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addButton))
+                        .addComponent(actionButton))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                             .addComponent(lnameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 214, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -180,7 +197,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
                 .addComponent(salaryFormattedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
+                    .addComponent(actionButton)
                     .addComponent(cancelButton))
                 .addContainerGap())
         );
@@ -212,24 +229,43 @@ public class EmployeeFrame extends javax.swing.JFrame {
 		this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-		Employee e = new Employee(
-			Float.parseFloat(this.salaryFormattedTextField.getText()),
-			this.fnameTextField.getText(),
-			this.lnameTextField.getText(),
-			(int) this.birthYearSpinner.getValue(),
-			int2Gender(this.genderComboBox.getSelectedIndex()),
-			this.emailTextFormattedField.getText()
-		);
+    private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
+		if (this.actionButton.getText() == "Add") {
+			Employee e = new Employee(
+				Float.parseFloat(this.salaryFormattedTextField.getText()),
+				this.fnameTextField.getText(),
+				this.lnameTextField.getText(),
+				(int) this.birthYearSpinner.getValue(),
+				int2Gender(this.genderComboBox.getSelectedIndex()),
+				this.emailTextFormattedField.getText()
+			);
 
-		if (e.insert()) {
-			JOptionPane.showMessageDialog(this, "Employee " + e.getFname() + " " + e.getLname() + "added successfully");
-			this.clearForm();
-			this.dispose();
+			if (e.insert()) {
+				JOptionPane.showMessageDialog(this, "Employee " + e.getFname() + " " + e.getLname() + "added successfully");
+				this.clearForm();
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		} else {
-			JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
+			Employee e = new Employee(
+				Float.parseFloat(this.salaryFormattedTextField.getText()),
+				this.fnameTextField.getText(),
+				this.lnameTextField.getText(),
+				(int) this.birthYearSpinner.getValue(),
+				int2Gender(this.genderComboBox.getSelectedIndex()),
+				this.emailTextFormattedField.getText()
+			);
+
+			if (e.update()) {
+				JOptionPane.showMessageDialog(this, "Employee " + e.getFname() + " " + e.getLname() + "updated successfully");
+				//this.clearForm();
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed to update employee", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
-    }//GEN-LAST:event_addButtonActionPerformed
+    }//GEN-LAST:event_actionButtonActionPerformed
 
 	/**
 		 * @param args the command line arguments
@@ -274,7 +310,7 @@ public class EmployeeFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
+    private javax.swing.JButton actionButton;
     private javax.swing.JSpinner birthYearSpinner;
     private javax.swing.JButton cancelButton;
     private javax.swing.JFormattedTextField emailTextFormattedField;

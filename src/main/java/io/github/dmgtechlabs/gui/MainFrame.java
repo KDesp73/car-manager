@@ -340,8 +340,18 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         editEmployeeButton.setText("EDIT");
+        editEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editEmployeeButtonActionPerformed(evt);
+            }
+        });
 
         deleteEmployeeButton.setText("DELETE");
+        deleteEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteEmployeeButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane7.setViewportView(employeesEditorPane);
 
@@ -406,8 +416,18 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         editCustomerButton.setText("EDIT");
+        editCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCustomerButtonActionPerformed(evt);
+            }
+        });
 
         deleteCustomerButton.setText("DELETE");
+        deleteCustomerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCustomerButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane5.setViewportView(customersEditorPane);
 
@@ -748,16 +768,68 @@ public class MainFrame extends javax.swing.JFrame {
     private void deleteCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCarButtonActionPerformed
 		var car = this.cars.get(this.carsList.getSelectedIndex());
 		int option = JOptionPane.showConfirmDialog(
-			this, 
+			this,
 			"Are you sure you want to delete " + car.getLicencePlate() + "?"
 		);
-		
-		if(option != 0) return;
-		
+
+		if (option != 0) {
+			return;
+		}
+
 		car.delete();
 		carsRefreshMenuItemActionPerformed(null);
 		GUIUtils.showInfo(carsEditorPane, this.cars.get(0));
     }//GEN-LAST:event_deleteCarButtonActionPerformed
+
+    private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerButtonActionPerformed
+		var customer = this.customers.get(this.customerList.getSelectedIndex());
+		int option = JOptionPane.showConfirmDialog(
+			this,
+			"Are you sure you want to delete" + customer.getId() + "?"
+		);
+
+		if (option != 0) {
+			return;
+		}
+
+		customer.delete();
+		customersRefreshMenuItemActionPerformed(null);
+		GUIUtils.showInfo(customersEditorPane, customer);
+    }//GEN-LAST:event_deleteCustomerButtonActionPerformed
+
+    private void deleteEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEmployeeButtonActionPerformed
+		var employee = this.employees.get(this.employeeList.getSelectedIndex());
+		int option = JOptionPane.showConfirmDialog(
+			this,
+			"Are you sure you want to delete" + employee.getId() + "?"
+		);
+
+		if (option != 0) {
+			return;
+		}
+
+		employee.delete();
+		employeesRefreshMenuItemActionPerformed(null);
+		GUIUtils.showInfo(employeesEditorPane, employee);
+    }//GEN-LAST:event_deleteEmployeeButtonActionPerformed
+
+    private void editCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCustomerButtonActionPerformed
+        if (this.customerList.getSelectedIndex() < 0 ) {
+			return;
+		}
+		
+		this.customerFrame = new CustomerFrame(this.customers.get(customerList.getSelectedIndex()));
+		GUIUtils.showFrame(this.customerFrame);
+    }//GEN-LAST:event_editCustomerButtonActionPerformed
+
+    private void editEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEmployeeButtonActionPerformed
+        if (this.employeeList.getSelectedIndex() < 0 ) {
+			return;
+		}
+		
+		this.employeeFrame = new EmployeeFrame(this.employees.get(employeeList.getSelectedIndex()));
+		GUIUtils.showFrame(this.employeeFrame);
+    }//GEN-LAST:event_editEmployeeButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
