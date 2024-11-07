@@ -21,7 +21,7 @@ public class Service implements Dao {
 	public Service(int id) {
 		this.id = id;
 	}
-	
+
 	public Service(int id, boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery, String date) {
 		this.id = id;
 		this.tires = tires;
@@ -60,6 +60,14 @@ public class Service implements Dao {
 		return date;
 	}
 
+	public boolean done() {
+		return tires
+			&& engine
+			&& brakes
+			&& oil
+			&& battery;
+	}
+
 	@Override
 	public boolean insert() {
 		throw new RuntimeException("Service should not be inserted independently from a Car");
@@ -68,9 +76,9 @@ public class Service implements Dao {
 	@Override
 	public boolean update(Object... values) {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.UPDATE, 
-			Functions.UPDATE_SERVICE, 
+			this,
+			SQLogger.SQLOperation.UPDATE,
+			Functions.UPDATE_SERVICE,
 			Utils.appendFront(id, values)
 		);
 	}

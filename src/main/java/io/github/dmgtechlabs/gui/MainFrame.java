@@ -60,21 +60,33 @@ public class MainFrame extends javax.swing.JFrame {
 		this.customerList.setFixedCellHeight(25);
 		this.customers = Customer.selectAll();
 		this.customerList.setListData(Customer.listToArray(customers));
+		this.customersEditorPane.setContentType("text/html");
+        this.customersEditorPane.setEditable(false);
+		this.customersEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 
 		//Employees Card
 		this.employeeList.setFixedCellHeight(25);
 		this.employees = Employee.selectAll();
 		this.employeeList.setListData(Employee.listToArray(employees));
+		this.employeesEditorPane.setContentType("text/html");
+        this.employeesEditorPane.setEditable(false);
+		this.employeesEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 
 		// Sales Card
 		this.salesList.setFixedCellHeight(25);
 		this.sales = Sale.selectAll();
 		this.salesList.setListData(Sale.listToArray(sales));
+		this.salesEditorPane.setContentType("text/html");
+        this.salesEditorPane.setEditable(false);
+		this.salesEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 
 		// Cars Card
 		this.carsList.setFixedCellHeight(25);
 		this.cars = Car.selectAllCars();
 		this.carsList.setListData(Car.listToArray(cars));
+		this.carsEditorPane.setContentType("text/html");
+        this.carsEditorPane.setEditable(false);
+		this.carsEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 	}
 
 	@SuppressWarnings("unchecked")
@@ -92,7 +104,7 @@ public class MainFrame extends javax.swing.JFrame {
         editSaleButton = new javax.swing.JButton();
         deleteSaleButton = new javax.swing.JButton();
         jScrollPane8 = new javax.swing.JScrollPane();
-        carsEditorPane3 = new javax.swing.JEditorPane();
+        salesEditorPane = new javax.swing.JEditorPane();
         carsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         carsList = new javax.swing.JList<>();
@@ -110,7 +122,7 @@ public class MainFrame extends javax.swing.JFrame {
         editEmployeeButton = new javax.swing.JButton();
         deleteEmployeeButton = new javax.swing.JButton();
         jScrollPane7 = new javax.swing.JScrollPane();
-        carsEditorPane2 = new javax.swing.JEditorPane();
+        employeesEditorPane = new javax.swing.JEditorPane();
         customersPanel = new javax.swing.JPanel();
         jScrollPane4 = new javax.swing.JScrollPane();
         customerList = new javax.swing.JList<>();
@@ -119,7 +131,7 @@ public class MainFrame extends javax.swing.JFrame {
         editCustomerButton = new javax.swing.JButton();
         deleteCustomerButton = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
-        carsEditorPane1 = new javax.swing.JEditorPane();
+        customersEditorPane = new javax.swing.JEditorPane();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
         addSaleMenuItem = new javax.swing.JMenuItem();
@@ -183,7 +195,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         deleteSaleButton.setText("DELETE");
 
-        jScrollPane8.setViewportView(carsEditorPane3);
+        jScrollPane8.setViewportView(salesEditorPane);
 
         javax.swing.GroupLayout salesPanelLayout = new javax.swing.GroupLayout(salesPanel);
         salesPanel.setLayout(salesPanelLayout);
@@ -227,6 +239,11 @@ public class MainFrame extends javax.swing.JFrame {
         cardContainer.add(salesPanel, "card2");
 
         carsList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        carsList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                carsListMouseClicked(evt);
+            }
+        });
         jScrollPane2.setViewportView(carsList);
 
         jLabel2.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -249,6 +266,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         deleteCarButton.setText("DELETE");
 
+        carsEditorPane.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jScrollPane3.setViewportView(carsEditorPane);
 
         javax.swing.GroupLayout carsPanelLayout = new javax.swing.GroupLayout(carsPanel);
@@ -310,7 +328,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         deleteEmployeeButton.setText("DELETE");
 
-        jScrollPane7.setViewportView(carsEditorPane2);
+        jScrollPane7.setViewportView(employeesEditorPane);
 
         javax.swing.GroupLayout employeesPanelLayout = new javax.swing.GroupLayout(employeesPanel);
         employeesPanel.setLayout(employeesPanelLayout);
@@ -371,7 +389,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         deleteCustomerButton.setText("DELETE");
 
-        jScrollPane5.setViewportView(carsEditorPane1);
+        jScrollPane5.setViewportView(customersEditorPane);
 
         javax.swing.GroupLayout customersPanelLayout = new javax.swing.GroupLayout(customersPanel);
         customersPanel.setLayout(customersPanelLayout);
@@ -615,6 +633,9 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addSaleButtonMouseClicked
 
     private void editCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCarButtonActionPerformed
+		if (this.carsList.getSelectedIndex() < 0) {
+			return;
+		}
 		this.insertCarFrame = new InsertCarFrame(this.cars.get(this.carsList.getSelectedIndex()));
 		GUIUtils.showFrame(this.insertCarFrame);
     }//GEN-LAST:event_editCarButtonActionPerformed
@@ -647,6 +668,14 @@ public class MainFrame extends javax.swing.JFrame {
 
     }//GEN-LAST:event_customersRefreshMenuItemActionPerformed
 
+    private void carsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carsListMouseClicked
+		if (this.carsList.getSelectedIndex() < 0) {
+			return;
+		}
+		
+		this.carsEditorPane.setText(this.cars.get(this.carsList.getSelectedIndex()).toHTML());
+    }//GEN-LAST:event_carsListMouseClicked
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -673,14 +702,12 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem allRefreshMenuItem;
     private javax.swing.JPanel cardContainer;
     private javax.swing.JEditorPane carsEditorPane;
-    private javax.swing.JEditorPane carsEditorPane1;
-    private javax.swing.JEditorPane carsEditorPane2;
-    private javax.swing.JEditorPane carsEditorPane3;
     private javax.swing.JList<String> carsList;
     private javax.swing.JMenuItem carsLogsMenuItem;
     private javax.swing.JPanel carsPanel;
     private javax.swing.JMenuItem carsRefreshMenuItem;
     private javax.swing.JList<String> customerList;
+    private javax.swing.JEditorPane customersEditorPane;
     private javax.swing.JPanel customersPanel;
     private javax.swing.JMenuItem customersRefreshMenuItem;
     private javax.swing.JButton deleteCarButton;
@@ -692,6 +719,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton editEmployeeButton;
     private javax.swing.JButton editSaleButton;
     private javax.swing.JList<String> employeeList;
+    private javax.swing.JEditorPane employeesEditorPane;
     private javax.swing.JPanel employeesPanel;
     private javax.swing.JMenuItem employeesRefreshMenuItem;
     private javax.swing.JList<String> formList;
@@ -713,6 +741,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JMenu logsMenu;
     private javax.swing.JMenu refreshMenu;
+    private javax.swing.JEditorPane salesEditorPane;
     private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;
     private javax.swing.JMenuItem salesRefreshMenuItem;

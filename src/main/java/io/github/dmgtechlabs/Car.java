@@ -13,7 +13,7 @@ import kdesp73.databridge.helpers.SQLogger;
  *
  * @author thanasis
  */
-public class Car extends Model implements Dao {
+public class Car extends Model implements Dao, UIObject {
 
 	private int id;
 	private String licensePlate;
@@ -177,5 +177,35 @@ public class Car extends Model implements Dao {
 	@Override
 	public String UIString() {
 		return this.licensePlate + " - " + this.price + "$ " + this.getManufacturerName() + " " + this.getName();
+	}
+	
+	@Override
+	public String toHTML() {
+		Model model = (Model) this;
+		Manufacturer manufacturer = (Manufacturer) model;
+		
+		StringBuilder sb = new StringBuilder();
+		sb.append(Utils.HTML.header(1, this.licensePlate));
+		sb.append(Utils.HTML.header(3, "Price: " + this.price + "$"));
+		
+		sb.append(Utils.HTML.header(3, "Model"));
+		sb.append(Utils.HTML.ul(
+			"Name: " + manufacturer.getManufacturerName() + " " +model.getName(),
+			"Type: " + model.getType(),
+			"Hp: " + model.getHp(),
+			"WD: " + model.getWd(),
+			"Year: " + model.getYear()
+		));
+		sb.append(Utils.HTML.header(3, "Service"));
+		sb.append(Utils.HTML.ul(
+			"Date: " + ((this.service.done()) ? this.service.getDate() : ""),
+			"Engine: " + this.service.engineChecked(),
+			"Oil: " + this.service.oilChecked(),
+			"Battery: " + this.service.batteryChecked(),
+			"Brakes: " + this.service.brakesChecked(),
+			"Tires: " + this.service.tiresChecked()
+		));
+		
+		return sb.toString();
 	}
 }

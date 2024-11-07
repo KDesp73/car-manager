@@ -14,7 +14,7 @@ import kdesp73.databridge.helpers.SQLogger;
  *
  * @author kdesp73
  */
-public class Sale implements Dao {
+public class Sale implements Dao, UIObject {
 
 	private int id;
 	private Car car;
@@ -207,6 +207,11 @@ public class Sale implements Dao {
 			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select Sale by id failed", ex);
 		}
 		return null;
+	}
+
+	@Override
+	public String toHTML() {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 
 }

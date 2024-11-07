@@ -13,7 +13,7 @@ import kdesp73.databridge.helpers.SQLogger;
  *
  * @author kdesp73
  */
-public class Customer extends Person implements Dao {
+public class Customer extends Person implements Dao, UIObject {
 
 	private int id;
 	private int personId;
@@ -136,5 +136,10 @@ public class Customer extends Person implements Dao {
 		}
 		
 		return result;
+	}
+
+	@Override
+	public String toHTML() {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
 	}
 }
