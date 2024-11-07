@@ -270,6 +270,11 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         deleteCarButton.setText("DELETE");
+        deleteCarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteCarButtonActionPerformed(evt);
+            }
+        });
 
         carsEditorPane.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jScrollPane3.setViewportView(carsEditorPane);
@@ -739,6 +744,20 @@ public class MainFrame extends javax.swing.JFrame {
 		var obj = this.customers.get(index);
 		GUIUtils.showInfo(this.customersEditorPane, obj);
     }//GEN-LAST:event_customerListMouseClicked
+
+    private void deleteCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCarButtonActionPerformed
+		var car = this.cars.get(this.carsList.getSelectedIndex());
+		int option = JOptionPane.showConfirmDialog(
+			this, 
+			"Are you sure you want to delete " + car.getLicencePlate() + "?"
+		);
+		
+		if(option != 0) return;
+		
+		car.delete();
+		carsRefreshMenuItemActionPerformed(null);
+		GUIUtils.showInfo(carsEditorPane, this.cars.get(0));
+    }//GEN-LAST:event_deleteCarButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
