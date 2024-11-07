@@ -90,6 +90,10 @@ public class Person implements Dao {
 	public int getId() {
 		return id;
 	}
+	
+	public String getName() {
+		return fname + " " + lname;
+	}
 
 	public static Gender int2Gender(int gender) {
 		for (Gender g : Gender.values()) {

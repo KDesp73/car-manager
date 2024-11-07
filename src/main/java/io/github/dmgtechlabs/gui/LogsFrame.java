@@ -6,6 +6,7 @@ package io.github.dmgtechlabs.gui;
 
 import io.github.dmgtechlabs.Car;
 import io.github.dmgtechlabs.CarLog;
+import io.github.dmgtechlabs.EmployeeLog;
 import java.awt.Dimension;
 import java.util.List;
 import javax.swing.JOptionPane;
@@ -17,18 +18,21 @@ import javax.swing.table.TableColumnModel;
  * @author kdesp73
  */
 public class LogsFrame extends javax.swing.JFrame {
+
 	public enum LogType {
 		CARS, SALES, SERVICES, MODELS, MANUFACTURERS, EMPLOYEES, CUSTOMERS
 	};
-	
+
 	private static String CARS_LOG_FILE = "cars.log";
+	private static String EMPLOYEES_LOG_FILE = "employees.log";
 	private LogType type = LogType.CARS;
 	private String[] columns = null;
 	private Object[][] data = null;
 	private List<CarLog> carLogs = null;
- 		
+	private List<EmployeeLog> employeeLogs = null;
+
 	private DefaultTableModel getModel(LogType type) {
-		switch(type) {
+		switch (type) {
 			case CARS -> {
 				this.columns = new String[]{"Operation", "Timestamp", "License Plate", "Price", "Model", "Manufacturer"};
 				this.carLogs = CarLog.selectAll();
@@ -43,31 +47,34 @@ public class LogsFrame extends javax.swing.JFrame {
 			case MANUFACTURERS -> {
 			}
 			case EMPLOYEES -> {
+				this.columns = new String[]{"Operation", "Timestamp", "First Name", "Last Name", "Email", "Salary"};
+				this.employeeLogs = EmployeeLog.selectAll();
+				this.data = EmployeeLog.listToArray(this.employeeLogs);
 			}
 			case CUSTOMERS -> {
 			}
-			default -> throw new AssertionError(type.name());
+			default ->
+				throw new AssertionError(type.name());
 
-				
 		}
-		
+
 		DefaultTableModel model = new DefaultTableModel(data, columns) {
 			@Override
 			public boolean isCellEditable(int row, int column) {
 				return false; // Make all cells non-editable
 			}
 		};
-		
+
 		return model;
 	}
-	
+
 	/**
 	 * Creates new form LogsFrame
 	 */
 	public LogsFrame(LogType type) {
 		initComponents();
 		GUIUtils.commonSetup(this);
-		
+
 		this.type = type;
 		this.table.setModel(this.getModel(type));
 		this.table.setRowHeight(20);
@@ -146,12 +153,15 @@ public class LogsFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void closeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_closeButtonActionPerformed
-        this.dispose();
+		this.dispose();
     }//GEN-LAST:event_closeButtonActionPerformed
 
     private void exportButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_exportButtonActionPerformed
-		switch(this.type){
-			case CARS -> CarLog.writeToFile(this.carLogs, CARS_LOG_FILE);
+		switch (this.type) {
+			case CARS -> {
+				CarLog.writeToFile(this.carLogs, CARS_LOG_FILE);
+				JOptionPane.showMessageDialog(this, LogsFrame.CARS_LOG_FILE + " exported");
+			}
 			case SALES -> {
 			}
 			case SERVICES -> {
@@ -161,12 +171,14 @@ public class LogsFrame extends javax.swing.JFrame {
 			case MANUFACTURERS -> {
 			}
 			case EMPLOYEES -> {
+				EmployeeLog.writeToFile(this.employeeLogs, EMPLOYEES_LOG_FILE);
+				JOptionPane.showMessageDialog(this, LogsFrame.EMPLOYEES_LOG_FILE + " exported");
 			}
 			case CUSTOMERS -> {
 			}
-			default -> throw new AssertionError(this.type.name());
+			default ->
+				throw new AssertionError(this.type.name());
 		}
-		JOptionPane.showMessageDialog(this, LogsFrame.CARS_LOG_FILE + " exported");
     }//GEN-LAST:event_exportButtonActionPerformed
 
 	/**

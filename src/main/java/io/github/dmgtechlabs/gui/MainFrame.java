@@ -151,6 +151,7 @@ public class MainFrame extends javax.swing.JFrame {
         customersRefreshMenuItem = new javax.swing.JMenuItem();
         logsMenu = new javax.swing.JMenu();
         carsLogsMenuItem = new javax.swing.JMenuItem();
+        employeeLogsMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
         helpMenuItem = new javax.swing.JMenuItem();
         aboutMenuItem = new javax.swing.JMenuItem();
@@ -562,6 +563,14 @@ public class MainFrame extends javax.swing.JFrame {
         });
         logsMenu.add(carsLogsMenuItem);
 
+        employeeLogsMenuItem.setText("Employee");
+        employeeLogsMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeeLogsMenuItemActionPerformed(evt);
+            }
+        });
+        logsMenu.add(employeeLogsMenuItem);
+
         jMenuBar1.add(logsMenu);
 
         helpMenu.setText("Help");
@@ -787,7 +796,7 @@ public class MainFrame extends javax.swing.JFrame {
 		var customer = this.customers.get(this.customerList.getSelectedIndex());
 		int option = JOptionPane.showConfirmDialog(
 			this,
-			"Are you sure you want to delete" + customer.getId() + "?"
+			"Are you sure you want to delete " + customer.getName() + "?"
 		);
 
 		if (option != 0) {
@@ -833,6 +842,15 @@ public class MainFrame extends javax.swing.JFrame {
 		GUIUtils.showFrame(this.employeeFrame);
     }//GEN-LAST:event_editEmployeeButtonActionPerformed
 
+    private void employeeLogsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeLogsMenuItemActionPerformed
+        if (this.logsFrame != null && this.logsFrame.isShowing()) {
+			return;
+		}
+
+		this.logsFrame = new LogsFrame(LogsFrame.LogType.EMPLOYEES);
+		this.logsFrame.setVisible(true);
+    }//GEN-LAST:event_employeeLogsMenuItemActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -876,6 +894,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton editEmployeeButton;
     private javax.swing.JButton editSaleButton;
     private javax.swing.JList<String> employeeList;
+    private javax.swing.JMenuItem employeeLogsMenuItem;
     private javax.swing.JEditorPane employeesEditorPane;
     private javax.swing.JPanel employeesPanel;
     private javax.swing.JMenuItem employeesRefreshMenuItem;

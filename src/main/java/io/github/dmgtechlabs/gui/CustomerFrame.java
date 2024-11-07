@@ -9,6 +9,7 @@ import io.github.dmgtechlabs.Customer;
 import io.github.dmgtechlabs.Email;
 import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Person;
+import io.github.dmgtechlabs.Person.Gender;
 import static io.github.dmgtechlabs.Person.int2Gender;
 import io.github.dmgtechlabs.Sale;
 import java.awt.event.KeyAdapter;
@@ -211,53 +212,40 @@ public class CustomerFrame extends javax.swing.JFrame {
 	}
 	
     private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
-		if (this.actionButton.getText() == "Add") {
+		String fname = this.fnameTextField.getText();
+		String lname = this.lnameTextField.getText();
+		int birthYear = (int) this.birthYearSpinner.getValue();
+		Gender gender = int2Gender(this.genderComboBox.getSelectedIndex());
+		String email = this.emailTextFormattedField.getText();
+		
+		if ("Add".equals(this.actionButton.getText())) {
 			Customer c = new Customer(
-				this.fnameTextField.getText(),
-				this.lnameTextField.getText(),
-				(int) this.birthYearSpinner.getValue(),
-				int2Gender(this.genderComboBox.getSelectedIndex()),
-				this.emailTextFormattedField.getText()
+				fname,
+				lname,
+				birthYear,
+				gender,
+				email
 			);
 
 			if (c.insert()) {
 				JOptionPane.showMessageDialog(this, "Employee " + c.getFname() + " " + c.getLname() + " added successfully");
 				this.clearForm();
-				//this.dispose();
 			} else {
 				JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			List<Customer> customerList = Customer.selectAll();
-			
-//			for (int i = 0; i < customerList.size(); i++) {
-//				if (customerList.get(i).getEmail().equals(this.emailTextFormattedField.getText())) {
-//					id = customerList.get(i).getId();
-//					break;
-//				}
-//			}
-//			
-//			Customer c = new Customer(
-//				id,
-//				this.fnameTextField.getText(),
-//				this.lnameTextField.getText(),
-//				(int) this.birthYearSpinner.getValue(),
-//				int2Gender(this.genderComboBox.getSelectedIndex()),
-//				this.emailTextFormattedField.getText()
-//			);
-//			
-//			if (c.update(
-//					this.fnameTextField.getText(),
-//					this.lnameTextField.getText(),
-//					(int) this.birthYearSpinner.getValue(),
-//					this.genderComboBox.getSelectedIndex()
-//				)) {
-//				JOptionPane.showMessageDialog(this, "Customer " + c.getFname() + " " + c.getLname() + " edited successfully");
-//				//this.clearForm();
-//				this.dispose();
-//			} else {
-//				JOptionPane.showMessageDialog(this, "Failed to edit customer", "Error", JOptionPane.ERROR_MESSAGE);
-//			}
+			if (customer.update(
+					fname,
+					lname,
+					birthYear,
+					gender.ordinal(),
+					email
+			)) {
+				JOptionPane.showMessageDialog(this, "Customer " + fname + " " + lname + " edited successfully");
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed to edit customer", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
     }//GEN-LAST:event_actionButtonActionPerformed
 

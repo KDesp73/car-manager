@@ -4,7 +4,12 @@
  */
 package io.github.dmgtechlabs;
 
+import io.github.dmgtechlabs.Person.Gender;
+import static io.github.dmgtechlabs.Person.int2Gender;
 import io.github.dmgtechlabs.db.Database;
+import java.io.BufferedWriter;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -77,5 +82,28 @@ public class EmployeeLog {
 			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Employee selectAll failed", ex);
 		}
 		return result;
+	}
+	
+	public static void writeToFile(List<EmployeeLog> employeeLogs, String filePath) {
+		try (BufferedWriter writer = new BufferedWriter(new FileWriter(filePath))) {
+			// Write the header
+			writer.write("Operation,Timestamp,First Name,Last Name,Email,Gender,Salary");
+			writer.newLine();
+
+			// Write each CarLog entry
+			for (EmployeeLog log : employeeLogs) {
+				writer.write(String.format("%s,%s,%s,%s,%s,%.2f",
+					log.operation,
+					log.timestamp,
+					log.fname,
+					log.lname,
+					log.email,
+					log.salary
+				));
+				writer.newLine();
+			}
+		} catch (IOException e) {
+			e.printStackTrace(); // Handle exceptions properly in real applications
+		}
 	}
 }
