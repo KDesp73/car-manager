@@ -5,12 +5,14 @@ import io.github.dmgtechlabs.Customer;
 import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Sale;
 import java.awt.CardLayout;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
+import javax.swing.JFrame;
 import javax.swing.UIManager;
 import kdesp73.databridge.helpers.SQLogger;
 
@@ -43,6 +45,8 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
+		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setMinimumSize(new Dimension(1048, 715));
 
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
@@ -61,7 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.customers = Customer.selectAll();
 		this.customerList.setListData(Customer.listToArray(customers));
 		this.customersEditorPane.setContentType("text/html");
-        this.customersEditorPane.setEditable(false);
+		this.customersEditorPane.setEditable(false);
 		this.customersEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 
 		//Employees Card
@@ -69,7 +73,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.employees = Employee.selectAll();
 		this.employeeList.setListData(Employee.listToArray(employees));
 		this.employeesEditorPane.setContentType("text/html");
-        this.employeesEditorPane.setEditable(false);
+		this.employeesEditorPane.setEditable(false);
 		this.employeesEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 
 		// Sales Card
@@ -77,7 +81,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.sales = Sale.selectAll();
 		this.salesList.setListData(Sale.listToArray(sales));
 		this.salesEditorPane.setContentType("text/html");
-        this.salesEditorPane.setEditable(false);
+		this.salesEditorPane.setEditable(false);
 		this.salesEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 
 		// Cars Card
@@ -85,7 +89,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.cars = Car.selectAllCars();
 		this.carsList.setListData(Car.listToArray(cars));
 		this.carsEditorPane.setContentType("text/html");
-        this.carsEditorPane.setEditable(false);
+		this.carsEditorPane.setEditable(false);
 		this.carsEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
 	}
 
@@ -168,10 +172,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         cardContainer.setLayout(new java.awt.CardLayout());
 
-        salesList.setModel(new javax.swing.AbstractListModel<String>() {
-            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
-            public int getSize() { return strings.length; }
-            public String getElementAt(int i) { return strings[i]; }
+        salesList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                salesListMouseClicked(evt);
+            }
         });
         jScrollPane1.setViewportView(salesList);
 
@@ -311,6 +315,11 @@ public class MainFrame extends javax.swing.JFrame {
         cardContainer.add(carsPanel, "card3");
 
         employeeList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        employeeList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                employeeListMouseClicked(evt);
+            }
+        });
         jScrollPane6.setViewportView(employeeList);
 
         jLabel6.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -372,6 +381,11 @@ public class MainFrame extends javax.swing.JFrame {
         cardContainer.add(employeesPanel, "card3");
 
         customerList.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        customerList.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                customerListMouseClicked(evt);
+            }
+        });
         jScrollPane4.setViewportView(customerList);
 
         jLabel5.setFont(new java.awt.Font("sansserif", 0, 24)); // NOI18N
@@ -669,12 +683,44 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_customersRefreshMenuItemActionPerformed
 
     private void carsListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_carsListMouseClicked
-		if (this.carsList.getSelectedIndex() < 0) {
+		int index = this.carsList.getSelectedIndex();
+		if (index < 0) {
 			return;
 		}
-		
-		this.carsEditorPane.setText(this.cars.get(this.carsList.getSelectedIndex()).toHTML());
+
+		var obj = this.cars.get(index);
+		GUIUtils.showInfo(this.carsEditorPane, obj);
     }//GEN-LAST:event_carsListMouseClicked
+
+    private void salesListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_salesListMouseClicked
+		int index = this.salesList.getSelectedIndex();
+		if (index < 0) {
+			return;
+		}
+
+		var obj = this.sales.get(index);
+		GUIUtils.showInfo(this.salesEditorPane, obj);
+    }//GEN-LAST:event_salesListMouseClicked
+
+    private void employeeListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_employeeListMouseClicked
+        int index = this.employeeList.getSelectedIndex();
+		if (index < 0) {
+			return;
+		}
+
+		var obj = this.employees.get(index);
+		GUIUtils.showInfo(this.employeesEditorPane, obj);
+    }//GEN-LAST:event_employeeListMouseClicked
+
+    private void customerListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_customerListMouseClicked
+		int index = this.customerList.getSelectedIndex();
+		if (index < 0) {
+			return;
+		}
+
+		var obj = this.customers.get(index);
+		GUIUtils.showInfo(this.customersEditorPane, obj);
+    }//GEN-LAST:event_customerListMouseClicked
 
 	/**
 	 * @param args the command line arguments

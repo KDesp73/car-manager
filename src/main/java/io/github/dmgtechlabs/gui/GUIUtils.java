@@ -4,6 +4,7 @@
  */
 package io.github.dmgtechlabs.gui;
 
+import io.github.dmgtechlabs.UIObject;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.FocusAdapter;
@@ -11,6 +12,7 @@ import java.awt.event.FocusEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.Random;
+import javax.swing.JEditorPane;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.UIManager;
@@ -21,6 +23,10 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author kdesp73
  */
 public class GUIUtils {
+	public static void showInfo(JEditorPane pane, UIObject obj) {
+		pane.setText(obj.toHTML());
+	}
+	
 	public static void showFrame(JFrame frame) {
 		if(frame.isShowing()) return;
 		
