@@ -20,28 +20,28 @@ public class Customer extends Person implements Dao, UIObject {
 
 	public Customer(
 		int id,
-		int personId, 
+		int personId,
 		String fname,
-		String lname, 
-		int birthYear, 
+		String lname,
+		int birthYear,
 		String email,
 		Gender gender
 	) {
 		super(personId, fname, lname, birthYear, gender, email);
 		this.id = id;
 	}
-	
+
 	public Customer(int id, int personId) {
 		super(personId);
 		this.id = id;
 	}
-	
+
 	// name = fname + " " + lname
 	public Customer(int id, String name, String email){
 		super(name, email);
 		this.id = id;
 	}
-	
+
 	public Customer(int id) {
 		this.id = id;
 	}
@@ -49,7 +49,7 @@ public class Customer extends Person implements Dao, UIObject {
 	public Customer(String fname, String lname, int birthYear, Gender gender, String email) {
 		super(fname, lname, birthYear, gender, email);
 	}
-	
+
 	public Customer(int id, String fname, String lname, int birthYear, Gender gender, String email) {
 		super(id, fname, lname, birthYear, gender, email);
 	}
@@ -58,7 +58,7 @@ public class Customer extends Person implements Dao, UIObject {
 	public int getId() {
 		return id;
 	}
-	
+
 	public int getPersonId() {
 		return personId;
 	}
@@ -67,12 +67,12 @@ public class Customer extends Person implements Dao, UIObject {
 	public String toString() {
 		return "Customer{" + "id=" + id + ", personId=" + personId + '}';
 	}
-	
+
 	@Override
 	public boolean insert() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.INSERT, 
+			this,
+			SQLogger.SQLOperation.INSERT,
 			Functions.INSERT_CUSTOMER,
 			this.getFname(), this.getLname(), this.getBirthYear(), this.getGender().ordinal(), this.getEmail()
 		);
@@ -81,8 +81,8 @@ public class Customer extends Person implements Dao, UIObject {
 	@Override
 	public boolean update(Object... values) {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.UPDATE, 
+			this,
+			SQLogger.SQLOperation.UPDATE,
 			Functions.UPDATE_CUSTOMER,
 			Utils.appendFront(id, values)
 		);
@@ -91,13 +91,13 @@ public class Customer extends Person implements Dao, UIObject {
 	@Override
 	public boolean delete() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.DELETE, 
+			this,
+			SQLogger.SQLOperation.DELETE,
 			Functions.DELETE_CUSTOMER,
 			this.id
 		);
 	}
-	
+
 	public static List<Customer> selectAll() {
 		PostgresConnection db = Database.connection();
 
@@ -132,25 +132,25 @@ public class Customer extends Person implements Dao, UIObject {
 
 		return result;
 	}
-	
+
 	public String UIString() {
 		return this.getFname() + " " + this.getLname() + " " + this.getBirthYear() + " " + this.getGender() + " " + this.getEmail() ;
 	}
-	
+
 	public static String[] listToArray(List<Customer> list) {
 		String[] result = new String[list.size()];
-		
+
 		for(int i = 0; i < list.size(); i++){
 			result[i] = list.get(i).UIString();
 		}
-		
+
 		return result;
 	}
 
 	@Override
 	public String toHTML() {
 		Person person = (Person) this;
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append(Utils.HTML.header(1, "Info"));
 		sb.append(Utils.HTML.ul(
@@ -159,7 +159,7 @@ public class Customer extends Person implements Dao, UIObject {
 			"Birth Year: " + person.getBirthYear(),
 			"Gender: " + person.getGender().name(),
 			"Email: " + person.getEmail()
-		));		
+		));
 		return sb.toString();
 	}
 }

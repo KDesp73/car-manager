@@ -9,6 +9,7 @@ import io.github.dmgtechlabs.Customer;
 import io.github.dmgtechlabs.Email;
 import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Person;
+import io.github.dmgtechlabs.Person.Gender;
 import static io.github.dmgtechlabs.Person.int2Gender;
 import io.github.dmgtechlabs.Sale;
 import java.awt.event.KeyAdapter;
@@ -27,7 +28,7 @@ import javax.swing.SpinnerNumberModel;
  * @author kdesp73
  */
 public class EmployeeFrame extends javax.swing.JFrame {
-	
+
 	private Employee employee;
 
 	static class EmailVerifier extends InputVerifier {
@@ -81,15 +82,15 @@ public class EmployeeFrame extends javax.swing.JFrame {
 			Person.Gender.OTHER.toString()
 		}));
 	}
-	
+
 	public EmployeeFrame(Employee employee) {
 		this();
 		this.employee = employee;
 		this.actionButton.setText("Edit");
-		
+
 		// Load data into form
 		this.fnameTextField.setText(employee.getFname());
-		this.lnameTextField.setText(employee.getFname());
+		this.lnameTextField.setText(employee.getLname());
 		this.birthYearSpinner.setModel(new SpinnerNumberModel(employee.getBirthYear(), 1900, Year.now().getValue() - 18, 1));
 		this.genderComboBox.setSelectedItem(employee.getGender().name());
 		this.emailTextFormattedField.setText(employee.getEmail());
@@ -224,42 +225,45 @@ public class EmployeeFrame extends javax.swing.JFrame {
 		this.emailTextFormattedField.setText("");
 		this.salaryFormattedTextField.setText("");
 	}
-	
+
     private void cancelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cancelButtonActionPerformed
 		this.dispose();
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
+		Float salary = Float.parseFloat(this.salaryFormattedTextField.getText());
+		String fname = this.fnameTextField.getText();
+		String lname = this.lnameTextField.getText();
+		int birthYear = (int) this.birthYearSpinner.getValue();
+		Gender gender = int2Gender(this.genderComboBox.getSelectedIndex());
+		String email = this.emailTextFormattedField.getText();
+		
 		if (this.actionButton.getText() == "Add") {
 			Employee e = new Employee(
-				Float.parseFloat(this.salaryFormattedTextField.getText()),
-				this.fnameTextField.getText(),
-				this.lnameTextField.getText(),
-				(int) this.birthYearSpinner.getValue(),
-				int2Gender(this.genderComboBox.getSelectedIndex()),
-				this.emailTextFormattedField.getText()
+				salary,
+				fname,
+				lname,
+				birthYear,
+				gender,
+				email
 			);
 
 			if (e.insert()) {
 				JOptionPane.showMessageDialog(this, "Employee " + e.getFname() + " " + e.getLname() + "added successfully");
 				this.clearForm();
-				this.dispose();
 			} else {
 				JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			Employee e = new Employee(
-				Float.parseFloat(this.salaryFormattedTextField.getText()),
-				this.fnameTextField.getText(),
-				this.lnameTextField.getText(),
-				(int) this.birthYearSpinner.getValue(),
-				int2Gender(this.genderComboBox.getSelectedIndex()),
-				this.emailTextFormattedField.getText()
-			);
-
-			if (e.update()) {
-				JOptionPane.showMessageDialog(this, "Employee " + e.getFname() + " " + e.getLname() + "updated successfully");
-				//this.clearForm();
+			if (employee.update(
+				salary,
+				fname,
+				lname,
+				birthYear,
+				gender.ordinal(),
+				email
+			)) {
+				JOptionPane.showMessageDialog(this, "Employee " + fname + " " + lname + "updated successfully");
 				this.dispose();
 			} else {
 				JOptionPane.showMessageDialog(this, "Failed to update employee", "Error", JOptionPane.ERROR_MESSAGE);
@@ -268,8 +272,8 @@ public class EmployeeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_actionButtonActionPerformed
 
 	/**
-		 * @param args the command line arguments
-		 */
+	 * @param args the command line arguments
+	 */
 	public static void main(String args[]) {
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">

@@ -161,7 +161,6 @@ public class Employee extends Person implements Dao, UIObject {
 			"Birth Year: " + person.getBirthYear(),
 			"Gender: " + person.getGender().name(),
 			"Email: " + person.getEmail(),
-			"\n",
 			"Salary: " + this.salary + "$"
 		));		
 		return sb.toString();
