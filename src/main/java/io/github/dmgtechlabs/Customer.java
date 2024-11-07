@@ -84,7 +84,7 @@ public class Customer extends Person implements Dao, UIObject {
 			this, 
 			SQLogger.SQLOperation.UPDATE, 
 			Functions.UPDATE_CUSTOMER,
-			Utils.appendFront(id, values)
+			Utils.appendFront(values)
 		);
 	}
 

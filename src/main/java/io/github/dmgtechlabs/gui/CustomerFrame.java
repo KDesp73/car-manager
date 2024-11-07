@@ -228,36 +228,26 @@ public class CustomerFrame extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
-			List<Customer> customerList = Customer.selectAll();
+			Customer c = new Customer(
+				this.fnameTextField.getText(),
+				this.lnameTextField.getText(),
+				(int) this.birthYearSpinner.getValue(),
+				int2Gender(this.genderComboBox.getSelectedIndex()),
+				this.emailTextFormattedField.getText()
+			);
 			
-//			for (int i = 0; i < customerList.size(); i++) {
-//				if (customerList.get(i).getEmail().equals(this.emailTextFormattedField.getText())) {
-//					id = customerList.get(i).getId();
-//					break;
-//				}
-//			}
-//			
-//			Customer c = new Customer(
-//				id,
-//				this.fnameTextField.getText(),
-//				this.lnameTextField.getText(),
-//				(int) this.birthYearSpinner.getValue(),
-//				int2Gender(this.genderComboBox.getSelectedIndex()),
-//				this.emailTextFormattedField.getText()
-//			);
-//			
-//			if (c.update(
-//					this.fnameTextField.getText(),
-//					this.lnameTextField.getText(),
-//					(int) this.birthYearSpinner.getValue(),
-//					this.genderComboBox.getSelectedIndex()
-//				)) {
-//				JOptionPane.showMessageDialog(this, "Customer " + c.getFname() + " " + c.getLname() + " edited successfully");
-//				//this.clearForm();
-//				this.dispose();
-//			} else {
-//				JOptionPane.showMessageDialog(this, "Failed to edit customer", "Error", JOptionPane.ERROR_MESSAGE);
-//			}
+			if (c.update(
+					this.fnameTextField.getText(),
+					this.lnameTextField.getText(),
+					(int) this.birthYearSpinner.getValue(),
+					this.genderComboBox.getSelectedIndex()
+				)) {
+				JOptionPane.showMessageDialog(this, "Customer " + c.getFname() + " " + c.getLname() + " edited successfully");
+				//this.clearForm();
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed to edit customer", "Error", JOptionPane.ERROR_MESSAGE);
+			}
 		}
     }//GEN-LAST:event_actionButtonActionPerformed
 
