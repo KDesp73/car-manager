@@ -630,6 +630,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
 
     private void addSaleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleMenuItemActionPerformed
+		this.saleFrame = new SaleFrame();
 		GUIUtils.showFrame(this.saleFrame);
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
@@ -659,7 +660,8 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addEmployeeButtonActionPerformed
 
     private void addSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleButtonActionPerformed
-		// TODO add your handling code here:
+		this.saleFrame = new SaleFrame();
+		GUIUtils.showFrame(this.saleFrame);
     }//GEN-LAST:event_addSaleButtonActionPerformed
 
     private void addCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarButtonActionPerformed

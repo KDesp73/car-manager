@@ -203,6 +203,7 @@ public class Sale implements Dao, UIObject {
 					rs.getDate("sale_date").toString()
 				);
 			}
+			rs.close();
 		} catch (RuntimeException | SQLException ex) {
 			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select Sale by id failed", ex);
 		}
