@@ -52,6 +52,7 @@ public class InsertEmployeeFrame extends javax.swing.JFrame {
 	public InsertEmployeeFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
+		this.setResizable(false);
 
 		GUIUtils.setPlaceholder(this.fnameTextField, "First Name");
 		GUIUtils.setPlaceholder(this.lnameTextField, "Last Name");

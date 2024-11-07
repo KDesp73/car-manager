@@ -12,6 +12,7 @@ import java.awt.event.MouseEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.UIManager;
+import kdesp73.databridge.helpers.SQLogger;
 
 public class MainFrame extends javax.swing.JFrame {
 
@@ -26,10 +27,10 @@ public class MainFrame extends javax.swing.JFrame {
 
 	// Customers Card
 	private List<Customer> customers;
-	
+
 	// Employees Card
 	private List<Employee> employees;
-	
+
 	// Sales Card
 	private List<Sale> sales;
 
@@ -47,10 +48,6 @@ public class MainFrame extends javax.swing.JFrame {
 		this.helpFrame = new HelpFrame();
 		this.aboutFrame = new AboutFrame();
 		this.logsFrame = null;
-		this.insertSaleFrame = new InsertSaleFrame();
-		this.insertEmployeeFrame = new InsertEmployeeFrame();
-		this.insertCustomerFrame = new InsertCustomerFrame();
-		this.insertCarFrame = new InsertCarFrame();
 
 		this.formList.setFixedCellHeight(40);
 		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers"});
@@ -63,12 +60,12 @@ public class MainFrame extends javax.swing.JFrame {
 		this.customerList.setFixedCellHeight(25);
 		this.customers = Customer.selectAll();
 		this.customerList.setListData(Customer.listToArray(customers));
-		
+
 		//Employees Card
 		this.employeeList.setFixedCellHeight(25);
 		this.employees = Employee.selectAll();
 		this.employeeList.setListData(Employee.listToArray(employees));
-		
+
 		// Sales Card
 		this.salesList.setFixedCellHeight(25);
 		this.sales = Sale.selectAll();
@@ -91,6 +88,11 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         salesList = new javax.swing.JList<>();
         jLabel1 = new javax.swing.JLabel();
+        addSaleButton = new javax.swing.JButton();
+        editSaleButton = new javax.swing.JButton();
+        deleteSaleButton = new javax.swing.JButton();
+        jScrollPane8 = new javax.swing.JScrollPane();
+        carsEditorPane3 = new javax.swing.JEditorPane();
         carsPanel = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         carsList = new javax.swing.JList<>();
@@ -124,7 +126,12 @@ public class MainFrame extends javax.swing.JFrame {
         addCarMenuItem = new javax.swing.JMenuItem();
         addCustomerMenuItem = new javax.swing.JMenuItem();
         addEmployeeMenuItem = new javax.swing.JMenuItem();
-        editMenu = new javax.swing.JMenu();
+        refreshMenu = new javax.swing.JMenu();
+        allRefreshMenuItem = new javax.swing.JMenuItem();
+        salesRefreshMenuItem = new javax.swing.JMenuItem();
+        carsRefreshMenuItem = new javax.swing.JMenuItem();
+        employeesRefreshMenuItem = new javax.swing.JMenuItem();
+        customersRefreshMenuItem = new javax.swing.JMenuItem();
         logsMenu = new javax.swing.JMenu();
         carsLogsMenuItem = new javax.swing.JMenuItem();
         helpMenu = new javax.swing.JMenu();
@@ -160,14 +167,43 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         jLabel1.setText("SALES");
 
+        addSaleButton.setText("ADD");
+        addSaleButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                addSaleButtonMouseClicked(evt);
+            }
+        });
+        addSaleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addSaleButtonActionPerformed(evt);
+            }
+        });
+
+        editSaleButton.setText("EDIT");
+
+        deleteSaleButton.setText("DELETE");
+
+        jScrollPane8.setViewportView(carsEditorPane3);
+
         javax.swing.GroupLayout salesPanelLayout = new javax.swing.GroupLayout(salesPanel);
         salesPanel.setLayout(salesPanelLayout);
         salesPanelLayout.setHorizontalGroup(
             salesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, salesPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 479, Short.MAX_VALUE)
+                .addGroup(salesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(salesPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jScrollPane8))
+                    .addGroup(salesPanelLayout.createSequentialGroup()
+                        .addGap(24, 24, 24)
+                        .addComponent(jLabel1)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                        .addComponent(addSaleButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(editSaleButton)
+                        .addGap(18, 18, 18)
+                        .addComponent(deleteSaleButton)))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -176,10 +212,15 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(salesPanelLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(salesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE)
                     .addGroup(salesPanelLayout.createSequentialGroup()
-                        .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 677, Short.MAX_VALUE))
+                        .addGroup(salesPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(addSaleButton)
+                            .addComponent(editSaleButton)
+                            .addComponent(deleteSaleButton))
+                        .addGap(106, 106, 106)
+                        .addComponent(jScrollPane8, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE)))
                 .addContainerGap())
         );
 
@@ -193,8 +234,18 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel2.setText("CARS");
 
         addCarButton.setText("ADD");
+        addCarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                addCarButtonActionPerformed(evt);
+            }
+        });
 
         editCarButton.setText("EDIT");
+        editCarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editCarButtonActionPerformed(evt);
+            }
+        });
 
         deleteCarButton.setText("DELETE");
 
@@ -399,8 +450,49 @@ public class MainFrame extends javax.swing.JFrame {
 
         jMenuBar1.add(addMenu);
 
-        editMenu.setText("Edit");
-        jMenuBar1.add(editMenu);
+        refreshMenu.setText("Refresh");
+
+        allRefreshMenuItem.setText("All");
+        allRefreshMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                allRefreshMenuItemActionPerformed(evt);
+            }
+        });
+        refreshMenu.add(allRefreshMenuItem);
+
+        salesRefreshMenuItem.setText("Sales");
+        salesRefreshMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salesRefreshMenuItemActionPerformed(evt);
+            }
+        });
+        refreshMenu.add(salesRefreshMenuItem);
+
+        carsRefreshMenuItem.setText("Cars");
+        carsRefreshMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carsRefreshMenuItemActionPerformed(evt);
+            }
+        });
+        refreshMenu.add(carsRefreshMenuItem);
+
+        employeesRefreshMenuItem.setText("Employees");
+        employeesRefreshMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeesRefreshMenuItemActionPerformed(evt);
+            }
+        });
+        refreshMenu.add(employeesRefreshMenuItem);
+
+        customersRefreshMenuItem.setText("Customers");
+        customersRefreshMenuItem.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                customersRefreshMenuItemActionPerformed(evt);
+            }
+        });
+        refreshMenu.add(customersRefreshMenuItem);
+
+        jMenuBar1.add(refreshMenu);
 
         logsMenu.setText("Logs");
 
@@ -455,19 +547,11 @@ public class MainFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 	private void helpMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpMenuItemActionPerformed
-		if (helpFrame.isShowing()) {
-			return;
-		}
-
-		helpFrame.setVisible(true);
+		GUIUtils.showFrame(this.helpFrame);
 	}//GEN-LAST:event_helpMenuItemActionPerformed
 
 	private void aboutMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_aboutMenuItemActionPerformed
-		if (aboutFrame.isShowing()) {
-			return;
-		}
-
-		aboutFrame.setVisible(true);
+		GUIUtils.showFrame(this.aboutFrame);
 	}//GEN-LAST:event_aboutMenuItemActionPerformed
 
     private void formListMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_formListMouseClicked
@@ -488,52 +572,80 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
 
     private void addSaleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleMenuItemActionPerformed
-		if (this.insertSaleFrame.isShowing()) {
-			return;
-		}
-
-		this.insertSaleFrame.setVisible(true);
+		GUIUtils.showFrame(this.insertSaleFrame);
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
     private void addEmployeeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeMenuItemActionPerformed
-		if (this.insertEmployeeFrame.isShowing()) {
-			return;
-		}
-
-		this.insertEmployeeFrame.setVisible(true);
+		this.insertEmployeeFrame = new InsertEmployeeFrame();
+		GUIUtils.showFrame(this.insertEmployeeFrame);
     }//GEN-LAST:event_addEmployeeMenuItemActionPerformed
 
     private void addCarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarMenuItemActionPerformed
-		if (this.insertCarFrame.isShowing()) {
-			return;
-		}
-
-		this.insertCarFrame.setVisible(true);
+		this.insertCarFrame = new InsertCarFrame();
+		GUIUtils.showFrame(this.insertCarFrame);
     }//GEN-LAST:event_addCarMenuItemActionPerformed
 
     private void addCustomerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerMenuItemActionPerformed
-        if (this.insertCustomerFrame.isShowing()) {
-			return;
-		}
-		
-		this.insertCustomerFrame.setVisible(true);
+		this.insertCustomerFrame = new InsertCustomerFrame();
+		GUIUtils.showFrame(this.insertCustomerFrame);
     }//GEN-LAST:event_addCustomerMenuItemActionPerformed
 
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-        if (this.insertCustomerFrame.isShowing()) {
-			return;
-		}
-		
-		this.insertCustomerFrame.setVisible(true);
+		this.insertCustomerFrame = new InsertCustomerFrame();
+		GUIUtils.showFrame(this.insertCustomerFrame);
     }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
-        if (this.insertEmployeeFrame.isShowing()) {
-			return;
-		}
-		
-		this.insertEmployeeFrame.setVisible(true);
+		this.insertEmployeeFrame = new InsertEmployeeFrame();
+		GUIUtils.showFrame(this.insertEmployeeFrame);
     }//GEN-LAST:event_addEmployeeButtonActionPerformed
+
+    private void addSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleButtonActionPerformed
+		// TODO add your handling code here:
+    }//GEN-LAST:event_addSaleButtonActionPerformed
+
+    private void addCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarButtonActionPerformed
+		this.insertCarFrame = new InsertCarFrame();
+		GUIUtils.showFrame(this.insertCarFrame);
+    }//GEN-LAST:event_addCarButtonActionPerformed
+
+    private void addSaleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSaleButtonMouseClicked
+		this.insertSaleFrame = new InsertSaleFrame();
+		GUIUtils.showFrame(this.insertSaleFrame);
+    }//GEN-LAST:event_addSaleButtonMouseClicked
+
+    private void editCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCarButtonActionPerformed
+		this.insertCarFrame = new InsertCarFrame(this.cars.get(this.carsList.getSelectedIndex()));
+		GUIUtils.showFrame(this.insertCarFrame);
+    }//GEN-LAST:event_editCarButtonActionPerformed
+
+    private void allRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allRefreshMenuItemActionPerformed
+		this.salesRefreshMenuItemActionPerformed(evt);
+		this.carsRefreshMenuItemActionPerformed(evt);
+		this.employeesRefreshMenuItemActionPerformed(evt);
+		this.customersRefreshMenuItemActionPerformed(evt);
+    }//GEN-LAST:event_allRefreshMenuItemActionPerformed
+
+    private void salesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesRefreshMenuItemActionPerformed
+		this.sales = Sale.selectAll();
+		this.salesList.setListData(Sale.listToArray(sales));
+    }//GEN-LAST:event_salesRefreshMenuItemActionPerformed
+
+    private void carsRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsRefreshMenuItemActionPerformed
+		this.cars = Car.selectAllCars();
+		this.carsList.setListData(Car.listToArray(cars));
+    }//GEN-LAST:event_carsRefreshMenuItemActionPerformed
+
+    private void employeesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesRefreshMenuItemActionPerformed
+		this.employees = Employee.selectAll();
+		this.employeeList.setListData(Employee.listToArray(employees));
+    }//GEN-LAST:event_employeesRefreshMenuItemActionPerformed
+
+    private void customersRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customersRefreshMenuItemActionPerformed
+		this.customers = Customer.selectAll();
+		this.customerList.setListData(Customer.listToArray(customers));
+
+    }//GEN-LAST:event_customersRefreshMenuItemActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -556,25 +668,32 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton addEmployeeButton;
     private javax.swing.JMenuItem addEmployeeMenuItem;
     private javax.swing.JMenu addMenu;
+    private javax.swing.JButton addSaleButton;
     private javax.swing.JMenuItem addSaleMenuItem;
+    private javax.swing.JMenuItem allRefreshMenuItem;
     private javax.swing.JPanel cardContainer;
     private javax.swing.JEditorPane carsEditorPane;
     private javax.swing.JEditorPane carsEditorPane1;
     private javax.swing.JEditorPane carsEditorPane2;
+    private javax.swing.JEditorPane carsEditorPane3;
     private javax.swing.JList<String> carsList;
     private javax.swing.JMenuItem carsLogsMenuItem;
     private javax.swing.JPanel carsPanel;
+    private javax.swing.JMenuItem carsRefreshMenuItem;
     private javax.swing.JList<String> customerList;
     private javax.swing.JPanel customersPanel;
+    private javax.swing.JMenuItem customersRefreshMenuItem;
     private javax.swing.JButton deleteCarButton;
     private javax.swing.JButton deleteCustomerButton;
     private javax.swing.JButton deleteEmployeeButton;
+    private javax.swing.JButton deleteSaleButton;
     private javax.swing.JButton editCarButton;
     private javax.swing.JButton editCustomerButton;
     private javax.swing.JButton editEmployeeButton;
-    private javax.swing.JMenu editMenu;
+    private javax.swing.JButton editSaleButton;
     private javax.swing.JList<String> employeeList;
     private javax.swing.JPanel employeesPanel;
+    private javax.swing.JMenuItem employeesRefreshMenuItem;
     private javax.swing.JList<String> formList;
     private javax.swing.JScrollPane formListContainer;
     private javax.swing.JMenu helpMenu;
@@ -591,8 +710,11 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane5;
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
+    private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JMenu logsMenu;
+    private javax.swing.JMenu refreshMenu;
     private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;
+    private javax.swing.JMenuItem salesRefreshMenuItem;
     // End of variables declaration//GEN-END:variables
 }

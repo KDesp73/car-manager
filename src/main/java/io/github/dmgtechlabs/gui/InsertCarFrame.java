@@ -14,6 +14,7 @@ import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
 import javax.swing.JOptionPane;
+import kdesp73.databridge.helpers.SQLogger;
 
 /**
  *
@@ -21,6 +22,7 @@ import javax.swing.JOptionPane;
  */
 public class InsertCarFrame extends javax.swing.JFrame {
 
+	private Car car = null;
 	private List<Manufacturer> manufacturers;
 	private List<Model> models;
 
@@ -30,15 +32,16 @@ public class InsertCarFrame extends javax.swing.JFrame {
 	public InsertCarFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
+		this.setResizable(false);
 
 		this.manufacturers = Manufacturer.selectAllManufacturers();
-		for(Manufacturer m : this.manufacturers) {
+		for (Manufacturer m : this.manufacturers) {
 			this.manufacturerComboBox.addItem(m.UIString());
 		}
-		
+
 		GUIUtils.setPlaceholder(this.priceTextFormattedField, "Price");
 		GUIUtils.setPlaceholder(this.licensePlateTextField, "License Plate");
-		
+
 		this.priceTextFormattedField.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyTyped(KeyEvent e) {
@@ -53,6 +56,18 @@ public class InsertCarFrame extends javax.swing.JFrame {
 		});
 	}
 
+	public InsertCarFrame(Car car) {
+		this();
+		this.car = car;
+		this.actionButton.setText("Edit");
+		
+		// Load car into form
+		this.priceTextFormattedField.setText(String.valueOf(car.getPrice()));
+		this.licensePlateTextField.setText(car.getLicencePlate());
+		this.modelComboBox.setSelectedItem(((Model) car).UIString());
+		this.manufacturerComboBox.setSelectedItem(((Manufacturer) (Model) car).UIString());
+	}
+
 	/**
 	 * This method is called from within the constructor to initialize the form.
 	 * WARNING: Do NOT modify this code. The content of this method is always
@@ -64,7 +79,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
 
         jButton1 = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        addButton = new javax.swing.JButton();
+        actionButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         manufacturerComboBox = new javax.swing.JComboBox<>();
@@ -77,10 +92,10 @@ public class InsertCarFrame extends javax.swing.JFrame {
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
-        addButton.setText("Add");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        actionButton.setText("Add");
+        actionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                actionButtonActionPerformed(evt);
             }
         });
 
@@ -115,7 +130,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
                 .addContainerGap(259, Short.MAX_VALUE)
                 .addComponent(cancelButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(addButton)
+                .addComponent(actionButton)
                 .addContainerGap())
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(21, 21, 21)
@@ -149,7 +164,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
                 .addComponent(licensePlateTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 277, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
+                    .addComponent(actionButton)
                     .addComponent(cancelButton))
                 .addContainerGap())
         );
@@ -177,39 +192,58 @@ public class InsertCarFrame extends javax.swing.JFrame {
 		this.licensePlateTextField.setText("");
 		this.modelComboBox.removeAllItems();
 	}
-	
+
 	private void printForm() {
 		System.out.println(this.licensePlateTextField.getText());
 		System.out.println(this.priceTextFormattedField.getText());
-		System.out.println(this.manufacturerComboBox.getSelectedIndex()  + ": " + this.manufacturerComboBox.getSelectedItem());
-		System.out.println(this.modelComboBox.getSelectedIndex()  + ": " + this.modelComboBox.getSelectedItem());
+		System.out.println(this.manufacturerComboBox.getSelectedIndex() + ": " + this.manufacturerComboBox.getSelectedItem());
+		System.out.println(this.modelComboBox.getSelectedIndex() + ": " + this.modelComboBox.getSelectedItem());
 	}
-	
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
+
+    private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
 		this.printForm();
-		Car c = new Car(
-			this.licensePlateTextField.getText(),
-			Float.parseFloat(this.priceTextFormattedField.getText()),
-			this.models.get(this.modelComboBox.getSelectedIndex()).getId()
-		);
+		String licensePlate = this.licensePlateTextField.getText();
+		float discount = Float.parseFloat(this.priceTextFormattedField.getText());
+		int modelId = this.models.get(this.modelComboBox.getSelectedIndex()).getId();
 		
-		if(c.insert()) {
+		
+		if (this.car != null) {
+			if (this.car.update(
+				licensePlate,
+				discount,
+				modelId
+			)) {
+				JOptionPane.showMessageDialog(this, "Edited Car (" + car.getLicencePlate() + ") successfully");
+				this.dispose();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed editing car", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			return;
+		}
+
+		Car c = new Car(
+			licensePlate,
+			discount,
+			modelId
+		);
+
+		if (c.insert()) {
 			JOptionPane.showMessageDialog(this, "Added Car (" + c.getLicencePlate() + ") successfully");
 			this.clearForm();
-		} else { 
+		} else {
 			JOptionPane.showMessageDialog(this, "Failed adding car", "Error", JOptionPane.ERROR_MESSAGE);
 		}
-    }//GEN-LAST:event_addButtonActionPerformed
+    }//GEN-LAST:event_actionButtonActionPerformed
 
     private void licensePlateTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_licensePlateTextFieldActionPerformed
-        // TODO add your handling code here:
+		// TODO add your handling code here:
     }//GEN-LAST:event_licensePlateTextFieldActionPerformed
 
     private void manufacturerComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manufacturerComboBoxActionPerformed
-        this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturerComboBox.getSelectedIndex()).getManufacturerName());
-		
+		this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturerComboBox.getSelectedIndex()).getManufacturerName());
+
 		this.modelComboBox.removeAllItems();
-		for(Model m : this.models) {
+		for (Model m : this.models) {
 			this.modelComboBox.addItem(m.UIString());
 		}
     }//GEN-LAST:event_manufacturerComboBoxActionPerformed
@@ -253,7 +287,7 @@ public class InsertCarFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
+    private javax.swing.JButton actionButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JButton jButton1;
     private javax.swing.JLabel jLabel1;

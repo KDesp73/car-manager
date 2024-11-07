@@ -21,6 +21,12 @@ import javax.swing.UnsupportedLookAndFeelException;
  * @author kdesp73
  */
 public class GUIUtils {
+	public static void showFrame(JFrame frame) {
+		if(frame.isShowing()) return;
+		
+		frame.setVisible(true);
+	}
+	
 	public static void commonSetup(JFrame frame) {
 		frame.setLocationRelativeTo(null);
 		GUIMethods.setFontFamilyRecursively(frame, "sans-serif", Font.PLAIN);

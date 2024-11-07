@@ -8,6 +8,7 @@ import io.github.dmgtechlabs.Car;
 import io.github.dmgtechlabs.Customer;
 import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Sale;
+import java.awt.Dimension;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.util.List;
@@ -29,6 +30,7 @@ public class InsertSaleFrame extends javax.swing.JFrame {
 	public InsertSaleFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
+		this.setResizable(false);
 
 		this.cars = Car.selectAllCars();
 		this.employees = Employee.selectAll();
@@ -58,6 +60,24 @@ public class InsertSaleFrame extends javax.swing.JFrame {
 				}
 			}
 		});
+
+		this.jPanel1.setMaximumSize(new Dimension(417, 476));
+		this.jPanel1.setMinimumSize(new Dimension(417, 476));
+		this.jPanel1.setSize(new Dimension(417, 476));
+		
+		var dim = new Dimension(77, 25);
+		this.carComboBox.setSize(dim);
+		this.carComboBox.setMinimumSize(dim);
+		this.carComboBox.setMaximumSize(dim);
+		this.discountTextField.setSize(dim);
+		this.discountTextField.setMinimumSize(dim);
+		this.discountTextField.setMaximumSize(dim);
+		this.employeeComboBox.setSize(dim);
+		this.employeeComboBox.setMinimumSize(dim);
+		this.employeeComboBox.setMaximumSize(dim);
+		this.customerComboBox.setSize(dim);
+		this.customerComboBox.setMinimumSize(dim);
+		this.customerComboBox.setMaximumSize(dim);
 	}
 
 	/**
@@ -114,32 +134,30 @@ public class InsertSaleFrame extends javax.swing.JFrame {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(cancelButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(addButton))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(37, 37, 37)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel6)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addComponent(jLabel1)
-                                        .addGap(33, 33, 33))
-                                    .addComponent(jLabel7)
-                                    .addComponent(jLabel8))
-                                .addGap(64, 64, 64)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(carComboBox, 0, 177, Short.MAX_VALUE)
-                                    .addComponent(discountTextField)
-                                    .addComponent(customerComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(employeeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                        .addGap(0, 76, Short.MAX_VALUE)))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(cancelButton)
+                .addGap(18, 18, 18)
+                .addComponent(addButton)
                 .addContainerGap())
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(37, 37, 37)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jLabel6)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(33, 33, 33))
+                            .addComponent(jLabel7)
+                            .addComponent(jLabel8))
+                        .addGap(64, 64, 64)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(discountTextField)
+                            .addComponent(customerComboBox, 0, 177, Short.MAX_VALUE)
+                            .addComponent(employeeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(carComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addGap(78, 78, 78))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -160,7 +178,7 @@ public class InsertSaleFrame extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(employeeComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel8))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 260, Short.MAX_VALUE)
+                .addGap(260, 260, 260)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(addButton)
                     .addComponent(cancelButton))
@@ -230,7 +248,7 @@ public class InsertSaleFrame extends javax.swing.JFrame {
 		/* Set the Nimbus look and feel */
 		//<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
 		/* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html
 		 */
 		try {
 			for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
