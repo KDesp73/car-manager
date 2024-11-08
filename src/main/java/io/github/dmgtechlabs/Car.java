@@ -238,4 +238,16 @@ public class Car extends Model implements Dao, UIObject {
 		
 		return sb.toString();
 	}
+
+	@Override
+	public Object[] objArray() {
+		return new Object[]{
+			this.licensePlate,
+			this.price,
+			this.getManufacturerName() + " " + this.getName(),
+			this.getType(),
+			this.getWd(),
+			this.getHp()
+		};
+	}
 }

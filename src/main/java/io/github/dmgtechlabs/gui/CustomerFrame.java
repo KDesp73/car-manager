@@ -32,24 +32,6 @@ public class CustomerFrame extends javax.swing.JFrame {
 	private Customer customer;
 	private List<Person> person;
 
-	static class EmailVerifier extends InputVerifier {
-
-		@Override
-		public boolean verify(JComponent input) {
-			String text = ((JFormattedTextField) input).getText();
-			return Email.EMAIL_PATTERN.matcher(text).matches();
-		}
-
-		@Override
-		public boolean shouldYieldFocus(JComponent input) {
-			if (!verify(input)) {
-				JOptionPane.showMessageDialog(input, "Please enter a valid email address.", "Invalid Email", JOptionPane.ERROR_MESSAGE);
-				return false; // Keep focus on the field if invalid
-			}
-			return true; // Allow focus transfer if valid
-		}
-	}
-
 	/**
 	 * Creates new form InsertSaleFrame
 	 */

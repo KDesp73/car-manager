@@ -4,7 +4,16 @@
  */
 package io.github.dmgtechlabs.gui;
 
+import io.github.dmgtechlabs.CarLog;
+import io.github.dmgtechlabs.EmployeeLog;
 import io.github.dmgtechlabs.UIObject;
+import static io.github.dmgtechlabs.gui.LogsFrame.LogType.CARS;
+import static io.github.dmgtechlabs.gui.LogsFrame.LogType.CUSTOMERS;
+import static io.github.dmgtechlabs.gui.LogsFrame.LogType.EMPLOYEES;
+import static io.github.dmgtechlabs.gui.LogsFrame.LogType.MANUFACTURERS;
+import static io.github.dmgtechlabs.gui.LogsFrame.LogType.MODELS;
+import static io.github.dmgtechlabs.gui.LogsFrame.LogType.SALES;
+import static io.github.dmgtechlabs.gui.LogsFrame.LogType.SERVICES;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -26,12 +35,23 @@ import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.table.DefaultTableModel;
 
 /**
  *
  * @author kdesp73
  */
 public class GUIUtils {
+	public static DefaultTableModel makeTableModel(Object[][]data, String[] columns, boolean cellEditable) {
+		DefaultTableModel model = new DefaultTableModel(data, columns) {
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return cellEditable;
+			}
+		};
+
+		return model;
+	}
 
 	public static void addKeyBinding(JComponent component, String keyStroke, Runnable action) {
 		// Get the input map for the component in the WHEN_IN_FOCUSED_WINDOW condition

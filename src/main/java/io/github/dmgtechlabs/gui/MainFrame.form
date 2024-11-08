@@ -165,7 +165,7 @@
           <Group type="102" alignment="0" attributes="0">
               <Component id="formListContainer" min="-2" pref="245" max="-2" attributes="0"/>
               <EmptySpace min="0" pref="0" max="-2" attributes="0"/>
-              <Component id="cardContainer" max="32767" attributes="0"/>
+              <Component id="cardContainer" pref="812" max="32767" attributes="0"/>
           </Group>
       </Group>
     </DimensionLayout>
@@ -227,12 +227,12 @@
                       <Group type="103" groupAlignment="0" attributes="0">
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace max="-2" attributes="0"/>
-                              <Component id="jScrollPane8" max="32767" attributes="0"/>
+                              <Component id="jScrollPane8" pref="559" max="32767" attributes="0"/>
                           </Group>
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jLabel1" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="3446" max="32767" attributes="0"/>
+                              <EmptySpace pref="219" max="32767" attributes="0"/>
                               <Component id="addSaleButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="editSaleButton" min="-2" max="-2" attributes="0"/>
@@ -356,7 +356,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="3455" max="32767" attributes="0"/>
+                              <EmptySpace pref="228" max="32767" attributes="0"/>
                               <Component id="addCarButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="editCarButton" min="-2" max="-2" attributes="0"/>
@@ -500,7 +500,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jLabel6" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="3378" max="32767" attributes="0"/>
+                              <EmptySpace pref="151" max="32767" attributes="0"/>
                               <Component id="addEmployeeButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="editEmployeeButton" min="-2" max="-2" attributes="0"/>
@@ -625,7 +625,7 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jLabel5" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="3372" max="32767" attributes="0"/>
+                              <EmptySpace pref="145" max="32767" attributes="0"/>
                               <Component id="addCustomerButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="editCustomerButton" min="-2" max="-2" attributes="0"/>
@@ -782,29 +782,20 @@
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
                                       <Group type="103" groupAlignment="0" attributes="0">
-                                          <Group type="102" alignment="1" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel9" min="-2" pref="166" max="-2" attributes="0"/>
-                                                  <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace max="32767" attributes="0"/>
-                                          </Group>
-                                          <Group type="102" alignment="0" attributes="0">
-                                              <Group type="103" groupAlignment="0" attributes="0">
-                                                  <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
-                                                  <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
-                                              </Group>
-                                              <EmptySpace pref="52" max="32767" attributes="0"/>
-                                          </Group>
+                                          <Component id="jLabel9" min="-2" pref="166" max="-2" attributes="0"/>
+                                          <Component id="jLabel8" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel13" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel12" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel11" alignment="0" min="-2" max="-2" attributes="0"/>
+                                          <Component id="jLabel10" min="-2" max="-2" attributes="0"/>
                                       </Group>
+                                      <EmptySpace pref="52" max="32767" attributes="0"/>
                                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
                                           <Group type="103" groupAlignment="1" attributes="0">
                                               <Group type="102" alignment="1" attributes="0">
                                                   <Group type="103" groupAlignment="0" attributes="0">
                                                       <Component id="namesFormatedTextField" min="-2" pref="311" max="-2" attributes="0"/>
-                                                      <Component id="emailFormatedTextField2" alignment="0" min="-2" pref="311" max="-2" attributes="0"/>
+                                                      <Component id="employeesByEmailTextField" alignment="0" min="-2" pref="311" max="-2" attributes="0"/>
                                                   </Group>
                                                   <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
@@ -826,7 +817,7 @@
                                           <Group type="102" alignment="1" attributes="0">
                                               <Group type="103" groupAlignment="0" attributes="0">
                                                   <Component id="employeesComboBox" min="-2" pref="311" max="-2" attributes="0"/>
-                                                  <Component id="emailFormatedTextField1" min="-2" pref="311" max="-2" attributes="0"/>
+                                                  <Component id="customersByEmailTextField" min="-2" pref="311" max="-2" attributes="0"/>
                                               </Group>
                                               <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
                                               <Group type="103" groupAlignment="0" attributes="0">
@@ -888,13 +879,13 @@
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel9" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="customersByEmailButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="emailFormatedTextField1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="customersByEmailTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="EmployeesByEmailButton" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="emailFormatedTextField2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="employeesByEmailTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -933,7 +924,7 @@
 
               <Layout class="org.netbeans.modules.form.compat2.layouts.support.JScrollPaneSupportLayout"/>
               <SubComponents>
-                <Component class="javax.swing.JTable" name="jTable1">
+                <Component class="javax.swing.JTable" name="searchResultsTable">
                   <Properties>
                     <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
                       <Table columnCount="4" rowCount="4">
@@ -1054,6 +1045,9 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="Run"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="customersByEmailButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel10">
               <Properties>
@@ -1135,15 +1129,9 @@
                 <Property name="text" type="java.lang.String" value="Run"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="emailFormatedTextField1">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
-              </Properties>
+            <Component class="javax.swing.JFormattedTextField" name="customersByEmailTextField">
             </Component>
-            <Component class="javax.swing.JFormattedTextField" name="emailFormatedTextField2">
-              <Properties>
-                <Property name="text" type="java.lang.String" value="jFormattedTextField1"/>
-              </Properties>
+            <Component class="javax.swing.JFormattedTextField" name="employeesByEmailTextField">
             </Component>
             <Component class="javax.swing.JComboBox" name="soldComboBox">
               <Properties>

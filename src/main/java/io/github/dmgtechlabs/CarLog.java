@@ -45,7 +45,7 @@ public class CarLog {
 		this.manufacturer = manufacturer;
 	}
 
-	public static Object[][] listToArray(List<CarLog> list) {
+	public static Object[][] tableData(List<CarLog> list) {
 		if (list == null || list.isEmpty()) {
 			return new Object[0][0];
 		}

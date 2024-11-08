@@ -39,7 +39,7 @@ public class EmployeeLog {
 		this.salary = salary;
 	}
 
-	public static Object[][] listToArray(List<EmployeeLog> list) {
+	public static Object[][] tableData(List<EmployeeLog> list) {
 		if (list == null || list.isEmpty()) {
 			return new Object[0][0];
 		}

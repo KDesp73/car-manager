@@ -36,7 +36,7 @@ public class LogsFrame extends javax.swing.JFrame {
 			case CARS -> {
 				this.columns = new String[]{"Operation", "Timestamp", "License Plate", "Price", "Model", "Manufacturer"};
 				this.carLogs = CarLog.selectAll();
-				this.data = CarLog.listToArray(this.carLogs);
+				this.data = CarLog.tableData(this.carLogs);
 			}
 			case SALES -> {
 			}
@@ -49,7 +49,7 @@ public class LogsFrame extends javax.swing.JFrame {
 			case EMPLOYEES -> {
 				this.columns = new String[]{"Operation", "Timestamp", "First Name", "Last Name", "Email", "Salary"};
 				this.employeeLogs = EmployeeLog.selectAll();
-				this.data = EmployeeLog.listToArray(this.employeeLogs);
+				this.data = EmployeeLog.tableData(this.employeeLogs);
 			}
 			case CUSTOMERS -> {
 			}

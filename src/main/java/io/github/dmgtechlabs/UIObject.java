@@ -13,6 +13,7 @@ import java.util.List;
 public interface UIObject {
 	String UIString();
 	String toHTML();
+	Object[] objArray();
 	
 	public static String[] listToArray(List<UIObject> list) {
 		String[] result = new String[list.size()];
@@ -21,6 +22,16 @@ public interface UIObject {
 			result[i] = list.get(i).UIString();
 		}
 
+		return result;
+	}
+	
+	public static Object[][] tableData(List<UIObject> list) {
+		var result = new Object[list.size()][];
+		
+		for(int i = 0; i < list.size(); i++) {
+			result[i] = list.get(i).objArray();
+		}
+		
 		return result;
 	}
 }

@@ -165,4 +165,15 @@ public class Employee extends Person implements Dao, UIObject {
 		));		
 		return sb.toString();
 	}
+
+	@Override
+	public Object[] objArray() {
+		return new Object[]{
+			this.salary,
+			this.getName(),
+			this.getBirthYear(),
+			this.getGender(),
+			this.getEmail()
+		};
+	}
 }

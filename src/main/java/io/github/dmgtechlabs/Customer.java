@@ -98,6 +98,41 @@ public class Customer extends Person implements Dao, UIObject {
 		);
 	}
 
+	public static List<Customer> selectByEmail(String email) {
+		PostgresConnection db = Database.connection();
+
+		ResultSet rs = db.callFunction(Database.SCHEMA + ".select_customers_by_email", email);
+
+		List<Customer> result = new ArrayList<>();
+		try {
+			if (rs.isClosed()) {
+				return null;
+			}
+
+			while (rs.next()) {
+				Customer c = new Customer(
+					rs.getInt("id"),
+					rs.getInt("customer_person_fk"),
+					rs.getString("fname"),
+					rs.getString("lname"),
+					rs.getInt("birth_year"),
+					rs.getString("email"),
+					int2Gender(rs.getInt("gender"))
+				);
+				System.out.println(c);
+				result.add(c);
+			}
+			rs.close();
+			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select all customers", SQLogger.SQLOperation.SELECT, null);
+		} catch (SQLException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
+		}
+
+		db.close();
+
+		return result;
+	}
+	
 	public static List<Customer> selectAll() {
 		PostgresConnection db = Database.connection();
 
@@ -151,5 +186,15 @@ public class Customer extends Person implements Dao, UIObject {
 			"Email: " + person.getEmail()
 		));
 		return sb.toString();
+	}
+
+	@Override
+	public Object[] objArray() {
+		return new Object[]{
+			this.getName(),
+			this.getBirthYear(),
+			this.getGender(),
+			this.getEmail(),
+		};
 	}
 }
