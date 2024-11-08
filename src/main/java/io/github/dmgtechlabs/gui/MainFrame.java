@@ -7,6 +7,7 @@ import io.github.dmgtechlabs.Sale;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
+import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
@@ -31,83 +32,151 @@ public class MainFrame extends javax.swing.JFrame {
 	private CarFrame carFrame;
 
 	private class Actions {
+
 		public static MainFrame frame;
-		
+
 		public static void addCar() {
 			frame.carFrame = new CarFrame();
 			GUIUtils.showFrame(frame.carFrame);
 		}
-		
-		public static void add(JFrame frame) {
-			if (frame instanceof SaleFrame sf) {
-				System.out.println("SaleFrame");
-				sf = new SaleFrame();
-				GUIUtils.showFrame(sf);
-			} else if (frame instanceof CustomerFrame cf) {
-				System.out.println("CustomerFrame");
-				cf = new CustomerFrame();
-				GUIUtils.showFrame(cf);
-			} else if (frame instanceof EmployeeFrame ef) {
-				System.out.println("EmployeeFrame");
-				ef = new EmployeeFrame();
-				GUIUtils.showFrame(ef);
-			} else if (frame instanceof CarFrame cf) {
-				System.out.println("CarFrame");
-				cf = new CarFrame();
-				GUIUtils.showFrame(cf);
-			}
+
+		public static void addCustomer() {
+			frame.customerFrame = new CustomerFrame();
+			GUIUtils.showFrame(frame.customerFrame);
 		}
 
-		public static void edit(JFrame frame, MainFrame mf) {
-			if (frame instanceof SaleFrame sf) {
-				System.out.println("SaleFrame");
-//				if (mf.salesList.getSelectedIndex() < 0) {
-//					return;
-//				}
-//				sf = new SaleFrame(mf.sales.get(mf.salesList.getSelectedIndex()));
-//				GUIUtils.showFrame(cf);
-			} else if (frame instanceof CustomerFrame cf) {
-				System.out.println("CustomerFrame");
-				if (mf.customerList.getSelectedIndex() < 0) {
-					return;
-				}
-				cf = new CustomerFrame(mf.customers.get(mf.customerList.getSelectedIndex()));
-				GUIUtils.showFrame(cf);
-			} else if (frame instanceof EmployeeFrame ef) {
-				System.out.println("EmployeeFrame");
-				if (mf.employeeList.getSelectedIndex() < 0) {
-					return;
-				}
-				ef = new EmployeeFrame(mf.employees.get(mf.employeeList.getSelectedIndex()));
-				GUIUtils.showFrame(ef);
-			} else if (frame instanceof CarFrame cf) {
-				System.out.println("CarFrame");
-				if (mf.carsList.getSelectedIndex() < 0) {
-					return;
-				}
-				cf = new CarFrame(mf.cars.get(mf.carsList.getSelectedIndex()));
-				GUIUtils.showFrame(cf);
-			}
+		public static void addEmployee() {
+			frame.employeeFrame = new EmployeeFrame();
+			GUIUtils.showFrame(frame.employeeFrame);
 		}
 
-		public static void delete(JFrame frame) {
-			if (frame instanceof SaleFrame sf) {
-				System.out.println("SaleFrame");
-				sf = new SaleFrame();
-				GUIUtils.showFrame(sf);
-			} else if (frame instanceof CustomerFrame cf) {
-				System.out.println("CustomerFrame");
-				cf = new CustomerFrame();
-				GUIUtils.showFrame(cf);
-			} else if (frame instanceof EmployeeFrame ef) {
-				System.out.println("EmployeeFrame");
-				ef = new EmployeeFrame();
-				GUIUtils.showFrame(ef);
-			} else if (frame instanceof CarFrame cf) {
-				System.out.println("CarFrame");
-				cf = new CarFrame();
-				GUIUtils.showFrame(cf);
+		public static void addSale() {
+			frame.saleFrame = new SaleFrame();
+			GUIUtils.showFrame(frame.saleFrame);
+		}
+
+		public static void editCar() {
+			if (frame.carsList.getSelectedIndex() < 0) {
+				return;
 			}
+			frame.carFrame = new CarFrame(frame.cars.get(frame.carsList.getSelectedIndex()));
+			GUIUtils.showFrame(frame.carFrame);
+		}
+
+		public static void editCustomer() {
+			if (frame.customerList.getSelectedIndex() < 0) {
+				return;
+			}
+			frame.customerFrame = new CustomerFrame(frame.customers.get(frame.customerList.getSelectedIndex()));
+			GUIUtils.showFrame(frame.customerFrame);
+		}
+
+		public static void editEmployee() {
+			if (frame.carsList.getSelectedIndex() < 0) {
+				return;
+			}
+			frame.employeeFrame = new EmployeeFrame(frame.employees.get(frame.employeeList.getSelectedIndex()));
+			GUIUtils.showFrame(frame.employeeFrame);
+		}
+
+		public static void editSale() {
+			if (frame.salesList.getSelectedIndex() < 0) {
+				return;
+			}
+			frame.saleFrame = new SaleFrame(frame.sales.get(frame.salesList.getSelectedIndex()));
+			GUIUtils.showFrame(frame.saleFrame);
+		}
+
+		public static void deleteCar() {
+			var car = frame.cars.get(frame.carsList.getSelectedIndex());
+			int option = JOptionPane.showConfirmDialog(
+				frame,
+				"Are you sure you want to delete " + car.getLicencePlate() + "?"
+			);
+
+			if (option != 0) {
+				return;
+			}
+
+			car.delete();
+			refreshCar();
+			GUIUtils.showInfo(frame.carsEditorPane, frame.cars.get(0));
+		}
+
+		public static void deleteCustomer() {
+			var customer = frame.customers.get(frame.customerList.getSelectedIndex());
+			int option = JOptionPane.showConfirmDialog(
+				frame,
+				"Are you sure you want to delete " + customer.getName() + "?"
+			);
+
+			if (option != 0) {
+				return;
+			}
+
+			customer.delete();
+			refreshCustomer();
+			GUIUtils.showInfo(frame.customersEditorPane, customer);
+		}
+
+		public static void deleteEmployee() {
+			var employee = frame.employees.get(frame.employeeList.getSelectedIndex());
+			int option = JOptionPane.showConfirmDialog(
+				frame,
+				"Are you sure you want to delete " + employee.getName() + "?"
+			);
+
+			if (option != 0) {
+				return;
+			}
+
+			employee.delete();
+			refreshEmployee();
+			GUIUtils.showInfo(frame.employeesEditorPane, employee);
+		}
+
+		public static void deleteSale() {
+			var sale = frame.sales.get(frame.salesList.getSelectedIndex());
+			int option = JOptionPane.showConfirmDialog(
+				frame,
+				"Are you sure you want to delete " + sale.getId() + "?"
+			);
+
+			if (option != 0) {
+				return;
+			}
+
+			sale.delete();
+			refreshSale();
+			GUIUtils.showInfo(frame.salesEditorPane, sale);
+		}
+
+		public static void refreshCar() {
+			frame.cars = Car.selectAllCars();
+			frame.carsList.setListData(Car.listToArray(frame.cars));
+		}
+
+		public static void refreshCustomer() {
+			frame.customers = Customer.selectAll();
+			frame.customerList.setListData(Customer.listToArray(frame.customers));
+		}
+
+		public static void refreshEmployee() {
+			frame.employees = Employee.selectAll();
+			frame.employeeList.setListData(Employee.listToArray(frame.employees));
+		}
+
+		public static void refreshSale() {
+			frame.sales = Sale.selectAll();
+			frame.salesList.setListData(Sale.listToArray(frame.sales));
+		}
+
+		public static void refreshAll() {
+			refreshCar();
+			refreshCustomer();
+			refreshEmployee();
+			refreshSale();
+			JOptionPane.showMessageDialog(frame, "Refreshed all lists");
 		}
 	}
 
@@ -129,9 +198,9 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
-		
+
 		Actions.frame = this;
-		
+
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(1048, 715));
 
@@ -752,31 +821,31 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
 
     private void addSaleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleMenuItemActionPerformed
-		Actions.add(this.saleFrame);
+		Actions.addSale();
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
     private void addEmployeeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeMenuItemActionPerformed
-		Actions.add(this.employeeFrame);
+		Actions.addEmployee();
     }//GEN-LAST:event_addEmployeeMenuItemActionPerformed
 
     private void addCarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarMenuItemActionPerformed
-		Actions.add(this.carFrame);
+		Actions.addCar();
     }//GEN-LAST:event_addCarMenuItemActionPerformed
 
     private void addCustomerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerMenuItemActionPerformed
-		Actions.add(this.customerFrame);
+		Actions.addCustomer();
     }//GEN-LAST:event_addCustomerMenuItemActionPerformed
 
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-		Actions.add(this.customerFrame);
+		Actions.addCustomer();
     }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
-		Actions.add(this.employeeFrame);
+		Actions.addEmployee();
     }//GEN-LAST:event_addEmployeeButtonActionPerformed
 
     private void addSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleButtonActionPerformed
-		Actions.add(this.saleFrame);
+		Actions.addSale();
     }//GEN-LAST:event_addSaleButtonActionPerformed
 
     private void addCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarButtonActionPerformed
@@ -784,39 +853,31 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addCarButtonActionPerformed
 
     private void addSaleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSaleButtonMouseClicked
-		Actions.add(this.saleFrame);
+		Actions.addSale();
     }//GEN-LAST:event_addSaleButtonMouseClicked
 
     private void editCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCarButtonActionPerformed
-		Actions.edit(this.carFrame, this);
+		Actions.editCar();
     }//GEN-LAST:event_editCarButtonActionPerformed
 
     private void allRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allRefreshMenuItemActionPerformed
-		this.salesRefreshMenuItemActionPerformed(evt);
-		this.carsRefreshMenuItemActionPerformed(evt);
-		this.employeesRefreshMenuItemActionPerformed(evt);
-		this.customersRefreshMenuItemActionPerformed(evt);
-		JOptionPane.showMessageDialog(this, "Refreshed all lists");
+		Actions.refreshAll();
     }//GEN-LAST:event_allRefreshMenuItemActionPerformed
 
     private void salesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesRefreshMenuItemActionPerformed
-		this.sales = Sale.selectAll();
-		this.salesList.setListData(Sale.listToArray(sales));
+		Actions.refreshSale();
     }//GEN-LAST:event_salesRefreshMenuItemActionPerformed
 
     private void carsRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsRefreshMenuItemActionPerformed
-		this.cars = Car.selectAllCars();
-		this.carsList.setListData(Car.listToArray(cars));
+		Actions.refreshCar();
     }//GEN-LAST:event_carsRefreshMenuItemActionPerformed
 
     private void employeesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesRefreshMenuItemActionPerformed
-		this.employees = Employee.selectAll();
-		this.employeeList.setListData(Employee.listToArray(employees));
+		Actions.refreshEmployee();
     }//GEN-LAST:event_employeesRefreshMenuItemActionPerformed
 
     private void customersRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customersRefreshMenuItemActionPerformed
-		this.customers = Customer.selectAll();
-		this.customerList.setListData(Customer.listToArray(customers));
+		Actions.refreshCustomer();
 
     }//GEN-LAST:event_customersRefreshMenuItemActionPerformed
 
@@ -877,59 +938,23 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_customerListMouseClicked
 
     private void deleteCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCarButtonActionPerformed
-		var car = this.cars.get(this.carsList.getSelectedIndex());
-		int option = JOptionPane.showConfirmDialog(
-			this,
-			"Are you sure you want to delete " + car.getLicencePlate() + "?"
-		);
-
-		if (option != 0) {
-			return;
-		}
-
-		car.delete();
-		carsRefreshMenuItemActionPerformed(null);
-		GUIUtils.showInfo(carsEditorPane, this.cars.get(0));
+		Actions.deleteCar();
     }//GEN-LAST:event_deleteCarButtonActionPerformed
 
     private void deleteCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteCustomerButtonActionPerformed
-		var customer = this.customers.get(this.customerList.getSelectedIndex());
-		int option = JOptionPane.showConfirmDialog(
-			this,
-			"Are you sure you want to delete " + customer.getName() + "?"
-		);
-
-		if (option != 0) {
-			return;
-		}
-
-		customer.delete();
-		customersRefreshMenuItemActionPerformed(null);
-		GUIUtils.showInfo(customersEditorPane, customer);
+		Actions.deleteCustomer();
     }//GEN-LAST:event_deleteCustomerButtonActionPerformed
 
     private void deleteEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteEmployeeButtonActionPerformed
-		var employee = this.employees.get(this.employeeList.getSelectedIndex());
-		int option = JOptionPane.showConfirmDialog(
-			this,
-			"Are you sure you want to delete " + employee.getName() + "?"
-		);
-
-		if (option != 0) {
-			return;
-		}
-
-		employee.delete();
-		employeesRefreshMenuItemActionPerformed(null);
-		GUIUtils.showInfo(employeesEditorPane, employee);
+		Actions.deleteEmployee();
     }//GEN-LAST:event_deleteEmployeeButtonActionPerformed
 
     private void editCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCustomerButtonActionPerformed
-		Actions.edit(this.customerFrame, this);
+		Actions.editCustomer();
     }//GEN-LAST:event_editCustomerButtonActionPerformed
 
     private void editEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEmployeeButtonActionPerformed
-		Actions.edit(this.employeeFrame, this);
+		Actions.editEmployee();
     }//GEN-LAST:event_editEmployeeButtonActionPerformed
 
     private void employeeLogsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeLogsMenuItemActionPerformed
@@ -942,24 +967,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_employeeLogsMenuItemActionPerformed
 
     private void editSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSaleButtonActionPerformed
-        this.saleFrame = new SaleFrame(this.sales.get(this.salesList.getSelectedIndex()));
-		GUIUtils.showFrame(this.saleFrame);
+		Actions.editSale();
     }//GEN-LAST:event_editSaleButtonActionPerformed
 
     private void deleteSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSaleButtonActionPerformed
-		var sale = this.sales.get(this.salesList.getSelectedIndex());
-		int option = JOptionPane.showConfirmDialog(
-			this,
-			"Are you sure you want to delete " + sale.getId() + "?"
-		);
-
-		if (option != 0) {
-			return;
-		}
-
-		sale.delete();
-		salesRefreshMenuItemActionPerformed(null);
-		GUIUtils.showInfo(salesEditorPane, sale);
+		Actions.deleteSale();
     }//GEN-LAST:event_deleteSaleButtonActionPerformed
 
 	/**
