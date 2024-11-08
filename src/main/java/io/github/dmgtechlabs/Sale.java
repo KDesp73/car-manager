@@ -116,16 +116,6 @@ public class Sale implements Dao, UIObject {
 	public String UIString() {
 		return this.customer.getLname() + " " + this.car.getLicencePlate() + " " + this.finalPrice + "$";
 	}
-	
-	public static String[] listToArray(List<Sale> list) {
-		String[] result = new String[list.size()];
-		
-		for(int i = 0; i < list.size(); i++){
-			result[i] = list.get(i).UIString();
-		}
-		
-		return result;
-	}
 
 	public static List<Sale> selectAll() {
 		List<Sale> result = new ArrayList<>();

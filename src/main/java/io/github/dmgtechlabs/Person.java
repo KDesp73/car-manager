@@ -133,32 +133,6 @@ public class Person implements Dao {
 		);
 	}
 
-//	public static List<Person> selectAll() {
-//		PostgresConnection db = Database.connection();
-//
-//		ResultSet rs = db.callFunction(Functions.SELECT_ALL_CUSTOMERS);
-//
-//		List<Person> result = new ArrayList<>();
-//		try {
-//			if (rs.isClosed()) {
-//				return null;
-//			}
-//
-//			while (rs.next()) {
-//				Person p = new Person(rs.getInt(6), rs.getString(1), rs.getString(2), rs.getString(3), int2Gender(rs.getInt(1)), rs.getString(1));
-//				result.add(p);
-//			}
-//			rs.close();
-//			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select all persons", SQLogger.SQLOperation.SELECT, null);
-//		} catch (SQLException ex) {
-//			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
-//		}
-//
-//		db.close();
-//
-//		return result;
-//	}
-
 	@Override
 	public String toString() {
 		return "Person{" + "fname=" + fname + ", lname=" + lname + ", birthYear=" + birthYear + ", gender=" + gender + ", email=" + email.address + '}';

@@ -124,16 +124,6 @@ public class Car extends Model implements Dao, UIObject {
 		);
 	}
 
-	public static String[] listToArray(List<Car> cars) {
-		String[] result = new String[cars.size()];
-
-		for (int i = 0; i < cars.size(); i++) {
-			result[i] = cars.get(i).UIString();
-		}
-
-		return result;
-	}
-
 	public static List<Car> selectAllCars() {
 		List<Car> result = new ArrayList<>();
 		try (PostgresConnection db = Database.connection()) {

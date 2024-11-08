@@ -4,6 +4,7 @@ import io.github.dmgtechlabs.Car;
 import io.github.dmgtechlabs.Customer;
 import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Sale;
+import io.github.dmgtechlabs.UIObject;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -153,22 +154,22 @@ public class MainFrame extends javax.swing.JFrame {
 
 		public static void refreshCar() {
 			frame.cars = Car.selectAllCars();
-			frame.carsList.setListData(Car.listToArray(frame.cars));
+			frame.carsList.setListData(UIObject.listToArray(frame.cars.stream().map(car -> (UIObject) car).toList()));
 		}
 
 		public static void refreshCustomer() {
 			frame.customers = Customer.selectAll();
-			frame.customerList.setListData(Customer.listToArray(frame.customers));
+			frame.customerList.setListData(UIObject.listToArray(frame.customers.stream().map(customer -> (UIObject) customer).toList()));
 		}
 
 		public static void refreshEmployee() {
 			frame.employees = Employee.selectAll();
-			frame.employeeList.setListData(Employee.listToArray(frame.employees));
+			frame.employeeList.setListData(UIObject.listToArray(frame.employees.stream().map(employee -> (UIObject) employee).toList()));
 		}
 
 		public static void refreshSale() {
 			frame.sales = Sale.selectAll();
-			frame.salesList.setListData(Sale.listToArray(frame.sales));
+			frame.salesList.setListData(UIObject.listToArray(frame.sales.stream().map(sale -> (UIObject) sale).toList()));
 		}
 
 		public static void refreshAll() {
@@ -179,6 +180,9 @@ public class MainFrame extends javax.swing.JFrame {
 			JOptionPane.showMessageDialog(frame, "Refreshed all lists");
 		}
 	}
+
+
+
 
 	// Customers Card
 	private List<Customer> customers;
@@ -220,7 +224,7 @@ public class MainFrame extends javax.swing.JFrame {
 		//Customers Card
 		this.customerList.setFixedCellHeight(25);
 		this.customers = Customer.selectAll();
-		this.customerList.setListData(Customer.listToArray(customers));
+		this.customerList.setListData(UIObject.listToArray(this.customers.stream().map(customer -> (UIObject) customer).toList()));
 		this.customersEditorPane.setContentType("text/html");
 		this.customersEditorPane.setEditable(false);
 		this.customersEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
@@ -228,7 +232,7 @@ public class MainFrame extends javax.swing.JFrame {
 		//Employees Card
 		this.employeeList.setFixedCellHeight(25);
 		this.employees = Employee.selectAll();
-		this.employeeList.setListData(Employee.listToArray(employees));
+		this.employeeList.setListData(UIObject.listToArray(this.employees.stream().map(employee -> (UIObject) employee).toList()));
 		this.employeesEditorPane.setContentType("text/html");
 		this.employeesEditorPane.setEditable(false);
 		this.employeesEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
@@ -236,7 +240,7 @@ public class MainFrame extends javax.swing.JFrame {
 		// Sales Card
 		this.salesList.setFixedCellHeight(25);
 		this.sales = Sale.selectAll();
-		this.salesList.setListData(Sale.listToArray(sales));
+		this.salesList.setListData(UIObject.listToArray(this.sales.stream().map(sale -> (UIObject) sale).toList()));
 		this.salesEditorPane.setContentType("text/html");
 		this.salesEditorPane.setEditable(false);
 		this.salesEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
@@ -244,11 +248,11 @@ public class MainFrame extends javax.swing.JFrame {
 		// Cars Card
 		this.carsList.setFixedCellHeight(25);
 		this.cars = Car.selectAllCars();
-		this.carsList.setListData(Car.listToArray(cars));
+		this.carsList.setListData(UIObject.listToArray(this.cars.stream().map(car -> (UIObject) car).toList()));
 		this.carsEditorPane.setContentType("text/html");
 		this.carsEditorPane.setEditable(false);
 		this.carsEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
-		
+
 		// Search Card
 	}
 
@@ -296,6 +300,14 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane5 = new javax.swing.JScrollPane();
         customersEditorPane = new javax.swing.JEditorPane();
         searchPanel = new javax.swing.JPanel();
+        jScrollPane9 = new javax.swing.JScrollPane();
+        jTable1 = new javax.swing.JTable();
+        jLabel3 = new javax.swing.JLabel();
+        jComboBox1 = new javax.swing.JComboBox<>();
+        jButton1 = new javax.swing.JButton();
+        jLabel4 = new javax.swing.JLabel();
+        jComboBox2 = new javax.swing.JComboBox<>();
+        jButton2 = new javax.swing.JButton();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
         addSaleMenuItem = new javax.swing.JMenuItem();
@@ -637,15 +649,68 @@ public class MainFrame extends javax.swing.JFrame {
 
         cardContainer.add(customersPanel, "card3");
 
+        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null}
+            },
+            new String [] {
+                "Title 1", "Title 2", "Title 3", "Title 4"
+            }
+        ));
+        jScrollPane9.setViewportView(jTable1);
+
+        jLabel3.setText("Search Cars By Model");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton1.setText("Run");
+
+        jLabel4.setText("Search Cars By Manufacturer");
+
+        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+
+        jButton2.setText("Run");
+
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
         searchPanelLayout.setHorizontalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 803, Short.MAX_VALUE)
+            .addComponent(jScrollPane9)
+            .addGroup(searchPanelLayout.createSequentialGroup()
+                .addGap(18, 18, 18)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel4)
+                        .addGap(18, 18, 18)
+                        .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton2))
+                    .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 318, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jButton1)))
+                .addContainerGap(179, Short.MAX_VALUE))
         );
         searchPanelLayout.setVerticalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 689, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+                .addGap(14, 14, 14)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton1))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel4)
+                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jButton2))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 422, Short.MAX_VALUE)
+                .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         cardContainer.add(searchPanel, "card6");
@@ -1016,8 +1081,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane formListContainer;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JComboBox<String> jComboBox1;
+    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JMenuBar jMenuBar1;
@@ -1029,6 +1100,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane6;
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
+    private javax.swing.JScrollPane jScrollPane9;
+    private javax.swing.JTable jTable1;
     private javax.swing.JMenu logsMenu;
     private javax.swing.JMenu refreshMenu;
     private javax.swing.JEditorPane salesEditorPane;

@@ -4,6 +4,8 @@
  */
 package io.github.dmgtechlabs;
 
+import java.util.List;
+
 /**
  *
  * @author kdesp73
@@ -11,4 +13,14 @@ package io.github.dmgtechlabs;
 public interface UIObject {
 	String UIString();
 	String toHTML();
+	
+	public static String[] listToArray(List<UIObject> list) {
+		String[] result = new String[list.size()];
+
+		for (int i = 0; i < list.size(); i++) {
+			result[i] = list.get(i).UIString();
+		}
+
+		return result;
+	}
 }
