@@ -33,7 +33,7 @@ public class SaleFrame extends javax.swing.JFrame {
 		GUIUtils.commonSetup(this);
 		this.setResizable(false);
 
-		this.cars = Car.selectAllCars();
+		this.cars = Car.selectCarsBySold(false);
 		this.employees = Employee.selectAll();
 		this.customers = Customer.selectAll();
 

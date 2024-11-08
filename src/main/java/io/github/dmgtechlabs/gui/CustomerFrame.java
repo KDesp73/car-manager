@@ -218,7 +218,7 @@ public class CustomerFrame extends javax.swing.JFrame {
 		Gender gender = int2Gender(this.genderComboBox.getSelectedIndex());
 		String email = this.emailTextFormattedField.getText();
 		
-		if ("Add".equals(this.actionButton.getText())) {
+		if (this.customer == null) {
 			Customer c = new Customer(
 				fname,
 				lname,

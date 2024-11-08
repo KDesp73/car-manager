@@ -179,6 +179,8 @@ public class MainFrame extends javax.swing.JFrame {
 		this.carsEditorPane.setContentType("text/html");
 		this.carsEditorPane.setEditable(false);
 		this.carsEditorPane.setFont(new Font("sans-serif", Font.PLAIN, 18));
+		
+		// Search Card
 	}
 
 	@SuppressWarnings("unchecked")

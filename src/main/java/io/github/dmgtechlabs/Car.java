@@ -173,6 +173,46 @@ public class Car extends Model implements Dao, UIObject {
 		}
 		return result;
 	}
+	
+	public static List<Car> selectCarsBySold(boolean sold) {
+		List<Car> result = new ArrayList<>();
+		try (PostgresConnection db = Database.connection()) {
+			ResultSet rs = db.callFunction(Database.SCHEMA + ".select_cars_by_sold", sold);
+			if (rs.isClosed()) {
+				return null;
+			}
+
+			while (rs.next()) {
+				result.add(new Car(
+					rs.getInt("car_id"),
+					rs.getString("car_license_plate"),
+					rs.getFloat("car_price"),
+					rs.getInt("model_id"),
+					rs.getString("model_name"),
+					int2Type(rs.getInt("model_type")),
+					rs.getInt("model_year"),
+					int2WheelDrive(rs.getInt("model_wd")),
+					rs.getInt("model_hp"),
+					rs.getInt("manufacturer_id"),
+					rs.getString("manufacturer_name"),
+					rs.getString("manufacturer_location"),
+					new Service(
+						rs.getInt("service_id"),
+						rs.getBoolean("service_tires"),
+						rs.getBoolean("service_engine"),
+						rs.getBoolean("service_brakes"),
+						rs.getBoolean("service_oil"),
+						rs.getBoolean("service_battery"),
+						(rs.getDate("service_date") == null) ? null : rs.getDate("service_date").toString()
+					)
+				));
+			}
+			rs.close();
+		} catch (RuntimeException | SQLException ex) {
+			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select All Cars failed", ex);
+		}
+		return result;
+	}
 
 	@Override
 	public String UIString() {

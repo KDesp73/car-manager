@@ -231,14 +231,14 @@ public class EmployeeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
-		Float salary = Float.parseFloat(this.salaryFormattedTextField.getText());
+		Float salary = Float.valueOf(this.salaryFormattedTextField.getText());
 		String fname = this.fnameTextField.getText();
 		String lname = this.lnameTextField.getText();
 		int birthYear = (int) this.birthYearSpinner.getValue();
 		Gender gender = int2Gender(this.genderComboBox.getSelectedIndex());
 		String email = this.emailTextFormattedField.getText();
 		
-		if (this.actionButton.getText() == "Add") {
+		if (this.employee == null) {
 			Employee e = new Employee(
 				salary,
 				fname,
