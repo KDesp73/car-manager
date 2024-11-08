@@ -72,7 +72,7 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void editEmployee() {
-			if (frame.carsList.getSelectedIndex() < 0) {
+			if (frame.employeeList.getSelectedIndex() < 0) {
 				return;
 			}
 			frame.employeeFrame = new EmployeeFrame(frame.employees.get(frame.employeeList.getSelectedIndex()));
