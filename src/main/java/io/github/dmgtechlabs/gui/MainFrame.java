@@ -345,11 +345,6 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel1.setText("SALES");
 
         addSaleButton.setText("ADD");
-        addSaleButton.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                addSaleButtonMouseClicked(evt);
-            }
-        });
         addSaleButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 addSaleButtonActionPerformed(evt);
@@ -851,10 +846,6 @@ public class MainFrame extends javax.swing.JFrame {
     private void addCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarButtonActionPerformed
 		Actions.addCar();
     }//GEN-LAST:event_addCarButtonActionPerformed
-
-    private void addSaleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSaleButtonMouseClicked
-		Actions.addSale();
-    }//GEN-LAST:event_addSaleButtonMouseClicked
 
     private void editCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCarButtonActionPerformed
 		Actions.editCar();
