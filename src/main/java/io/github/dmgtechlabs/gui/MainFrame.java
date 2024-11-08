@@ -28,6 +28,81 @@ public class MainFrame extends javax.swing.JFrame {
 	private CustomerFrame customerFrame;
 	private CarFrame carFrame;
 
+	static class Actions {
+
+		public static void add(JFrame frame) {
+			if (frame instanceof SaleFrame sf) {
+				System.out.println("SaleFrame");
+				sf = new SaleFrame();
+				GUIUtils.showFrame(sf);
+			} else if (frame instanceof CustomerFrame cf) {
+				System.out.println("CustomerFrame");
+				cf = new CustomerFrame();
+				GUIUtils.showFrame(cf);
+			} else if (frame instanceof EmployeeFrame ef) {
+				System.out.println("EmployeeFrame");
+				ef = new EmployeeFrame();
+				GUIUtils.showFrame(ef);
+			} else if (frame instanceof CarFrame cf) {
+				System.out.println("CarFrame");
+				cf = new CarFrame();
+				GUIUtils.showFrame(cf);
+			}
+		}
+
+		public static void edit(JFrame frame, MainFrame mf) {
+			if (frame instanceof SaleFrame sf) {
+				System.out.println("SaleFrame");
+//				if (mf.salesList.getSelectedIndex() < 0) {
+//					return;
+//				}
+//				sf = new SaleFrame(mf.sales.get(mf.salesList.getSelectedIndex()));
+//				GUIUtils.showFrame(cf);
+			} else if (frame instanceof CustomerFrame cf) {
+				System.out.println("CustomerFrame");
+				if (mf.customerList.getSelectedIndex() < 0) {
+					return;
+				}
+				cf = new CustomerFrame(mf.customers.get(mf.customerList.getSelectedIndex()));
+				GUIUtils.showFrame(cf);
+			} else if (frame instanceof EmployeeFrame ef) {
+				System.out.println("EmployeeFrame");
+				if (mf.employeeList.getSelectedIndex() < 0) {
+					return;
+				}
+				ef = new EmployeeFrame(mf.employees.get(mf.employeeList.getSelectedIndex()));
+				GUIUtils.showFrame(ef);
+			} else if (frame instanceof CarFrame cf) {
+				System.out.println("CarFrame");
+				if (mf.carsList.getSelectedIndex() < 0) {
+					return;
+				}
+				cf = new CarFrame(mf.cars.get(mf.carsList.getSelectedIndex()));
+				GUIUtils.showFrame(cf);
+			}
+		}
+
+		public static void delete(JFrame frame) {
+			if (frame instanceof SaleFrame sf) {
+				System.out.println("SaleFrame");
+				sf = new SaleFrame();
+				GUIUtils.showFrame(sf);
+			} else if (frame instanceof CustomerFrame cf) {
+				System.out.println("CustomerFrame");
+				cf = new CustomerFrame();
+				GUIUtils.showFrame(cf);
+			} else if (frame instanceof EmployeeFrame ef) {
+				System.out.println("EmployeeFrame");
+				ef = new EmployeeFrame();
+				GUIUtils.showFrame(ef);
+			} else if (frame instanceof CarFrame cf) {
+				System.out.println("CarFrame");
+				cf = new CarFrame();
+				GUIUtils.showFrame(cf);
+			}
+		}
+	}
+
 	// Customers Card
 	private List<Customer> customers;
 
@@ -639,56 +714,43 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsLogsMenuItemActionPerformed
 
     private void addSaleMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleMenuItemActionPerformed
-		this.saleFrame = new SaleFrame();
-		GUIUtils.showFrame(this.saleFrame);
+		Actions.add(this.saleFrame);
     }//GEN-LAST:event_addSaleMenuItemActionPerformed
 
     private void addEmployeeMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeMenuItemActionPerformed
-		this.employeeFrame = new EmployeeFrame();
-		GUIUtils.showFrame(this.employeeFrame);
+		Actions.add(this.employeeFrame);
     }//GEN-LAST:event_addEmployeeMenuItemActionPerformed
 
     private void addCarMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarMenuItemActionPerformed
-		this.carFrame = new CarFrame();
-		GUIUtils.showFrame(this.carFrame);
+		Actions.add(this.carFrame);
     }//GEN-LAST:event_addCarMenuItemActionPerformed
 
     private void addCustomerMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerMenuItemActionPerformed
-		this.customerFrame = new CustomerFrame();
-		GUIUtils.showFrame(this.customerFrame);
+		Actions.add(this.customerFrame);
     }//GEN-LAST:event_addCustomerMenuItemActionPerformed
 
     private void addCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCustomerButtonActionPerformed
-		this.customerFrame = new CustomerFrame();
-		GUIUtils.showFrame(this.customerFrame);
+		Actions.add(this.customerFrame);
     }//GEN-LAST:event_addCustomerButtonActionPerformed
 
     private void addEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addEmployeeButtonActionPerformed
-		this.employeeFrame = new EmployeeFrame();
-		GUIUtils.showFrame(this.employeeFrame);
+		Actions.add(this.employeeFrame);
     }//GEN-LAST:event_addEmployeeButtonActionPerformed
 
     private void addSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addSaleButtonActionPerformed
-		this.saleFrame = new SaleFrame();
-		GUIUtils.showFrame(this.saleFrame);
+		Actions.add(this.saleFrame);
     }//GEN-LAST:event_addSaleButtonActionPerformed
 
     private void addCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarButtonActionPerformed
-		this.carFrame = new CarFrame();
-		GUIUtils.showFrame(this.carFrame);
+		Actions.add(this.carFrame);
     }//GEN-LAST:event_addCarButtonActionPerformed
 
     private void addSaleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSaleButtonMouseClicked
-		this.saleFrame = new SaleFrame();
-		GUIUtils.showFrame(this.saleFrame);
+		Actions.add(this.saleFrame);
     }//GEN-LAST:event_addSaleButtonMouseClicked
 
     private void editCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCarButtonActionPerformed
-		if (this.carsList.getSelectedIndex() < 0) {
-			return;
-		}
-		this.carFrame = new CarFrame(this.cars.get(this.carsList.getSelectedIndex()));
-		GUIUtils.showFrame(this.carFrame);
+		Actions.edit(this.carFrame, this);
     }//GEN-LAST:event_editCarButtonActionPerformed
 
     private void allRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_allRefreshMenuItemActionPerformed
@@ -825,25 +887,15 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteEmployeeButtonActionPerformed
 
     private void editCustomerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editCustomerButtonActionPerformed
-        if (this.customerList.getSelectedIndex() < 0 ) {
-			return;
-		}
-		
-		this.customerFrame = new CustomerFrame(this.customers.get(customerList.getSelectedIndex()));
-		GUIUtils.showFrame(this.customerFrame);
+		Actions.edit(this.customerFrame, this);
     }//GEN-LAST:event_editCustomerButtonActionPerformed
 
     private void editEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editEmployeeButtonActionPerformed
-        if (this.employeeList.getSelectedIndex() < 0 ) {
-			return;
-		}
-		
-		this.employeeFrame = new EmployeeFrame(this.employees.get(employeeList.getSelectedIndex()));
-		GUIUtils.showFrame(this.employeeFrame);
+		Actions.edit(this.employeeFrame, this);
     }//GEN-LAST:event_editEmployeeButtonActionPerformed
 
     private void employeeLogsMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeeLogsMenuItemActionPerformed
-        if (this.logsFrame != null && this.logsFrame.isShowing()) {
+		if (this.logsFrame != null && this.logsFrame.isShowing()) {
 			return;
 		}
 
