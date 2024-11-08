@@ -313,11 +313,17 @@
               <Properties>
                 <Property name="text" type="java.lang.String" value="EDIT"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="editSaleButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JButton" name="deleteSaleButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="DELETE"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="deleteSaleButtonActionPerformed"/>
+              </Events>
             </Component>
             <Container class="javax.swing.JScrollPane" name="jScrollPane8">
               <AuxValues>

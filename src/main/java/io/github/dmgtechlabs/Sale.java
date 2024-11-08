@@ -212,7 +212,17 @@ public class Sale implements Dao, UIObject {
 
 	@Override
 	public String toHTML() {
-		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+		StringBuilder sb = new StringBuilder();
+		
+		sb.append(Utils.HTML.header(1, "Sold " + this.car.getLicencePlate() + " for " + this.finalPrice + "$"));
+		sb.append(Utils.HTML.header(2, "Details"));
+		sb.append(Utils.HTML.ul(
+			"Model: " + this.car.getManufacturerName() + " " + this.car.getName() + " " + this.car.getYear(),
+			"Sold by: " + this.employee.getName(),
+			"Sold to: " + this.customer.getName()
+		));
+		
+		return sb.toString();
 	}
 
 }
