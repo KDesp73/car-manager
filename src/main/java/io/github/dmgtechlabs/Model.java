@@ -198,6 +198,14 @@ public class Model extends Manufacturer implements Dao {
 			this.id
 		);
 	}
+	
+	public static void populate() {
+		PostgresConnection db = Database.connection();
+		db.callProcedure(Database.SCHEMA + ".populate_model");
+		db.close();
+
+		SQLogger.getLogger().logSQL("Populating Model", SQLogger.SQLOperation.INSERT, null);
+	}
 
 	public static List<Model> selectAllModels() {
 		return null;
