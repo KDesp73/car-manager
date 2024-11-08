@@ -38,21 +38,25 @@ public class MainFrame extends javax.swing.JFrame {
 
 		public static void addCar() {
 			frame.carFrame = new CarFrame();
+			GUIUtils.addWindowClosedListener(frame.carFrame, refreshCarsRunnable());
 			GUIUtils.showFrame(frame.carFrame);
 		}
 
 		public static void addCustomer() {
 			frame.customerFrame = new CustomerFrame();
+			GUIUtils.addWindowClosedListener(frame.customerFrame, refreshCustomersRunnable());
 			GUIUtils.showFrame(frame.customerFrame);
 		}
 
 		public static void addEmployee() {
 			frame.employeeFrame = new EmployeeFrame();
+			GUIUtils.addWindowClosedListener(frame.employeeFrame, refreshEmployeesRunnable());
 			GUIUtils.showFrame(frame.employeeFrame);
 		}
 
 		public static void addSale() {
 			frame.saleFrame = new SaleFrame();
+			GUIUtils.addWindowClosedListener(frame.saleFrame, refreshSalesRunnable());
 			GUIUtils.showFrame(frame.saleFrame);
 		}
 
@@ -61,6 +65,7 @@ public class MainFrame extends javax.swing.JFrame {
 				return;
 			}
 			frame.carFrame = new CarFrame(frame.cars.get(frame.carsList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.carFrame, refreshCarsRunnable());
 			GUIUtils.showFrame(frame.carFrame);
 		}
 
@@ -69,6 +74,7 @@ public class MainFrame extends javax.swing.JFrame {
 				return;
 			}
 			frame.customerFrame = new CustomerFrame(frame.customers.get(frame.customerList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.customerFrame, refreshCustomersRunnable());
 			GUIUtils.showFrame(frame.customerFrame);
 		}
 
@@ -77,6 +83,7 @@ public class MainFrame extends javax.swing.JFrame {
 				return;
 			}
 			frame.employeeFrame = new EmployeeFrame(frame.employees.get(frame.employeeList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.employeeFrame, refreshEmployeesRunnable());
 			GUIUtils.showFrame(frame.employeeFrame);
 		}
 
@@ -85,6 +92,7 @@ public class MainFrame extends javax.swing.JFrame {
 				return;
 			}
 			frame.saleFrame = new SaleFrame(frame.sales.get(frame.salesList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.saleFrame, refreshSalesRunnable());
 			GUIUtils.showFrame(frame.saleFrame);
 		}
 
@@ -100,7 +108,7 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			car.delete();
-			refreshCar();
+			refreshCars();
 			GUIUtils.showInfo(frame.carsEditorPane, frame.cars.get(0));
 		}
 
@@ -116,7 +124,7 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			customer.delete();
-			refreshCustomer();
+			refreshCustomers();
 			GUIUtils.showInfo(frame.customersEditorPane, customer);
 		}
 
@@ -132,7 +140,7 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			employee.delete();
-			refreshEmployee();
+			refreshEmployees();
 			GUIUtils.showInfo(frame.employeesEditorPane, employee);
 		}
 
@@ -148,41 +156,70 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			sale.delete();
-			refreshSale();
+			refreshSales();
 			GUIUtils.showInfo(frame.salesEditorPane, sale);
 		}
 
-		public static void refreshCar() {
+		private static Runnable asRunnable(Runnable method) {
+			return method;
+		}
+
+		public static Runnable refreshCarsRunnable() {
+			return asRunnable(() -> {
+				frame.cars = Car.selectAllCars();
+				frame.carsList.setListData(UIObject.listToArray(frame.cars.stream().map(car -> (UIObject) car).toList()));
+			});
+		}
+
+		public static Runnable refreshCustomersRunnable() {
+			return asRunnable(() -> {
+			frame.customers = Customer.selectAll();
+			frame.customerList.setListData(UIObject.listToArray(frame.customers.stream().map(customer -> (UIObject) customer).toList()));
+			});
+		}
+
+		public static Runnable refreshEmployeesRunnable() {
+			return asRunnable(() -> {
+			frame.employees = Employee.selectAll();
+			frame.employeeList.setListData(UIObject.listToArray(frame.employees.stream().map(employee -> (UIObject) employee).toList()));
+			});
+		}
+
+		public static Runnable refreshSalesRunnable() {
+			return asRunnable(() -> {
+			frame.sales = Sale.selectAll();
+			frame.salesList.setListData(UIObject.listToArray(frame.sales.stream().map(sale -> (UIObject) sale).toList()));
+			});
+		}
+
+		public static void refreshCars() {
 			frame.cars = Car.selectAllCars();
 			frame.carsList.setListData(UIObject.listToArray(frame.cars.stream().map(car -> (UIObject) car).toList()));
 		}
 
-		public static void refreshCustomer() {
+		public static void refreshCustomers() {
 			frame.customers = Customer.selectAll();
 			frame.customerList.setListData(UIObject.listToArray(frame.customers.stream().map(customer -> (UIObject) customer).toList()));
 		}
 
-		public static void refreshEmployee() {
+		public static void refreshEmployees() {
 			frame.employees = Employee.selectAll();
 			frame.employeeList.setListData(UIObject.listToArray(frame.employees.stream().map(employee -> (UIObject) employee).toList()));
 		}
 
-		public static void refreshSale() {
+		public static void refreshSales() {
 			frame.sales = Sale.selectAll();
 			frame.salesList.setListData(UIObject.listToArray(frame.sales.stream().map(sale -> (UIObject) sale).toList()));
 		}
 
 		public static void refreshAll() {
-			refreshCar();
-			refreshCustomer();
-			refreshEmployee();
-			refreshSale();
+			refreshCars();
+			refreshCustomers();
+			refreshEmployees();
+			refreshSales();
 			JOptionPane.showMessageDialog(frame, "Refreshed all lists");
 		}
 	}
-
-
-
 
 	// Customers Card
 	private List<Customer> customers;
@@ -921,19 +958,19 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_allRefreshMenuItemActionPerformed
 
     private void salesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesRefreshMenuItemActionPerformed
-		Actions.refreshSale();
+		Actions.refreshSales();
     }//GEN-LAST:event_salesRefreshMenuItemActionPerformed
 
     private void carsRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsRefreshMenuItemActionPerformed
-		Actions.refreshCar();
+		Actions.refreshCars();
     }//GEN-LAST:event_carsRefreshMenuItemActionPerformed
 
     private void employeesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesRefreshMenuItemActionPerformed
-		Actions.refreshEmployee();
+		Actions.refreshEmployees();
     }//GEN-LAST:event_employeesRefreshMenuItemActionPerformed
 
     private void customersRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customersRefreshMenuItemActionPerformed
-		Actions.refreshCustomer();
+		Actions.refreshCustomers();
 
     }//GEN-LAST:event_customersRefreshMenuItemActionPerformed
 
