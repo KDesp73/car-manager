@@ -7,6 +7,7 @@ import io.github.dmgtechlabs.Manufacturer;
 import io.github.dmgtechlabs.Model;
 import io.github.dmgtechlabs.Sale;
 import io.github.dmgtechlabs.UIObject;
+import io.github.dmgtechlabs.Utils;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -33,6 +34,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private EmployeeFrame employeeFrame;
 	private CustomerFrame customerFrame;
 	private CarFrame carFrame;
+	private ServiceFrame serviceFrame;
 
 	private class Actions {
 
@@ -40,57 +42,81 @@ public class MainFrame extends javax.swing.JFrame {
 
 		public static void addCar() {
 			frame.carFrame = new CarFrame();
+			GUIUtils.addWindowClosedListener(frame.carFrame, refreshCarsRunnable());
 			GUIUtils.showFrame(frame.carFrame);
 		}
 
 		public static void addCustomer() {
 			frame.customerFrame = new CustomerFrame();
+			GUIUtils.addWindowClosedListener(frame.customerFrame, refreshCustomersRunnable());
 			GUIUtils.showFrame(frame.customerFrame);
 		}
 
 		public static void addEmployee() {
 			frame.employeeFrame = new EmployeeFrame();
+			GUIUtils.addWindowClosedListener(frame.employeeFrame, refreshEmployeesRunnable());
 			GUIUtils.showFrame(frame.employeeFrame);
 		}
 
 		public static void addSale() {
 			frame.saleFrame = new SaleFrame();
+			GUIUtils.addWindowClosedListener(frame.saleFrame, refreshSalesRunnable());
 			GUIUtils.showFrame(frame.saleFrame);
 		}
 
 		public static void editCar() {
-			if (frame.carsList.getSelectedIndex() < 0) {
+			if(frame.carsList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
 			frame.carFrame = new CarFrame(frame.cars.get(frame.carsList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.carFrame, refreshCarsRunnable());
 			GUIUtils.showFrame(frame.carFrame);
 		}
 
 		public static void editCustomer() {
-			if (frame.customerList.getSelectedIndex() < 0) {
+			if(frame.customerList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
 			frame.customerFrame = new CustomerFrame(frame.customers.get(frame.customerList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.customerFrame, refreshCustomersRunnable());
 			GUIUtils.showFrame(frame.customerFrame);
 		}
 
 		public static void editEmployee() {
-			if (frame.employeeList.getSelectedIndex() < 0) {
+			if(frame.employeeList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
 			frame.employeeFrame = new EmployeeFrame(frame.employees.get(frame.employeeList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.employeeFrame, refreshEmployeesRunnable());
 			GUIUtils.showFrame(frame.employeeFrame);
 		}
 
 		public static void editSale() {
+			if(frame.salesList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			if (frame.salesList.getSelectedIndex() < 0) {
 				return;
 			}
 			frame.saleFrame = new SaleFrame(frame.sales.get(frame.salesList.getSelectedIndex()));
+			GUIUtils.addWindowClosedListener(frame.saleFrame, refreshSalesRunnable());
 			GUIUtils.showFrame(frame.saleFrame);
 		}
 
 		public static void deleteCar() {
+			if(frame.carsList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var car = frame.cars.get(frame.carsList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -102,11 +128,16 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			car.delete();
-			refreshCar();
+			refreshCars();
 			GUIUtils.showInfo(frame.carsEditorPane, frame.cars.get(0));
 		}
 
 		public static void deleteCustomer() {
+			if(frame.customerList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var customer = frame.customers.get(frame.customerList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -118,11 +149,16 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			customer.delete();
-			refreshCustomer();
+			refreshCustomers();
 			GUIUtils.showInfo(frame.customersEditorPane, customer);
 		}
 
 		public static void deleteEmployee() {
+			if(frame.employeeList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var employee = frame.employees.get(frame.employeeList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -134,11 +170,16 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			employee.delete();
-			refreshEmployee();
+			refreshEmployees();
 			GUIUtils.showInfo(frame.employeesEditorPane, employee);
 		}
 
 		public static void deleteSale() {
+			if(frame.salesList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var sale = frame.sales.get(frame.salesList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -150,41 +191,87 @@ public class MainFrame extends javax.swing.JFrame {
 			}
 
 			sale.delete();
-			refreshSale();
+			refreshSales();
 			GUIUtils.showInfo(frame.salesEditorPane, sale);
 		}
 
-		public static void refreshCar() {
+		public static void updateService() {
+			if(frame.carsList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			frame.serviceFrame = new ServiceFrame(frame.cars.get(frame.carsList.getSelectedIndex()).getService());
+			GUIUtils.addWindowClosedListener(frame.serviceFrame, refreshCarsRunnable());
+			GUIUtils.showFrame(frame.serviceFrame);
+		}
+
+		private static Runnable asRunnable(Runnable method) {
+			return method;
+		}
+
+		public static Runnable refreshCarsRunnable() {
+			return asRunnable(() -> {
+				refreshCars();
+			});
+		}
+
+		public static Runnable refreshCustomersRunnable() {
+			return asRunnable(() -> {
+				refreshCustomers();
+			});
+		}
+
+		public static Runnable refreshEmployeesRunnable() {
+			return asRunnable(() -> {
+				refreshEmployees();
+			});
+		}
+
+		public static Runnable refreshSalesRunnable() {
+			return asRunnable(() -> {
+				refreshSales();
+			});
+		}
+
+		public static Runnable refreshAllRunnable() {
+			return asRunnable(() -> {
+				refreshAll();
+			});
+		}
+
+		public static void refreshCars() {
 			frame.cars = Car.selectAllCars();
 			frame.carsList.setListData(UIObject.listToArray(frame.cars.stream().map(car -> (UIObject) car).toList()));
+			frame.carsEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
-		public static void refreshCustomer() {
+		public static void refreshCustomers() {
 			frame.customers = Customer.selectAll();
 			frame.customerList.setListData(UIObject.listToArray(frame.customers.stream().map(customer -> (UIObject) customer).toList()));
+			frame.customersEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
-		public static void refreshEmployee() {
+		public static void refreshEmployees() {
 			frame.employees = Employee.selectAll();
 			frame.employeeList.setListData(UIObject.listToArray(frame.employees.stream().map(employee -> (UIObject) employee).toList()));
+			frame.employeesEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
-		public static void refreshSale() {
+		public static void refreshSales() {
 			frame.sales = Sale.selectAll();
 			frame.salesList.setListData(UIObject.listToArray(frame.sales.stream().map(sale -> (UIObject) sale).toList()));
+			frame.salesEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
 		public static void refreshAll() {
-			refreshCar();
-			refreshCustomer();
-			refreshEmployee();
-			refreshSale();
+			refreshCars();
+			refreshCustomers();
+			refreshEmployees();
+			refreshSales();
 			JOptionPane.showMessageDialog(frame, "Refreshed all lists");
 		}
 	}
-
-
-
 
 	// Customers Card
 	private List<Customer> customers;
@@ -213,6 +300,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(1048, 715));
+		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
 
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
@@ -262,7 +350,7 @@ public class MainFrame extends javax.swing.JFrame {
 		// Search Card
 		this.manufacturers = Manufacturer.selectAllManufacturers();
 		for (Manufacturer m : this.manufacturers) {
-			this.manufacturerComboBox1.addItem(m.UIString());
+			this.manufacturersComboBox1.addItem(m.UIString());
 		}
 		
 	}
@@ -292,6 +380,7 @@ public class MainFrame extends javax.swing.JFrame {
         deleteCarButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         carsEditorPane = new javax.swing.JEditorPane();
+        serviceCarButton = new javax.swing.JButton();
         employeesPanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         employeeList = new javax.swing.JList<>();
@@ -314,10 +403,10 @@ public class MainFrame extends javax.swing.JFrame {
         jScrollPane9 = new javax.swing.JScrollPane();
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
-        manufacturerComboBox1 = new javax.swing.JComboBox<>();
+        manufacturersComboBox1 = new javax.swing.JComboBox<>();
         jButton1 = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
-        manufacturersComboBox1 = new javax.swing.JComboBox<>();
+        manufacturersComboBox2 = new javax.swing.JComboBox<>();
         jButton2 = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         customerComboBox = new javax.swing.JComboBox<>();
@@ -335,7 +424,7 @@ public class MainFrame extends javax.swing.JFrame {
         locationsComboBox = new javax.swing.JComboBox<>();
         jButton8 = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        manufacturersComboBox2 = new javax.swing.JComboBox<>();
+        combobox = new javax.swing.JComboBox<>();
         jButton9 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         jButton10 = new javax.swing.JButton();
@@ -494,6 +583,13 @@ public class MainFrame extends javax.swing.JFrame {
         carsEditorPane.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jScrollPane3.setViewportView(carsEditorPane);
 
+        serviceCarButton.setText("Service");
+        serviceCarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serviceCarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout carsPanelLayout = new javax.swing.GroupLayout(carsPanel);
         carsPanel.setLayout(carsPanelLayout);
         carsPanelLayout.setHorizontalGroup(
@@ -506,12 +602,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(carsPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
                         .addComponent(addCarButton)
                         .addGap(18, 18, 18)
                         .addComponent(editCarButton)
                         .addGap(18, 18, 18)
-                        .addComponent(deleteCarButton)))
+                        .addComponent(deleteCarButton))
+                    .addGroup(carsPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(serviceCarButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -527,7 +626,9 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(addCarButton)
                             .addComponent(editCarButton)
                             .addComponent(deleteCarButton))
-                        .addGap(106, 106, 106)
+                        .addGap(75, 75, 75)
+                        .addComponent(serviceCarButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
@@ -702,10 +803,10 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Search Cars By Model");
 
-        manufacturerComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        manufacturerComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        manufacturersComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        manufacturersComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manufacturerComboBox1ActionPerformed(evt);
+                manufacturersComboBox1ActionPerformed(evt);
             }
         });
 
@@ -713,12 +814,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel4.setText("Search Cars By Manufacturer");
 
-        manufacturersComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        manufacturersComboBox1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                manufacturersComboBox1ActionPerformed(evt);
-            }
-        });
+        manufacturersComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton2.setText("Run");
 
@@ -754,7 +850,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel13.setText("Search Model By Manufacturer");
 
-        manufacturersComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jButton9.setText("Run");
 
@@ -830,7 +926,7 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addComponent(manufacturerlabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(manufacturerComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(manufacturersComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(modelLabel)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -839,7 +935,7 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addComponent(jButton1)
                                 .addGap(0, 0, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                                .addComponent(manufacturersComboBox1, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(manufacturersComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton2))))
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, searchPanelLayout.createSequentialGroup()
@@ -851,7 +947,7 @@ public class MainFrame extends javax.swing.JFrame {
                         .addGap(152, 152, 152)
                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(manufacturersComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(combobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGap(18, 18, 18)
                                 .addComponent(jButton9))
                             .addGroup(searchPanelLayout.createSequentialGroup()
@@ -874,7 +970,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(14, 14, 14)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
-                    .addComponent(manufacturerComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manufacturersComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton1)
                     .addComponent(modelsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(manufacturerlabel)
@@ -882,7 +978,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
-                    .addComponent(manufacturersComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(manufacturersComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton2))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -922,7 +1018,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(manufacturersComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
@@ -1136,19 +1232,19 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_allRefreshMenuItemActionPerformed
 
     private void salesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesRefreshMenuItemActionPerformed
-		Actions.refreshSale();
+		Actions.refreshSales();
     }//GEN-LAST:event_salesRefreshMenuItemActionPerformed
 
     private void carsRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsRefreshMenuItemActionPerformed
-		Actions.refreshCar();
+		Actions.refreshCars();
     }//GEN-LAST:event_carsRefreshMenuItemActionPerformed
 
     private void employeesRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesRefreshMenuItemActionPerformed
-		Actions.refreshEmployee();
+		Actions.refreshEmployees();
     }//GEN-LAST:event_employeesRefreshMenuItemActionPerformed
 
     private void customersRefreshMenuItemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customersRefreshMenuItemActionPerformed
-		Actions.refreshCustomer();
+		Actions.refreshCustomers();
 
     }//GEN-LAST:event_customersRefreshMenuItemActionPerformed
 
@@ -1245,22 +1341,22 @@ public class MainFrame extends javax.swing.JFrame {
 		Actions.deleteSale();
     }//GEN-LAST:event_deleteSaleButtonActionPerformed
 
-    private void manufacturerComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manufacturerComboBox1ActionPerformed
-        this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturerComboBox1.getSelectedIndex()).getManufacturerName());
+    private void manufacturersComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manufacturersComboBox1ActionPerformed
+        this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturersComboBox1.getSelectedIndex()).getManufacturerName());
 
 		this.modelsComboBox.removeAllItems();
 		for (Model m : this.models) {
 			this.modelsComboBox.addItem(m.UIString());
 		}
-    }//GEN-LAST:event_manufacturerComboBox1ActionPerformed
+    }//GEN-LAST:event_manufacturersComboBox1ActionPerformed
 
     private void modelsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modelsComboBoxActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_modelsComboBoxActionPerformed
 
-    private void manufacturersComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manufacturersComboBox1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_manufacturersComboBox1ActionPerformed
+    private void serviceCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceCarButtonActionPerformed
+		Actions.updateService();
+    }//GEN-LAST:event_serviceCarButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -1292,6 +1388,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem carsLogsMenuItem;
     private javax.swing.JPanel carsPanel;
     private javax.swing.JMenuItem carsRefreshMenuItem;
+    private javax.swing.JComboBox<String> combobox;
     private javax.swing.JComboBox<String> customerComboBox;
     private javax.swing.JList<String> customerList;
     private javax.swing.JEditorPane customersEditorPane;
@@ -1354,7 +1451,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> locationsComboBox;
     private javax.swing.JMenu logsMenu;
-    private javax.swing.JComboBox<String> manufacturerComboBox1;
     private javax.swing.JLabel manufacturerlabel;
     private javax.swing.JComboBox<String> manufacturersComboBox1;
     private javax.swing.JComboBox<String> manufacturersComboBox2;
@@ -1367,6 +1463,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel salesPanel;
     private javax.swing.JMenuItem salesRefreshMenuItem;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JButton serviceCarButton;
     private javax.swing.JComboBox<String> soldComboBox;
     // End of variables declaration//GEN-END:variables
 }

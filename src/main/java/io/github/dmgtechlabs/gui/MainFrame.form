@@ -356,12 +356,16 @@
                           <Group type="102" alignment="0" attributes="0">
                               <EmptySpace min="-2" pref="24" max="-2" attributes="0"/>
                               <Component id="jLabel2" min="-2" max="-2" attributes="0"/>
-                              <EmptySpace pref="209" max="32767" attributes="0"/>
+                              <EmptySpace pref="219" max="32767" attributes="0"/>
                               <Component id="addCarButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="editCarButton" min="-2" max="-2" attributes="0"/>
                               <EmptySpace type="separate" max="-2" attributes="0"/>
                               <Component id="deleteCarButton" min="-2" max="-2" attributes="0"/>
+                          </Group>
+                          <Group type="102" attributes="0">
+                              <EmptySpace max="32767" attributes="0"/>
+                              <Component id="serviceCarButton" min="-2" max="-2" attributes="0"/>
                           </Group>
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
@@ -382,7 +386,9 @@
                                   <Component id="editCarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                                   <Component id="deleteCarButton" alignment="3" min="-2" max="-2" attributes="0"/>
                               </Group>
-                              <EmptySpace min="-2" pref="106" max="-2" attributes="0"/>
+                              <EmptySpace min="-2" pref="75" max="-2" attributes="0"/>
+                              <Component id="serviceCarButton" min="-2" max="-2" attributes="0"/>
+                              <EmptySpace max="-2" attributes="0"/>
                               <Component id="jScrollPane3" pref="538" max="32767" attributes="0"/>
                           </Group>
                           <Component id="jScrollPane2" max="32767" attributes="0"/>
@@ -465,6 +471,14 @@
                 </Component>
               </SubComponents>
             </Container>
+            <Component class="javax.swing.JButton" name="serviceCarButton">
+              <Properties>
+                <Property name="text" type="java.lang.String" value="Service"/>
+              </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="serviceCarButtonActionPerformed"/>
+              </Events>
+            </Component>
           </SubComponents>
         </Container>
         <Container class="javax.swing.JPanel" name="employeesPanel">
@@ -786,7 +800,7 @@
                                   <Group type="102" attributes="0">
                                       <Component id="manufacturerlabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
-                                      <Component id="manufacturerComboBox1" min="-2" max="-2" attributes="0"/>
+                                      <Component id="manufacturersComboBox1" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace min="-2" max="-2" attributes="0"/>
                                       <Component id="modelLabel" min="-2" max="-2" attributes="0"/>
                                       <EmptySpace max="-2" attributes="0"/>
@@ -796,7 +810,7 @@
                                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                                   </Group>
                                   <Group type="102" alignment="1" attributes="0">
-                                      <Component id="manufacturersComboBox1" max="32767" attributes="0"/>
+                                      <Component id="manufacturersComboBox2" max="32767" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jButton2" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -812,7 +826,7 @@
                               <EmptySpace min="-2" pref="152" max="-2" attributes="0"/>
                               <Group type="103" groupAlignment="0" attributes="0">
                                   <Group type="102" alignment="0" attributes="0">
-                                      <Component id="manufacturersComboBox2" max="32767" attributes="0"/>
+                                      <Component id="combobox" max="32767" attributes="0"/>
                                       <EmptySpace type="separate" max="-2" attributes="0"/>
                                       <Component id="jButton9" min="-2" max="-2" attributes="0"/>
                                   </Group>
@@ -845,7 +859,7 @@
                       <EmptySpace min="-2" pref="14" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel3" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="manufacturerComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="manufacturersComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton1" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="modelsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="manufacturerlabel" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -854,7 +868,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel4" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="manufacturersComboBox1" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="manufacturersComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton2" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -902,7 +916,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="manufacturersComboBox2" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="combobox" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="85" max="32767" attributes="0"/>
@@ -938,7 +952,7 @@
                 <Property name="text" type="java.lang.String" value="Search Cars By Model"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="manufacturerComboBox1">
+            <Component class="javax.swing.JComboBox" name="manufacturersComboBox1">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -950,7 +964,7 @@
                 </Property>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manufacturerComboBox1ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manufacturersComboBox1ActionPerformed"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
@@ -966,7 +980,7 @@
                 <Property name="text" type="java.lang.String" value="Search Cars By Manufacturer"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="manufacturersComboBox1">
+            <Component class="javax.swing.JComboBox" name="manufacturersComboBox2">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -977,9 +991,6 @@
                   </StringArray>
                 </Property>
               </Properties>
-              <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="manufacturersComboBox1ActionPerformed"/>
-              </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
@@ -1099,7 +1110,7 @@
                 <Property name="text" type="java.lang.String" value="Search Model By Manufacturer"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="manufacturersComboBox2">
+            <Component class="javax.swing.JComboBox" name="combobox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">

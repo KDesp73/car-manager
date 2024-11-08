@@ -223,7 +223,7 @@ public class Car extends Model implements Dao, UIObject {
 			"Name: " + manufacturer.getManufacturerName() + " " +model.getName(),
 			"Type: " + model.getType(),
 			"Hp: " + model.getHp(),
-			"WD: " + model.getWd(),
+			"WD: " + model.getWd().toString().substring(1),
 			"Year: " + model.getYear()
 		));
 		sb.append(Utils.HTML.header(3, "Service"));
