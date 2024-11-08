@@ -30,8 +30,14 @@ public class MainFrame extends javax.swing.JFrame {
 	private CustomerFrame customerFrame;
 	private CarFrame carFrame;
 
-	static class Actions {
-
+	private class Actions {
+		public static MainFrame frame;
+		
+		public static void addCar() {
+			frame.carFrame = new CarFrame();
+			GUIUtils.showFrame(frame.carFrame);
+		}
+		
 		public static void add(JFrame frame) {
 			if (frame instanceof SaleFrame sf) {
 				System.out.println("SaleFrame");
@@ -123,6 +129,9 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
+		
+		Actions.frame = this;
+		
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(1048, 715));
 
@@ -754,7 +763,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_addSaleButtonActionPerformed
 
     private void addCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addCarButtonActionPerformed
-		Actions.add(this.carFrame);
+		Actions.addCar();
     }//GEN-LAST:event_addCarButtonActionPerformed
 
     private void addSaleButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_addSaleButtonMouseClicked
