@@ -295,12 +295,11 @@ public class MainFrame extends javax.swing.JFrame {
 	public MainFrame() {
 		initComponents();
 		GUIUtils.commonSetup(this);
-
-		Actions.frame = this;
+		this.setTitle("car-manager");
+		this.setResizable(false);
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(1048, 715));
-		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
 
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
@@ -354,8 +353,25 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 		
 		this.employeesByEmailTextField.setInputVerifier(new EmailVerifier());
+		GUIUtils.setPlaceholder(this.employeesByEmailTextField, "Email");
 		this.customersByEmailTextField.setInputVerifier(new EmailVerifier());
+		GUIUtils.setPlaceholder(this.customersByEmailTextField, "Email");
+		this.carPriceTextFormattedField.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				char c = e.getKeyChar();
+				String text = carPriceTextFormattedField.getText();
+
+				// Allow only digits and a single dot that is not the first character
+				if (!(Character.isDigit(c) || (c == '.' && !text.isEmpty() && !text.contains(".")))) {
+					e.consume();
+				}
+			}
+		});
 		
+		
+		Actions.frame = this;
+		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
 	}
 
 	@SuppressWarnings("unchecked")
@@ -434,10 +450,11 @@ public class MainFrame extends javax.swing.JFrame {
         customersByEmailTextField = new javax.swing.JFormattedTextField();
         employeesByEmailTextField = new javax.swing.JFormattedTextField();
         soldComboBox = new javax.swing.JComboBox<>();
-        namesFormatedTextField = new javax.swing.JTextField();
         modelsComboBox = new javax.swing.JComboBox<>();
         resultCountLabel = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
+        carPriceTextFormattedField = new javax.swing.JFormattedTextField();
+        jComboBox1 = new javax.swing.JComboBox<>();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
         addSaleMenuItem = new javax.swing.JMenuItem();
@@ -845,7 +862,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         EmployeesByEmailButton.setText("Run");
 
-        jLabel11.setText("Search Manufacturer By Name");
+        jLabel11.setText("Search Cars By Price");
 
         jButton7.setText("Run");
 
@@ -867,9 +884,9 @@ public class MainFrame extends javax.swing.JFrame {
 
         soldComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        namesFormatedTextField.setText("jTextField1");
-
         jLabel15.setText("Result Count:");
+
+        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { ">=", "<=", "==" }));
 
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
@@ -918,9 +935,9 @@ public class MainFrame extends javax.swing.JFrame {
                                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                     .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                         .addGroup(searchPanelLayout.createSequentialGroup()
-                                            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(namesFormatedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addComponent(employeesByEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(employeesByEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(carPriceTextFormattedField, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGap(136, 136, 136)
                                             .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                                 .addComponent(EmployeesByEmailButton, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -940,7 +957,8 @@ public class MainFrame extends javax.swing.JFrame {
                                         .addGap(136, 136, 136)
                                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(customersByEmailButton, javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(salesByEmployeeButton, javax.swing.GroupLayout.Alignment.TRAILING)))))))
+                                            .addComponent(salesByEmployeeButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                     .addGroup(searchPanelLayout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(jLabel15)
@@ -992,7 +1010,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel11)
                     .addComponent(jButton7)
-                    .addComponent(namesFormatedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(carPriceTextFormattedField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
@@ -1003,7 +1022,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel13)
                     .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(resultCountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1142,7 +1161,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addComponent(formListContainer, javax.swing.GroupLayout.PREFERRED_SIZE, 245, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, 0)
-                .addComponent(cardContainer, javax.swing.GroupLayout.DEFAULT_SIZE, 812, Short.MAX_VALUE))
+                .addComponent(cardContainer, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -1378,6 +1397,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton addSaleButton;
     private javax.swing.JMenuItem addSaleMenuItem;
     private javax.swing.JMenuItem allRefreshMenuItem;
+    private javax.swing.JFormattedTextField carPriceTextFormattedField;
     private javax.swing.JPanel cardContainer;
     private javax.swing.JButton carsByManufacturerButton;
     private javax.swing.JButton carsByModelButton;
@@ -1417,6 +1437,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
+    private javax.swing.JComboBox<String> jComboBox1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1447,7 +1468,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> manufacturersComboBox1;
     private javax.swing.JComboBox<String> manufacturersComboBox2;
     private javax.swing.JComboBox<String> modelsComboBox;
-    private javax.swing.JTextField namesFormatedTextField;
     private javax.swing.JMenu refreshMenu;
     private javax.swing.JLabel resultCountLabel;
     private javax.swing.JButton salesByCustomer;

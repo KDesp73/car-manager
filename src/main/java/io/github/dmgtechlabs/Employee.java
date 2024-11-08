@@ -98,11 +98,11 @@ public class Employee extends Person implements Dao, UIObject {
 			this.id
 		);
 	}
-
-	public static List<Employee> selectAll() {
+	
+	private static List<Employee> select(String functionName, Object... params) {
 		List<Employee> result = new ArrayList<>();
 		try (PostgresConnection db = Database.connection()) {
-			ResultSet rs = db.callFunction(Functions.SELECT_ALL_EMPLOYEES + "__"); // TODO: replace method in postgres
+			ResultSet rs = db.callFunction(functionName, params);
 			if (rs.isClosed()) {
 				return null;
 			}
@@ -127,6 +127,10 @@ public class Employee extends Person implements Dao, UIObject {
 		}
 
 		return result;
+	}
+
+	public static List<Employee> selectAll() {
+		return select(Functions.SELECT_ALL_EMPLOYEES + "__");
 	}
 
 	@Override

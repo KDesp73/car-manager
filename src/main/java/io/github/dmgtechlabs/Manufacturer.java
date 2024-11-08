@@ -100,10 +100,10 @@ public class Manufacturer implements Dao {
 		SQLogger.getLogger().logSQL("Populating Manufacturer", SQLogger.SQLOperation.INSERT, null);
 	}
 	
-	public static List<Manufacturer> selectByLocation(String location) {
+	private static List<Manufacturer> select(String functionName, Object... params) {
 		List<Manufacturer> result = new ArrayList<>();
 		try(PostgresConnection db = Database.connection()){
-			ResultSet rs = db.callFunction(Functions.SELECT_MANUFACTURERS_BY_LOCATION, location);
+			ResultSet rs = db.callFunction(functionName, params);
 			if(rs.isClosed()) return null;
 			
 			while(rs.next()){
@@ -116,30 +116,13 @@ public class Manufacturer implements Dao {
 		}
 		return result;
 	}
+	
+	public static List<Manufacturer> selectByLocation(String location) {
+		return select(Functions.SELECT_MANUFACTURERS_BY_LOCATION, location);
+	}
 
 	public static List<Manufacturer> selectAllManufacturers() {
-		PostgresConnection db = Database.connection();
-
-		ResultSet rs = db.callFunction(Functions.SELECT_ALL_MANUFACTURERS);
-		List<Manufacturer> result = new ArrayList<>();
-		try {
-			if (rs.isClosed()) {
-				return null;
-			}
-
-			while (rs.next()) {
-				Manufacturer m = new Manufacturer(rs.getInt("id"), rs.getString("name"), rs.getString("location"));
-				result.add(m);
-			}
-			rs.close();
-			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select all manufacturers", SQLogger.SQLOperation.SELECT, null);
-		} catch (SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
-		}
-
-		db.close();
-
-		return result;
+		return select(Functions.SELECT_ALL_MANUFACTURERS);
 	}
 
 	@Override

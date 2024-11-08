@@ -113,14 +113,10 @@ public class Sale implements Dao, UIObject {
 		);
 	}
 	
-	public String UIString() {
-		return this.customer.getLname() + " " + this.car.getLicencePlate() + " " + this.finalPrice + "$";
-	}
-
-	public static List<Sale> selectAll() {
+	private static List<Sale> select(String functionName, Object... params) {
 		List<Sale> result = new ArrayList<>();
 		try (PostgresConnection db = Database.connection()) {
-			ResultSet rs = db.callFunction(Functions.SELECT_ALL_SALES + "__");
+			ResultSet rs = db.callFunction(functionName, params);
 			if (rs.isClosed()) {
 				return null;
 			}
@@ -160,44 +156,17 @@ public class Sale implements Dao, UIObject {
 		return result;
 	}
 
-	public static Sale select(int id) {
-		try (PostgresConnection db = Database.connection()) {
-			ResultSet rs = db.callFunction(Database.SCHEMA + ".select_sale", id);
-			if (rs.isClosed()) {
-				return null;
-			}
+	public static List<Sale> selectAll() {
+		return select(Functions.SELECT_ALL_SALES + "__");
+	}
 
-			while (rs.next()) {
-				return new Sale(
-					rs.getInt("sale_id"),
-					rs.getFloat("sale_price"),
-					rs.getFloat("sale_discount"),
-					new Car(
-						rs.getInt("car_id"),
-						rs.getString("car_license_plate"),
-						rs.getFloat("car_price"),
-						rs.getString("car_model_name"),
-						rs.getInt("car_model_year"),
-						rs.getString("car_manufacturer_name")
-					),
-					new Employee(
-						rs.getInt("employee_id"),
-						rs.getString("employee_name"),
-						rs.getString("employee_email")
-					),
-					new Customer(
-						rs.getInt("customer_id"),
-						rs.getString("customer_name"),
-						rs.getString("customer_email")
-					),
-					rs.getDate("sale_date").toString()
-				);
-			}
-			rs.close();
-		} catch (RuntimeException | SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select Sale by id failed", ex);
-		}
-		return null;
+	public static Sale selectById(int id) {
+		return select(Database.SCHEMA + ".select_sale", id).get(0);
+	}
+	
+	@Override
+	public String UIString() {
+		return this.customer.getLname() + " " + this.car.getLicencePlate() + " " + this.finalPrice + "$";
 	}
 
 	@Override

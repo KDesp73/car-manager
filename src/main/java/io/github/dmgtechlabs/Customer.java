@@ -37,7 +37,7 @@ public class Customer extends Person implements Dao, UIObject {
 	}
 
 	// name = fname + " " + lname
-	public Customer(int id, String name, String email){
+	public Customer(int id, String name, String email) {
 		super(name, email);
 		this.id = id;
 	}
@@ -98,13 +98,11 @@ public class Customer extends Person implements Dao, UIObject {
 		);
 	}
 
-	public static List<Customer> selectByEmail(String email) {
-		PostgresConnection db = Database.connection();
-
-		ResultSet rs = db.callFunction(Database.SCHEMA + ".select_customers_by_email", email);
-
+	private static List<Customer> select(String functionName, Object... params) {
 		List<Customer> result = new ArrayList<>();
-		try {
+		try (PostgresConnection db = Database.connection()) {
+			ResultSet rs = db.callFunction(functionName, params);
+
 			if (rs.isClosed()) {
 				return null;
 			}
@@ -127,49 +125,20 @@ public class Customer extends Person implements Dao, UIObject {
 		} catch (SQLException ex) {
 			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
 		}
-
-		db.close();
 
 		return result;
 	}
-	
+
+	public static List<Customer> selectByEmail(String email) {
+		return select(Database.SCHEMA + ".select_customers_by_email", email);
+	}
+
 	public static List<Customer> selectAll() {
-		PostgresConnection db = Database.connection();
-
-		ResultSet rs = db.callFunction(Functions.SELECT_ALL_CUSTOMERS + "__");
-
-		List<Customer> result = new ArrayList<>();
-		try {
-			if (rs.isClosed()) {
-				return null;
-			}
-
-			while (rs.next()) {
-				Customer c = new Customer(
-					rs.getInt("id"),
-					rs.getInt("customer_person_fk"),
-					rs.getString("fname"),
-					rs.getString("lname"),
-					rs.getInt("birth_year"),
-					rs.getString("email"),
-					int2Gender(rs.getInt("gender"))
-				);
-				System.out.println(c);
-				result.add(c);
-			}
-			rs.close();
-			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select all customers", SQLogger.SQLOperation.SELECT, null);
-		} catch (SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
-		}
-
-		db.close();
-
-		return result;
+		return select(Functions.SELECT_ALL_CUSTOMERS + "__");
 	}
 
 	public String UIString() {
-		return this.getFname() + " " + this.getLname() + " " + this.getBirthYear() + " " + this.getGender() + " " + this.getEmail() ;
+		return this.getFname() + " " + this.getLname() + " " + this.getBirthYear() + " " + this.getGender() + " " + this.getEmail();
 	}
 
 	@Override
@@ -194,7 +163,6 @@ public class Customer extends Person implements Dao, UIObject {
 			this.getName(),
 			this.getBirthYear(),
 			this.getGender(),
-			this.getEmail(),
-		};
+			this.getEmail(),};
 	}
 }

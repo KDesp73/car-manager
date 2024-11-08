@@ -206,15 +206,11 @@ public class Model extends Manufacturer implements Dao {
 
 		SQLogger.getLogger().logSQL("Populating Model", SQLogger.SQLOperation.INSERT, null);
 	}
-
-	public static List<Model> selectAllModels() {
-		return null;
-	}
 	
-	public static List<Model> selectByManufacturer(String man) {
+	private static List<Model> select(String functionName, Object... params) {
 		List<Model> result = new ArrayList<>();
 		try(PostgresConnection db = Database.connection()){
-			ResultSet rs = db.callFunction(Database.SCHEMA + ".select_models_by_manufacturer", man);
+			ResultSet rs = db.callFunction(functionName, params);
 			if(rs.isClosed()) return null;
 			
 			while(rs.next()) {
@@ -234,6 +230,14 @@ public class Model extends Manufacturer implements Dao {
 			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select models by manufacturer failed", ex);
 		}
 		return result;
+	}
+
+	public static List<Model> selectAllModels() {
+		return select(Functions.SELECT_ALL_MODELS);
+	}
+	
+	public static List<Model> selectByManufacturer(String man) {
+		return select(Database.SCHEMA + ".select_models_by_manufacturer", man);
 	}
 	
 	@Override

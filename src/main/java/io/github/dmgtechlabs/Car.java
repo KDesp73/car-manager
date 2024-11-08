@@ -69,13 +69,11 @@ public class Car extends Model implements Dao, UIObject {
 		Service service
 	) {
 		super(modelId, modelName, modelType, modelYear, modelWd, modelHp, manufacturerId, manufacturerName, manufacturerLocation);
-		this.id  = carId;
+		this.id = carId;
 		this.licensePlate = licensePlate;
 		this.price = price;
 		this.service = service;
 	}
-
-	
 
 	@Override
 	public int getId() {
@@ -124,10 +122,10 @@ public class Car extends Model implements Dao, UIObject {
 		);
 	}
 
-	public static List<Car> selectAllCars() {
+	private static List<Car> select(String functionName, Object... params) {
 		List<Car> result = new ArrayList<>();
 		try (PostgresConnection db = Database.connection()) {
-			ResultSet rs = db.callFunction(Functions.SELECT_ALL_CARS + "__");
+			ResultSet rs = db.callFunction(functionName, params);
 			if (rs.isClosed()) {
 				return null;
 			}
@@ -163,64 +161,32 @@ public class Car extends Model implements Dao, UIObject {
 		}
 		return result;
 	}
-	
-	public static List<Car> selectCarsBySold(boolean sold) {
-		List<Car> result = new ArrayList<>();
-		try (PostgresConnection db = Database.connection()) {
-			ResultSet rs = db.callFunction(Database.SCHEMA + ".select_cars_by_sold", sold);
-			if (rs.isClosed()) {
-				return null;
-			}
 
-			while (rs.next()) {
-				result.add(new Car(
-					rs.getInt("car_id"),
-					rs.getString("car_license_plate"),
-					rs.getFloat("car_price"),
-					rs.getInt("model_id"),
-					rs.getString("model_name"),
-					int2Type(rs.getInt("model_type")),
-					rs.getInt("model_year"),
-					int2WheelDrive(rs.getInt("model_wd")),
-					rs.getInt("model_hp"),
-					rs.getInt("manufacturer_id"),
-					rs.getString("manufacturer_name"),
-					rs.getString("manufacturer_location"),
-					new Service(
-						rs.getInt("service_id"),
-						rs.getBoolean("service_tires"),
-						rs.getBoolean("service_engine"),
-						rs.getBoolean("service_brakes"),
-						rs.getBoolean("service_oil"),
-						rs.getBoolean("service_battery"),
-						(rs.getDate("service_date") == null) ? null : rs.getDate("service_date").toString()
-					)
-				));
-			}
-			rs.close();
-		} catch (RuntimeException | SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select All Cars failed", ex);
-		}
-		return result;
+	public static List<Car> selectAllCars() {
+		return select(Functions.SELECT_ALL_CARS + "__");	
+	}
+
+	public static List<Car> selectCarsBySold(boolean sold) {
+		return select(Database.SCHEMA + ".select_cars_by_sold", sold);
 	}
 
 	@Override
 	public String UIString() {
 		return this.licensePlate + " - " + this.price + "$ " + this.getManufacturerName() + " " + this.getName();
 	}
-	
+
 	@Override
 	public String toHTML() {
 		Model model = (Model) this;
 		Manufacturer manufacturer = (Manufacturer) model;
-		
+
 		StringBuilder sb = new StringBuilder();
 		sb.append(Utils.HTML.header(1, this.licensePlate));
 		sb.append(Utils.HTML.header(3, "Price: " + this.price + "$"));
-		
+
 		sb.append(Utils.HTML.header(3, "Model"));
 		sb.append(Utils.HTML.ul(
-			"Name: " + manufacturer.getManufacturerName() + " " +model.getName(),
+			"Name: " + manufacturer.getManufacturerName() + " " + model.getName(),
 			"Type: " + model.getType(),
 			"Hp: " + model.getHp(),
 			"WD: " + model.getWd().toString().substring(1),
@@ -235,7 +201,7 @@ public class Car extends Model implements Dao, UIObject {
 			"Brakes: " + this.service.brakesChecked(),
 			"Tires: " + this.service.tiresChecked()
 		));
-		
+
 		return sb.toString();
 	}
 
