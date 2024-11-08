@@ -166,29 +166,31 @@ public class MainFrame extends javax.swing.JFrame {
 
 		public static Runnable refreshCarsRunnable() {
 			return asRunnable(() -> {
-				frame.cars = Car.selectAllCars();
-				frame.carsList.setListData(UIObject.listToArray(frame.cars.stream().map(car -> (UIObject) car).toList()));
+				refreshCars();
 			});
 		}
 
 		public static Runnable refreshCustomersRunnable() {
 			return asRunnable(() -> {
-			frame.customers = Customer.selectAll();
-			frame.customerList.setListData(UIObject.listToArray(frame.customers.stream().map(customer -> (UIObject) customer).toList()));
+				refreshCustomers();
 			});
 		}
 
 		public static Runnable refreshEmployeesRunnable() {
 			return asRunnable(() -> {
-			frame.employees = Employee.selectAll();
-			frame.employeeList.setListData(UIObject.listToArray(frame.employees.stream().map(employee -> (UIObject) employee).toList()));
+				refreshEmployees();
 			});
 		}
 
 		public static Runnable refreshSalesRunnable() {
 			return asRunnable(() -> {
-			frame.sales = Sale.selectAll();
-			frame.salesList.setListData(UIObject.listToArray(frame.sales.stream().map(sale -> (UIObject) sale).toList()));
+				refreshSales();
+			});
+		}
+
+		public static Runnable refreshAllRunnable() {
+			return asRunnable(() -> {
+				refreshAll();
 			});
 		}
 
@@ -244,6 +246,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(1048, 715));
+		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
 
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
 		this.helpFrame = new HelpFrame();
