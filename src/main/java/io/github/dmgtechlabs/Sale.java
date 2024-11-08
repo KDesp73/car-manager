@@ -161,7 +161,7 @@ public class Sale implements Dao, UIObject {
 	}
 
 	public static Sale selectById(int id) {
-		return select(Database.SCHEMA + ".select_sale", id).get(0);
+		return select(Database.SCHEMA + ".select_sale_by_id", id).get(0);
 	}
 	
 	@Override

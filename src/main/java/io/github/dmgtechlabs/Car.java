@@ -192,6 +192,7 @@ public class Car extends Model implements Dao, UIObject {
 		return this.licensePlate + " - " + this.price + "$ " + this.getManufacturerName() + " " + this.getName();
 	}
 
+	// TODO: add "SOLD" on the right of the license plate
 	@Override
 	public String toHTML() {
 		Model model = (Model) this;
