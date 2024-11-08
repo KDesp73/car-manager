@@ -141,11 +141,12 @@ public class MainFrame extends javax.swing.JFrame {
 		this.logsFrame = null;
 
 		this.formList.setFixedCellHeight(40);
-		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers"});
+		this.formList.setListData(new String[]{"Sales", "Cars", "Employees", "Customers", "Search"});
 		this.cardLayout.addLayoutComponent(this.salesPanel, "Sales");
 		this.cardLayout.addLayoutComponent(this.carsPanel, "Cars");
 		this.cardLayout.addLayoutComponent(this.employeesPanel, "Employees");
 		this.cardLayout.addLayoutComponent(this.customersPanel, "Customers");
+		this.cardLayout.addLayoutComponent(this.searchPanel, "Search");
 
 		//Customers Card
 		this.customerList.setFixedCellHeight(25);
@@ -223,6 +224,7 @@ public class MainFrame extends javax.swing.JFrame {
         deleteCustomerButton = new javax.swing.JButton();
         jScrollPane5 = new javax.swing.JScrollPane();
         customersEditorPane = new javax.swing.JEditorPane();
+        searchPanel = new javax.swing.JPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
         addSaleMenuItem = new javax.swing.JMenuItem();
@@ -568,6 +570,19 @@ public class MainFrame extends javax.swing.JFrame {
         );
 
         cardContainer.add(customersPanel, "card3");
+
+        javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
+        searchPanel.setLayout(searchPanelLayout);
+        searchPanelLayout.setHorizontalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 803, Short.MAX_VALUE)
+        );
+        searchPanelLayout.setVerticalGroup(
+            searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 689, Short.MAX_VALUE)
+        );
+
+        cardContainer.add(searchPanel, "card6");
 
         addMenu.setText("Add");
 
@@ -1015,5 +1030,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;
     private javax.swing.JMenuItem salesRefreshMenuItem;
+    private javax.swing.JPanel searchPanel;
     // End of variables declaration//GEN-END:variables
 }
