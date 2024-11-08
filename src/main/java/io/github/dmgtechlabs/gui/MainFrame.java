@@ -300,6 +300,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(1048, 715));
+//		this.setResizable(false);
 		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
 
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
@@ -314,7 +315,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.cardLayout.addLayoutComponent(this.employeesPanel, "Employees");
 		this.cardLayout.addLayoutComponent(this.customersPanel, "Customers");
 		this.cardLayout.addLayoutComponent(this.searchPanel, "Search");
-
+		
 		//Customers Card
 		this.customerList.setFixedCellHeight(25);
 		this.customers = Customer.selectAll();
@@ -404,20 +405,20 @@ public class MainFrame extends javax.swing.JFrame {
         jTable1 = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         manufacturersComboBox1 = new javax.swing.JComboBox<>();
-        jButton1 = new javax.swing.JButton();
+        carsByModelButton = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         manufacturersComboBox2 = new javax.swing.JComboBox<>();
-        jButton2 = new javax.swing.JButton();
+        carsByManufacturerButton = new javax.swing.JButton();
         jLabel7 = new javax.swing.JLabel();
         customerComboBox = new javax.swing.JComboBox<>();
-        jButton3 = new javax.swing.JButton();
+        salesByCustomer = new javax.swing.JButton();
         jLabel8 = new javax.swing.JLabel();
         employeesComboBox = new javax.swing.JComboBox<>();
-        jButton4 = new javax.swing.JButton();
+        salesByEmployeeButton = new javax.swing.JButton();
         jLabel9 = new javax.swing.JLabel();
-        jButton5 = new javax.swing.JButton();
+        customersByEmailButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        jButton6 = new javax.swing.JButton();
+        EmployeesByEmailButton = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         jButton7 = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
@@ -427,14 +428,14 @@ public class MainFrame extends javax.swing.JFrame {
         combobox = new javax.swing.JComboBox<>();
         jButton9 = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
-        jButton10 = new javax.swing.JButton();
+        carsBySoldButton = new javax.swing.JButton();
         emailFormatedTextField1 = new javax.swing.JFormattedTextField();
         emailFormatedTextField2 = new javax.swing.JFormattedTextField();
         soldComboBox = new javax.swing.JComboBox<>();
         namesFormatedTextField = new javax.swing.JTextField();
         modelsComboBox = new javax.swing.JComboBox<>();
-        manufacturerlabel = new javax.swing.JLabel();
-        modelLabel = new javax.swing.JLabel();
+        resultCountLabel = new javax.swing.JLabel();
+        jLabel15 = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
         addMenu = new javax.swing.JMenu();
         addSaleMenuItem = new javax.swing.JMenuItem();
@@ -518,7 +519,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(salesPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel1)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 210, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3446, Short.MAX_VALUE)
                         .addComponent(addSaleButton)
                         .addGap(18, 18, 18)
                         .addComponent(editSaleButton)
@@ -602,7 +603,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(carsPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3455, Short.MAX_VALUE)
                         .addComponent(addCarButton)
                         .addGap(18, 18, 18)
                         .addComponent(editCarButton)
@@ -683,7 +684,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(employeesPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel6)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 142, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3378, Short.MAX_VALUE)
                         .addComponent(addEmployeeButton)
                         .addGap(18, 18, 18)
                         .addComponent(editEmployeeButton)
@@ -759,7 +760,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(customersPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel5)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 136, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 3372, Short.MAX_VALUE)
                         .addComponent(addCustomerButton)
                         .addGap(18, 18, 18)
                         .addComponent(editCustomerButton)
@@ -803,40 +804,39 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Search Cars By Model");
 
-        manufacturersComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
         manufacturersComboBox1.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 manufacturersComboBox1ActionPerformed(evt);
             }
         });
 
-        jButton1.setText("Run");
+        carsByModelButton.setText("Run");
 
         jLabel4.setText("Search Cars By Manufacturer");
 
         manufacturersComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton2.setText("Run");
+        carsByManufacturerButton.setText("Run");
 
         jLabel7.setText("Search Sales By Customer");
 
         customerComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton3.setText("Run");
+        salesByCustomer.setText("Run");
 
         jLabel8.setText("Search Sales By Employee");
 
         employeesComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton4.setText("Run");
+        salesByEmployeeButton.setText("Run");
 
-        jLabel9.setText("Search Customers BY Email");
+        jLabel9.setText("Search Customers By Email");
 
-        jButton5.setText("Run");
+        customersByEmailButton.setText("Run");
 
         jLabel10.setText("Search Employees By Email");
 
-        jButton6.setText("Run");
+        EmployeesByEmailButton.setText("Run");
 
         jLabel11.setText("Search Manufacturer By Name");
 
@@ -856,7 +856,7 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel14.setText("Search Cars By Sold");
 
-        jButton10.setText("Run");
+        carsBySoldButton.setText("Run");
 
         emailFormatedTextField1.setText("jFormattedTextField1");
 
@@ -866,103 +866,90 @@ public class MainFrame extends javax.swing.JFrame {
 
         namesFormatedTextField.setText("jTextField1");
 
-        modelsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-        modelsComboBox.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                modelsComboBoxActionPerformed(evt);
-            }
-        });
-
-        manufacturerlabel.setText("Manufacturer");
-
-        modelLabel.setText("Model");
+        jLabel15.setText("Result Count:");
 
         javax.swing.GroupLayout searchPanelLayout = new javax.swing.GroupLayout(searchPanel);
         searchPanel.setLayout(searchPanelLayout);
         searchPanelLayout.setHorizontalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane9)
             .addGroup(searchPanelLayout.createSequentialGroup()
-                .addGap(16, 16, 16)
-                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel8)
-                            .addComponent(jLabel9))
-                        .addGap(197, 197, 197)
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(employeesComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(emailFormatedTextField1))
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton4))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton5))))
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel7)
-                            .addComponent(jLabel14))
-                        .addGap(206, 206, 206)
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(customerComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton3))
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(soldComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton10))))
-                    .addGroup(searchPanelLayout.createSequentialGroup()
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel4)
-                                .addGap(183, 183, 183))
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(jLabel3)
-                                .addGap(234, 234, 234)))
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(manufacturerlabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(manufacturersComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(modelLabel)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                .addComponent(modelsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton1)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
-                                .addComponent(manufacturersComboBox2, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton2))))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, searchPanelLayout.createSequentialGroup()
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel10)
-                            .addComponent(jLabel11)
-                            .addComponent(jLabel12)
-                            .addComponent(jLabel13))
-                        .addGap(152, 152, 152)
-                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(combobox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton9))
-                            .addGroup(searchPanelLayout.createSequentialGroup()
-                                .addComponent(locationsComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addGap(18, 18, 18)
-                                .addComponent(jButton8))
+                        .addGap(16, 16, 16)
+                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(emailFormatedTextField2)
-                                    .addComponent(namesFormatedTextField))
-                                .addGap(18, 18, 18)
+                                    .addComponent(jLabel14)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(jLabel3)
+                                    .addComponent(jLabel4))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addGroup(searchPanelLayout.createSequentialGroup()
+                                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(soldComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(customerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(136, 136, 136)
+                                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(salesByCustomer, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(carsBySoldButton, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, searchPanelLayout.createSequentialGroup()
+                                        .addComponent(manufacturersComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(136, 136, 136)
+                                        .addComponent(carsByManufacturerButton))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, searchPanelLayout.createSequentialGroup()
+                                        .addComponent(manufacturersComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 162, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                        .addComponent(modelsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(136, 136, 136)
+                                        .addComponent(carsByModelButton))))
+                            .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jButton6, javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING))))))
-                .addContainerGap(19, Short.MAX_VALUE))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+                                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(jLabel8))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                    .addGroup(searchPanelLayout.createSequentialGroup()
+                                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel13)
+                                            .addComponent(jLabel12)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jLabel10))
+                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 52, Short.MAX_VALUE)))
+                                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(namesFormatedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                                .addComponent(emailFormatedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                            .addGap(136, 136, 136)
+                                            .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                                .addComponent(EmployeesByEmailButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(jButton7, javax.swing.GroupLayout.Alignment.TRAILING)))
+                                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                            .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(136, 136, 136)
+                                            .addComponent(jButton9))
+                                        .addGroup(searchPanelLayout.createSequentialGroup()
+                                            .addComponent(locationsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addGap(136, 136, 136)
+                                            .addComponent(jButton8)))
+                                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
+                                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(employeesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(emailFormatedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                        .addGap(136, 136, 136)
+                                        .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(customersByEmailButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                                            .addComponent(salesByEmployeeButton, javax.swing.GroupLayout.Alignment.TRAILING)))))))
+                    .addGroup(searchPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel15)
+                        .addGap(19, 19, 19)
+                        .addComponent(resultCountLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(20, 20, 20))
+            .addComponent(jScrollPane9)
         );
         searchPanelLayout.setVerticalGroup(
             searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -971,39 +958,37 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel3)
                     .addComponent(manufacturersComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(modelsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(manufacturerlabel)
-                    .addComponent(modelLabel))
+                    .addComponent(carsByModelButton)
+                    .addComponent(modelsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel4)
                     .addComponent(manufacturersComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton2))
+                    .addComponent(carsByManufacturerButton))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel14)
-                    .addComponent(jButton10)
+                    .addComponent(carsBySoldButton)
                     .addComponent(soldComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel7)
                     .addComponent(customerComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton3))
+                    .addComponent(salesByCustomer))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel8)
                     .addComponent(employeesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton4))
+                    .addComponent(salesByEmployeeButton))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel9)
-                    .addComponent(jButton5)
+                    .addComponent(customersByEmailButton)
                     .addComponent(emailFormatedTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(jButton6)
+                    .addComponent(EmployeesByEmailButton)
                     .addComponent(emailFormatedTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1020,7 +1005,11 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel13)
                     .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 39, Short.MAX_VALUE)
+                .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(resultCountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane9, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
@@ -1350,10 +1339,6 @@ public class MainFrame extends javax.swing.JFrame {
 		}
     }//GEN-LAST:event_manufacturersComboBox1ActionPerformed
 
-    private void modelsComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_modelsComboBoxActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_modelsComboBoxActionPerformed
-
     private void serviceCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceCarButtonActionPerformed
 		Actions.updateService();
     }//GEN-LAST:event_serviceCarButtonActionPerformed
@@ -1371,6 +1356,7 @@ public class MainFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton EmployeesByEmailButton;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton addCarButton;
     private javax.swing.JMenuItem addCarMenuItem;
@@ -1383,6 +1369,9 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem addSaleMenuItem;
     private javax.swing.JMenuItem allRefreshMenuItem;
     private javax.swing.JPanel cardContainer;
+    private javax.swing.JButton carsByManufacturerButton;
+    private javax.swing.JButton carsByModelButton;
+    private javax.swing.JButton carsBySoldButton;
     private javax.swing.JEditorPane carsEditorPane;
     private javax.swing.JList<String> carsList;
     private javax.swing.JMenuItem carsLogsMenuItem;
@@ -1391,6 +1380,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JComboBox<String> combobox;
     private javax.swing.JComboBox<String> customerComboBox;
     private javax.swing.JList<String> customerList;
+    private javax.swing.JButton customersByEmailButton;
     private javax.swing.JEditorPane customersEditorPane;
     private javax.swing.JPanel customersPanel;
     private javax.swing.JMenuItem customersRefreshMenuItem;
@@ -1414,13 +1404,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane formListContainer;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton10;
-    private javax.swing.JButton jButton2;
-    private javax.swing.JButton jButton3;
-    private javax.swing.JButton jButton4;
-    private javax.swing.JButton jButton5;
-    private javax.swing.JButton jButton6;
     private javax.swing.JButton jButton7;
     private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
@@ -1430,6 +1413,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel12;
     private javax.swing.JLabel jLabel13;
     private javax.swing.JLabel jLabel14;
+    private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
@@ -1451,13 +1435,14 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JTable jTable1;
     private javax.swing.JComboBox<String> locationsComboBox;
     private javax.swing.JMenu logsMenu;
-    private javax.swing.JLabel manufacturerlabel;
     private javax.swing.JComboBox<String> manufacturersComboBox1;
     private javax.swing.JComboBox<String> manufacturersComboBox2;
-    private javax.swing.JLabel modelLabel;
     private javax.swing.JComboBox<String> modelsComboBox;
     private javax.swing.JTextField namesFormatedTextField;
     private javax.swing.JMenu refreshMenu;
+    private javax.swing.JLabel resultCountLabel;
+    private javax.swing.JButton salesByCustomer;
+    private javax.swing.JButton salesByEmployeeButton;
     private javax.swing.JEditorPane salesEditorPane;
     private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;
