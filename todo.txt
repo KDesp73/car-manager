@@ -1,15 +1,4 @@
-TODO: edit employee form
-TODO: edit customer form
-TODO: edit sale form
-TODO: delete car form
-TODO: delete employee form
-TODO: delete customer form
-TODO: delete sale form
 TODO: dynamic queries card
-TODO: sales card
-TODO: employee card
-TODO: customer card
-TODO: cars card
 TODO: service edit
 DONE: saved queries
 DONE: logger
@@ -19,3 +8,14 @@ DONE: insert employee form
 DONE: insert customer form
 DONE: insert sale form
 DONE: edit car form
+DONE: edit employee form
+DONE: edit customer form
+DONE: edit sale form
+DONE: delete car form
+DONE: delete employee form
+DONE: delete customer form
+DONE: delete sale form
+DONE: sales card
+DONE: employee card
+DONE: customer card
+DONE: cars card

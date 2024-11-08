@@ -22,6 +22,14 @@ public class Service implements Dao {
 		this.id = id;
 	}
 
+	public Service(boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery) {
+		this.tires = tires;
+		this.engine = engine;
+		this.brakes = brakes;
+		this.oil = oil;
+		this.battery = battery;
+	}
+	
 	public Service(int id, boolean tires, boolean engine, boolean brakes, boolean oil, boolean battery, String date) {
 		this.id = id;
 		this.tires = tires;

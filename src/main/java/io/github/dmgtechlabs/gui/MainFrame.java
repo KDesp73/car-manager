@@ -5,6 +5,7 @@ import io.github.dmgtechlabs.Customer;
 import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Sale;
 import io.github.dmgtechlabs.UIObject;
+import io.github.dmgtechlabs.Utils;
 import java.awt.CardLayout;
 import java.awt.Dimension;
 import java.awt.Font;
@@ -31,6 +32,7 @@ public class MainFrame extends javax.swing.JFrame {
 	private EmployeeFrame employeeFrame;
 	private CustomerFrame customerFrame;
 	private CarFrame carFrame;
+	private ServiceFrame serviceFrame;
 
 	private class Actions {
 
@@ -61,33 +63,44 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void editCar() {
-			if (frame.carsList.getSelectedIndex() < 0) {
+			if(frame.carsList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
 			frame.carFrame = new CarFrame(frame.cars.get(frame.carsList.getSelectedIndex()));
 			GUIUtils.addWindowClosedListener(frame.carFrame, refreshCarsRunnable());
 			GUIUtils.showFrame(frame.carFrame);
 		}
 
 		public static void editCustomer() {
-			if (frame.customerList.getSelectedIndex() < 0) {
+			if(frame.customerList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
 			frame.customerFrame = new CustomerFrame(frame.customers.get(frame.customerList.getSelectedIndex()));
 			GUIUtils.addWindowClosedListener(frame.customerFrame, refreshCustomersRunnable());
 			GUIUtils.showFrame(frame.customerFrame);
 		}
 
 		public static void editEmployee() {
-			if (frame.employeeList.getSelectedIndex() < 0) {
+			if(frame.employeeList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
+			
 			frame.employeeFrame = new EmployeeFrame(frame.employees.get(frame.employeeList.getSelectedIndex()));
 			GUIUtils.addWindowClosedListener(frame.employeeFrame, refreshEmployeesRunnable());
 			GUIUtils.showFrame(frame.employeeFrame);
 		}
 
 		public static void editSale() {
+			if(frame.salesList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			if (frame.salesList.getSelectedIndex() < 0) {
 				return;
 			}
@@ -97,6 +110,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteCar() {
+			if(frame.carsList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var car = frame.cars.get(frame.carsList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -113,6 +131,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteCustomer() {
+			if(frame.customerList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var customer = frame.customers.get(frame.customerList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -129,6 +152,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteEmployee() {
+			if(frame.employeeList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var employee = frame.employees.get(frame.employeeList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -145,6 +173,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteSale() {
+			if(frame.salesList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
 			var sale = frame.sales.get(frame.salesList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -158,6 +191,17 @@ public class MainFrame extends javax.swing.JFrame {
 			sale.delete();
 			refreshSales();
 			GUIUtils.showInfo(frame.salesEditorPane, sale);
+		}
+
+		public static void updateService() {
+			if(frame.carsList.getSelectedIndex() < 0) {
+				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
+				return;
+			}
+			
+			frame.serviceFrame = new ServiceFrame(frame.cars.get(frame.carsList.getSelectedIndex()).getService());
+			GUIUtils.addWindowClosedListener(frame.serviceFrame, refreshCarsRunnable());
+			GUIUtils.showFrame(frame.serviceFrame);
 		}
 
 		private static Runnable asRunnable(Runnable method) {
@@ -197,21 +241,25 @@ public class MainFrame extends javax.swing.JFrame {
 		public static void refreshCars() {
 			frame.cars = Car.selectAllCars();
 			frame.carsList.setListData(UIObject.listToArray(frame.cars.stream().map(car -> (UIObject) car).toList()));
+			frame.carsEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
 		public static void refreshCustomers() {
 			frame.customers = Customer.selectAll();
 			frame.customerList.setListData(UIObject.listToArray(frame.customers.stream().map(customer -> (UIObject) customer).toList()));
+			frame.customersEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
 		public static void refreshEmployees() {
 			frame.employees = Employee.selectAll();
 			frame.employeeList.setListData(UIObject.listToArray(frame.employees.stream().map(employee -> (UIObject) employee).toList()));
+			frame.employeesEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
 		public static void refreshSales() {
 			frame.sales = Sale.selectAll();
 			frame.salesList.setListData(UIObject.listToArray(frame.sales.stream().map(sale -> (UIObject) sale).toList()));
+			frame.salesEditorPane.setText(Utils.HTML.paragraph(""));
 		}
 
 		public static void refreshAll() {
@@ -321,6 +369,7 @@ public class MainFrame extends javax.swing.JFrame {
         deleteCarButton = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         carsEditorPane = new javax.swing.JEditorPane();
+        serviceCarButton = new javax.swing.JButton();
         employeesPanel = new javax.swing.JPanel();
         jScrollPane6 = new javax.swing.JScrollPane();
         employeeList = new javax.swing.JList<>();
@@ -496,6 +545,13 @@ public class MainFrame extends javax.swing.JFrame {
         carsEditorPane.setFont(new java.awt.Font("sansserif", 0, 18)); // NOI18N
         jScrollPane3.setViewportView(carsEditorPane);
 
+        serviceCarButton.setText("Service");
+        serviceCarButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                serviceCarButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout carsPanelLayout = new javax.swing.GroupLayout(carsPanel);
         carsPanel.setLayout(carsPanelLayout);
         carsPanelLayout.setHorizontalGroup(
@@ -508,12 +564,15 @@ public class MainFrame extends javax.swing.JFrame {
                     .addGroup(carsPanelLayout.createSequentialGroup()
                         .addGap(24, 24, 24)
                         .addComponent(jLabel2)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 209, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 219, Short.MAX_VALUE)
                         .addComponent(addCarButton)
                         .addGap(18, 18, 18)
                         .addComponent(editCarButton)
                         .addGap(18, 18, 18)
-                        .addComponent(deleteCarButton)))
+                        .addComponent(deleteCarButton))
+                    .addGroup(carsPanelLayout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(serviceCarButton)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 235, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
@@ -529,7 +588,9 @@ public class MainFrame extends javax.swing.JFrame {
                             .addComponent(addCarButton)
                             .addComponent(editCarButton)
                             .addComponent(deleteCarButton))
-                        .addGap(106, 106, 106)
+                        .addGap(75, 75, 75)
+                        .addComponent(serviceCarButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jScrollPane3, javax.swing.GroupLayout.DEFAULT_SIZE, 538, Short.MAX_VALUE))
                     .addComponent(jScrollPane2))
                 .addContainerGap())
@@ -1070,6 +1131,10 @@ public class MainFrame extends javax.swing.JFrame {
 		Actions.deleteSale();
     }//GEN-LAST:event_deleteSaleButtonActionPerformed
 
+    private void serviceCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_serviceCarButtonActionPerformed
+		Actions.updateService();
+    }//GEN-LAST:event_serviceCarButtonActionPerformed
+
 	/**
 	 * @param args the command line arguments
 	 */
@@ -1149,5 +1214,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JPanel salesPanel;
     private javax.swing.JMenuItem salesRefreshMenuItem;
     private javax.swing.JPanel searchPanel;
+    private javax.swing.JButton serviceCarButton;
     // End of variables declaration//GEN-END:variables
 }
