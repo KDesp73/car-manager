@@ -169,7 +169,19 @@ public class Car extends Model implements Dao, UIObject {
 	public static List<Car> selectCarsBySold(boolean sold) {
 		return select(Database.SCHEMA + ".select_cars_by_sold", sold);
 	}
+	
+	public static List<Car> selectCarsByPriceGreater(float price) {
+		return select(Database.SCHEMA + ".select_cars_by_price_greater", price);
+	}
+	
+	public static List<Car> selectCarsByPriceLess(float price) {
+		return select(Database.SCHEMA + ".select_cars_by_price_less", price);
+	}
 
+	public static List<Car> selectCarsByPrice(float price) {
+		return select(Database.SCHEMA + ".select_cars_by_price", price);
+	}
+	
 	@Override
 	public String UIString() {
 		return this.licensePlate + " - " + this.price + "$ " + this.getManufacturerName() + " " + this.getName();
@@ -204,7 +216,11 @@ public class Car extends Model implements Dao, UIObject {
 
 		return sb.toString();
 	}
-
+	
+	/**
+	 * new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}
+	 * @return 
+	 */
 	@Override
 	public Object[] objArray() {
 		return new Object[]{
@@ -212,7 +228,7 @@ public class Car extends Model implements Dao, UIObject {
 			this.price,
 			this.getManufacturerName() + " " + this.getName(),
 			this.getType(),
-			this.getWd(),
+			this.getWd().toString().substring(1),
 			this.getHp()
 		};
 	}
