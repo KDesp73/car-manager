@@ -10,6 +10,8 @@ import java.awt.Font;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.util.List;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
@@ -273,8 +275,18 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         editSaleButton.setText("EDIT");
+        editSaleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                editSaleButtonActionPerformed(evt);
+            }
+        });
 
         deleteSaleButton.setText("DELETE");
+        deleteSaleButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                deleteSaleButtonActionPerformed(evt);
+            }
+        });
 
         jScrollPane8.setViewportView(salesEditorPane);
 
@@ -874,7 +886,7 @@ public class MainFrame extends javax.swing.JFrame {
 		var employee = this.employees.get(this.employeeList.getSelectedIndex());
 		int option = JOptionPane.showConfirmDialog(
 			this,
-			"Are you sure you want to delete" + employee.getId() + "?"
+			"Are you sure you want to delete " + employee.getName() + "?"
 		);
 
 		if (option != 0) {
@@ -902,6 +914,27 @@ public class MainFrame extends javax.swing.JFrame {
 		this.logsFrame = new LogsFrame(LogsFrame.LogType.EMPLOYEES);
 		this.logsFrame.setVisible(true);
     }//GEN-LAST:event_employeeLogsMenuItemActionPerformed
+
+    private void editSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_editSaleButtonActionPerformed
+        this.saleFrame = new SaleFrame(this.sales.get(this.salesList.getSelectedIndex()));
+		GUIUtils.showFrame(this.saleFrame);
+    }//GEN-LAST:event_editSaleButtonActionPerformed
+
+    private void deleteSaleButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_deleteSaleButtonActionPerformed
+		var sale = this.sales.get(this.salesList.getSelectedIndex());
+		int option = JOptionPane.showConfirmDialog(
+			this,
+			"Are you sure you want to delete " + sale.getId() + "?"
+		);
+
+		if (option != 0) {
+			return;
+		}
+
+		sale.delete();
+		salesRefreshMenuItemActionPerformed(null);
+		GUIUtils.showInfo(salesEditorPane, sale);
+    }//GEN-LAST:event_deleteSaleButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments

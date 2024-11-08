@@ -20,6 +20,7 @@ import javax.swing.JOptionPane;
  */
 public class SaleFrame extends javax.swing.JFrame {
 
+	private Sale sale;
 	private List<Car> cars;
 	private List<Employee> employees;
 	private List<Customer> customers;
@@ -60,24 +61,17 @@ public class SaleFrame extends javax.swing.JFrame {
 				}
 			}
 		});
+	}
 
-		this.jPanel1.setMaximumSize(new Dimension(417, 476));
-		this.jPanel1.setMinimumSize(new Dimension(417, 476));
-		this.jPanel1.setSize(new Dimension(417, 476));
-		
-		var dim = new Dimension(77, 25);
-		this.carComboBox.setSize(dim);
-		this.carComboBox.setMinimumSize(dim);
-		this.carComboBox.setMaximumSize(dim);
-		this.discountTextField.setSize(dim);
-		this.discountTextField.setMinimumSize(dim);
-		this.discountTextField.setMaximumSize(dim);
-		this.employeeComboBox.setSize(dim);
-		this.employeeComboBox.setMinimumSize(dim);
-		this.employeeComboBox.setMaximumSize(dim);
-		this.customerComboBox.setSize(dim);
-		this.customerComboBox.setMinimumSize(dim);
-		this.customerComboBox.setMaximumSize(dim);
+	public SaleFrame(Sale sale) {
+		this();
+		this.sale = sale;
+		this.actionButton.setText("Edit");
+
+		this.employeeComboBox.setSelectedItem(sale.getEmployee().UIString());
+		this.customerComboBox.setSelectedItem(sale.getCustomer().UIString());
+		this.discountTextField.setValue(sale.getDiscount());
+		this.carComboBox.setSelectedItem(sale.getCar().UIString());
 	}
 
 	/**
@@ -99,7 +93,7 @@ public class SaleFrame extends javax.swing.JFrame {
         employeeComboBox = new javax.swing.JComboBox<>();
         carComboBox = new javax.swing.JComboBox<>();
         jLabel1 = new javax.swing.JLabel();
-        addButton = new javax.swing.JButton();
+        actionButton = new javax.swing.JButton();
         cancelButton = new javax.swing.JButton();
 
         jButton1.setText("jButton1");
@@ -107,6 +101,12 @@ public class SaleFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
 
         jLabel6.setText("Discount");
+
+        discountTextField.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                discountTextFieldActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Customer");
 
@@ -116,10 +116,10 @@ public class SaleFrame extends javax.swing.JFrame {
 
         jLabel1.setText("Car");
 
-        addButton.setText("Add");
-        addButton.addActionListener(new java.awt.event.ActionListener() {
+        actionButton.setText("Add");
+        actionButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                addButtonActionPerformed(evt);
+                actionButtonActionPerformed(evt);
             }
         });
 
@@ -135,11 +135,11 @@ public class SaleFrame extends javax.swing.JFrame {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                .addContainerGap()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addComponent(cancelButton)
                 .addGap(18, 18, 18)
-                .addComponent(addButton)
-                .addContainerGap())
+                .addComponent(actionButton)
+                .addGap(12, 12, 12))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(37, 37, 37)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -152,11 +152,11 @@ public class SaleFrame extends javax.swing.JFrame {
                             .addComponent(jLabel1))
                         .addGap(64, 64, 64)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(carComboBox, 0, 329, Short.MAX_VALUE)
                             .addComponent(discountTextField)
-                            .addComponent(customerComboBox, 0, 177, Short.MAX_VALUE)
-                            .addComponent(employeeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(carComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
-                .addGap(78, 78, 78))
+                            .addComponent(customerComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(employeeComboBox, 0, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                .addContainerGap(187, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -179,7 +179,7 @@ public class SaleFrame extends javax.swing.JFrame {
                     .addComponent(jLabel8))
                 .addGap(260, 260, 260)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(addButton)
+                    .addComponent(actionButton)
                     .addComponent(cancelButton))
                 .addContainerGap())
         );
@@ -219,26 +219,43 @@ public class SaleFrame extends javax.swing.JFrame {
 		System.out.println(this.discountTextField.getText());
 	}
 
-    private void addButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_addButtonActionPerformed
-		printForm();
+    private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
 
 		float price = this.cars.get(this.carComboBox.getSelectedIndex()).getPrice();
-		float discount = Float.parseFloat(this.discountTextField.getText());
-		Sale s = new Sale(
-			price - price * discount,
-			discount,
-			this.cars.get(this.carComboBox.getSelectedIndex()).getId(),
-			this.employees.get(this.employeeComboBox.getSelectedIndex()).getEmployeeId(),
-			this.customers.get(this.customerComboBox.getSelectedIndex()).getId()
-		);
+		float discount = (this.discountTextField.getText().isEmpty()) ? 0 : Float.parseFloat(this.discountTextField.getText());
+		int carId = this.cars.get(this.carComboBox.getSelectedIndex()).getId();
+		int employeeId = this.employees.get(this.employeeComboBox.getSelectedIndex()).getEmployeeId();
+		int customerId = this.customers.get(this.customerComboBox.getSelectedIndex()).getId();
 
-		if (s.insert()) {
-			JOptionPane.showMessageDialog(this, "Sale added successfully");
-			this.clearForm();
-		} else {
-			JOptionPane.showMessageDialog(this, "Failed to add sale", "Error", JOptionPane.ERROR_MESSAGE);
+		if (this.sale == null) {
+			Sale s = new Sale(
+				price - price * discount,
+				discount,
+				carId,
+				employeeId,
+				customerId
+			);
+
+			if (s.insert()) {
+				JOptionPane.showMessageDialog(this, "Sale added successfully");
+				this.clearForm();
+			} else {
+				JOptionPane.showMessageDialog(this, "Failed to add sale", "Error", JOptionPane.ERROR_MESSAGE);
+			}
+			return;
 		}
-    }//GEN-LAST:event_addButtonActionPerformed
+		
+		if (this.sale.update(price - price*discount, discount, carId, employeeId, customerId)) {
+			JOptionPane.showMessageDialog(this, "Sale edited successfully");
+			this.dispose();
+		} else {
+			JOptionPane.showMessageDialog(this, "Failed to edit sale", "Error", JOptionPane.ERROR_MESSAGE);
+		}
+    }//GEN-LAST:event_actionButtonActionPerformed
+
+    private void discountTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_discountTextFieldActionPerformed
+		// TODO add your handling code here:
+    }//GEN-LAST:event_discountTextFieldActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -277,7 +294,7 @@ public class SaleFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton addButton;
+    private javax.swing.JButton actionButton;
     private javax.swing.JButton cancelButton;
     private javax.swing.JComboBox<String> carComboBox;
     private javax.swing.JComboBox<String> customerComboBox;
