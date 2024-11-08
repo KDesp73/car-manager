@@ -261,6 +261,7 @@ CREATE TABLE sales (
 	sales_customer_fk int4 NOT NULL,
 	sales_employee_fk int4 NOT NULL,
 	price float4 NOT NULL,
+	CONSTRAINT sales_pk PRIMARY KEY (id),
 	CONSTRAINT sales_car_fk FOREIGN KEY (sales_car_fk) REFERENCES car(id),
 	CONSTRAINT sales_customer_fk FOREIGN KEY (sales_customer_fk) REFERENCES customer(id),
 	CONSTRAINT sales_employee_fk FOREIGN KEY (sales_employee_fk) REFERENCES employee(id)
@@ -279,7 +280,7 @@ AS $function$
         car_manufacturer varchar;
 		t timestamp;
     BEGIN
-		SELECT to_char(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') INTO t;
+		SELECT to_char(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') INTO t;	
 
         -- Fetch model and manufacturer based on the car's model foreign key
         IF (TG_OP = 'DELETE') THEN
@@ -289,7 +290,7 @@ AS $function$
             JOIN "CarManager_DB".manufacturer mf ON m.model_manufacturer_fk = mf.id
             WHERE m.id = OLD.car_model_fk;
 
-            INSERT INTO "CarManager_DB".car_logs
+            INSERT INTO "CarManager_DB".car_logs 
             VALUES ('DELETE', t, OLD.license_plate, OLD.price, car_model, car_manufacturer);
             RETURN OLD;
 
@@ -302,17 +303,17 @@ AS $function$
             WHERE m.id = NEW.car_model_fk;
 
             IF (TG_OP = 'UPDATE') THEN
-                INSERT INTO "CarManager_DB".car_logs
+                INSERT INTO "CarManager_DB".car_logs 
                 VALUES ('UPDATE', t, NEW.license_plate, NEW.price, car_model, car_manufacturer);
                 RETURN NEW;
 
             ELSIF (TG_OP = 'INSERT') THEN
-                INSERT INTO "CarManager_DB".car_logs
+                INSERT INTO "CarManager_DB".car_logs 
                 VALUES ('INSERT', t, NEW.license_plate, NEW.price, car_model, car_manufacturer);
                 RETURN NEW;
             END IF;
         END IF;
-
+        
         RETURN NULL;
     END;
 $function$
@@ -330,7 +331,7 @@ AS $function$
 		email varchar;
 		t timestamp;
     BEGIN
-		SELECT to_char(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') INTO t;
+		SELECT to_char(CURRENT_TIMESTAMP, 'YYYY-MM-DD HH24:MI:SS') INTO t;	
 
         -- Fetch model and manufacturer based on the car's model foreign key
         IF (TG_OP = 'DELETE') THEN
@@ -340,7 +341,7 @@ AS $function$
 			WHERE p.id = OLD.employee_person_fk;
 
             INSERT INTO "CarManager_DB".employee_logs (
-				operation, timestamp, salary, fname, lname, email
+				operation, timestamp, salary, fname, lname, email 
 			)
             VALUES ('DELETE', t, OLD.salary, fname, lname, email);
             RETURN OLD;
@@ -354,20 +355,20 @@ AS $function$
 
             IF (TG_OP = 'UPDATE') THEN
                 INSERT INTO "CarManager_DB".employee_logs (
-					operation, timestamp, salary, fname, lname, email
+					operation, timestamp, salary, fname, lname, email 
 				)
                 VALUES ('UPDATE', t, NEW.salary, fname, lname, email);
                 RETURN NEW;
 
             ELSIF (TG_OP = 'INSERT') THEN
                 INSERT INTO "CarManager_DB".employee_logs (
-					operation, timestamp, salary, fname, lname, email
+					operation, timestamp, salary, fname, lname, email 
 				)
                 VALUES ('INSERT', t, NEW.salary, fname, lname, email);
                 RETURN NEW;
             END IF;
         END IF;
-
+        
         RETURN NULL;
     END;
 $function$
@@ -415,11 +416,11 @@ AS $procedure$
 DECLARE
     service_fk integer;
 BEGIN
-    SELECT car_service_fk INTO service_fk
-    FROM "CarManager_DB".car
+    SELECT car_service_fk INTO service_fk 
+    FROM "CarManager_DB".car 
     WHERE id = param_id;
 
-    DELETE FROM "CarManager_DB".car
+    DELETE FROM "CarManager_DB".car 
     WHERE id = param_id;
 
 	DELETE FROM "CarManager_DB".service
@@ -438,8 +439,8 @@ declare
 	person_fk int4;
 begin
 	select id into customer_fk from "CarManager_DB".Customer;
-	select customer_person_fk into person_fk from "CarManager_DB".Customer;
-
+	select customer_person_fk into person_fk from "CarManager_DB".Customer; 
+	
 	delete from "CarManager_DB".Sales where sales_customer_fk = customer_fk;
 	delete from "CarManager_DB".Customer where id = param_id;
 	delete from "CarManager_DB".Person where id = person_fk;
@@ -513,7 +514,7 @@ AS $procedure$
 
 		UPDATE "CarManager_DB".car
 		SET sold = false
-		WHERE id = car_id;
+		WHERE id = car_id;		
 
 		DELETE FROM "CarManager_DB".sales
 		WHERE id = param_id;
@@ -586,23 +587,23 @@ CREATE OR REPLACE PROCEDURE "CarManager_DB".insert_customer(IN param_person_id i
 AS $procedure$
 	BEGIN
 		INSERT INTO "CarManager_DB".Person (
-			fname,
-			lname,
-			birth_year,
-			gender,
+			fname, 
+			lname, 
+			birth_year, 
+			gender, 
 			email
-		)
+		) 
 		VALUES (
-			param_fname,
-			param_lname,
-			param_birth_year,
-			param_gender,
+			param_fname, 
+			param_lname, 
+			param_birth_year, 
+			param_gender, 
 			param_email
 		);
-
+	
 		INSERT INTO "CarManager_DB".Customer (
 			customer_person_fk
-		)
+		) 
 		VALUES (
 			param_person_id
 		);
@@ -618,7 +619,7 @@ AS $procedure$
 	BEGIN
 		INSERT INTO "CarManager_DB".Customer (
 			customer_person_fk
-		)
+		) 
 		VALUES (
 			param_person_id
 		);
@@ -635,24 +636,24 @@ AS $procedure$
 		person_id int4;
 	BEGIN
 		INSERT INTO "CarManager_DB".Person (
-			fname,
-			lname,
-			birth_year,
-			gender,
+			fname, 
+			lname, 
+			birth_year, 
+			gender, 
 			email
-		)
+		) 
 		VALUES (
-			param_fname,
-			param_lname,
-			param_birth_year,
-			param_gender,
+			param_fname, 
+			param_lname, 
+			param_birth_year, 
+			param_gender, 
 			param_email
 		)
 		RETURNING id INTO person_id;
-
+	
 		INSERT INTO "CarManager_DB".Customer (
 			customer_person_fk
-		)
+		) 
 		VALUES (
 			person_id
 		);
@@ -668,7 +669,7 @@ AS $procedure$
 	BEGIN
 		INSERT INTO "CarManager_DB".Employee (
 			salary
-		)
+		) 
 		VALUES (
 			param_salary
 		);
@@ -685,25 +686,25 @@ AS $procedure$
 		person_id int4;
 	BEGIN
 		INSERT INTO "CarManager_DB".Person (
-			fname,
-			lname,
-			birth_year,
-			gender,
+			fname, 
+			lname, 
+			birth_year, 
+			gender, 
 			email
-		)
+		) 
 		VALUES (
-			param_fname,
-			param_lname,
-			param_birth_year,
-			param_gender,
+			param_fname, 
+			param_lname, 
+			param_birth_year, 
+			param_gender, 
 			param_email
 		)
 		RETURNING id INTO person_id;
-
+	
 		INSERT INTO "CarManager_DB".Employee (
 			employee_person_fk,
 			salary
-		)
+		) 
 		VALUES (
 			person_id,
 			param_salary
@@ -758,17 +759,17 @@ CREATE OR REPLACE PROCEDURE "CarManager_DB".insert_person(IN param_fname charact
 AS $procedure$
 	BEGIN
 		INSERT INTO "CarManager_DB".Person (
-			fname,
-			lname,
-			birth_year,
-			gender,
+			fname, 
+			lname, 
+			birth_year, 
+			gender, 
 			email
-		)
+		) 
 		VALUES (
-			param_fname,
-			param_lname,
-			param_birth_year,
-			param_gender,
+			param_fname, 
+			param_lname, 
+			param_birth_year, 
+			param_gender, 
 			param_email
 		);
 	END;
@@ -784,7 +785,7 @@ AS $procedure$
 		UPDATE "CarManager_DB".car
 		SET
 			sold = true
-		WHERE id = param_car_fk;
+		WHERE id = param_car_fk;		
 
 		INSERT INTO "CarManager_DB".sales (
 			price,
@@ -972,7 +973,7 @@ begin
 		select *
 		from "CarManager_DB".Car
 	);
-end;
+end; 
 $function$
 ;
 
@@ -1009,7 +1010,7 @@ BEGIN
         JOIN "CarManager_DB".manufacturer manufacturer ON manufacturer.id = model.model_manufacturer_fk
         JOIN "CarManager_DB".service service ON service.id = car.car_service_fk
     );
-END;
+END; 
 $function$
 ;
 
@@ -1021,7 +1022,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_all_customers__()
 AS $function$
 BEGIN
     RETURN QUERY (
-        SELECT
+        SELECT 
             customer.id,
 			person.id,
             person.fname,
@@ -1029,12 +1030,12 @@ BEGIN
 			person.email,
 			person.birth_year,
 			person.gender
-      	FROM
+      	FROM 
             "CarManager_DB".customer
-        JOIN
+        JOIN 
             "CarManager_DB".person ON customer.customer_person_fk = person.id
     );
-END;
+END; 
 $function$
 ;
 
@@ -1060,7 +1061,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_all_employees__()
 AS $function$
 BEGIN
     RETURN QUERY (
-        SELECT
+        SELECT 
             employee.id,
 			employee.salary,
 			employee.employee_person_fk,
@@ -1069,12 +1070,12 @@ BEGIN
 			person.email,
 			person.birth_year,
 			person.gender
-      	FROM
+      	FROM 
             "CarManager_DB".employee
-        JOIN
+        JOIN 
             "CarManager_DB".person ON employee.employee_person_fk = person.id -- Join on the foreign key
     );
-END;
+END; 
 $function$
 ;
 
@@ -1085,8 +1086,8 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_all_manufacturers()
  LANGUAGE plpgsql
 AS $function$
 BEGIN
-    RETURN QUERY
-    SELECT *
+    RETURN QUERY 
+    SELECT * 
     FROM "CarManager_DB".Manufacturer;
 END;
 $function$
@@ -1103,7 +1104,7 @@ begin
 		select *
 		from "CarManager_DB".model
 	);
-end;
+end; 
 $function$
 ;
 
@@ -1118,7 +1119,7 @@ begin
 		select *
 		from "CarManager_DB".person
 	);
-end;
+end; 
 $function$
 ;
 
@@ -1133,7 +1134,7 @@ begin
 		select *
 		from "CarManager_DB".sales
 	);
-end;
+end; 
 $function$
 ;
 
@@ -1145,7 +1146,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_all_sales__()
 AS $function$
 BEGIN
     RETURN QUERY
-    SELECT
+    SELECT 
         s.id AS sale_id,
         s.date AS sale_date,
         s.price AS sale_price,
@@ -1185,7 +1186,7 @@ begin
 		select *
 		from "CarManager_DB".service
 	);
-end;
+end; 
 $function$
 ;
 
@@ -1237,7 +1238,7 @@ BEGIN
         JOIN "CarManager_DB".service service ON service.id = car.car_service_fk
 		WHERE manufacturer.id = param_manufacturer_id
     );
-END;
+END; 
 $function$
 ;
 
@@ -1275,7 +1276,7 @@ BEGIN
         JOIN "CarManager_DB".service service ON service.id = car.car_service_fk
 		WHERE model.id = param_model_id
     );
-END;
+END; 
 $function$
 ;
 
@@ -1313,7 +1314,7 @@ BEGIN
         JOIN "CarManager_DB".service service ON service.id = car.car_service_fk
 		WHERE car.sold = param_sold
     );
-END;
+END; 
 $function$
 ;
 
@@ -1339,7 +1340,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_customers_by_email(param_custo
 AS $function$
 BEGIN
     RETURN QUERY (
-        SELECT
+        SELECT 
             customer.id,
 			person.id,
             person.fname,
@@ -1347,13 +1348,13 @@ BEGIN
 			person.email,
 			person.birth_year,
 			person.gender
-      	FROM
+      	FROM 
             "CarManager_DB".customer
-        JOIN
+        JOIN 
             "CarManager_DB".person ON customer.customer_person_fk = person.id
 		WHERE person.email = param_customer_email
     );
-END;
+END; 
 $function$
 ;
 
@@ -1379,7 +1380,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_employees_by_email(param_emplo
 AS $function$
 BEGIN
     RETURN QUERY (
-        SELECT
+        SELECT 
             employee.id,
 			employee.salary,
 			employee.employee_person_fk,
@@ -1388,13 +1389,13 @@ BEGIN
 			person.email,
 			person.birth_year,
 			person.gender
-      	FROM
+      	FROM 
             "CarManager_DB".employee
-        JOIN
+        JOIN 
             "CarManager_DB".person ON employee.employee_person_fk = person.id -- Join on the foreign key
 		WHERE person.email = param_employee_email
     );
-END;
+END; 
 $function$
 ;
 
@@ -1419,7 +1420,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_manufacturers_by_location(para
  LANGUAGE plpgsql
 AS $function$
 	begin
-		return QUERY
+		return QUERY 
     select
 	*
 from
@@ -1438,7 +1439,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_manufacturers_by_name(param_na
  LANGUAGE plpgsql
 AS $function$
 	begin
-		return QUERY
+		return QUERY 
     select
 	*
 from
@@ -1472,7 +1473,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_models_by_manufacturer(param_m
 AS $function$
 	BEGIN
 		RETURN QUERY (
-			SELECT
+			SELECT 
 				model.id,
 				model.name,
 				model.type,
@@ -1482,7 +1483,7 @@ AS $function$
 				manufacturer.name
 			FROM "CarManager_DB".model model
 			JOIN "CarManager_DB".manufacturer manufacturer ON model.model_manufacturer_fk = manufacturer.id
-			WHERE
+			WHERE 
 				manufacturer.name = param_manufacturer
 		);
 	END;
@@ -1511,7 +1512,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_sale(param_sale_id integer)
 AS $function$
 BEGIN
     RETURN QUERY
-    SELECT
+    SELECT 
         s.id AS sale_id,
         s.date AS sale_date,
         s.price AS sale_price,
@@ -1549,7 +1550,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_sales_by_customer(param_custom
 AS $function$
 BEGIN
     RETURN QUERY
-    SELECT
+    SELECT 
         s.id AS sale_id,
         s.date AS sale_date,
         s.price AS sale_price,
@@ -1587,7 +1588,7 @@ CREATE OR REPLACE FUNCTION "CarManager_DB".select_sales_by_employee(param_employ
 AS $function$
 BEGIN
     RETURN QUERY
-    SELECT
+    SELECT 
         s.id AS sale_id,
         s.date AS sale_date,
         s.price AS sale_price,
@@ -1638,7 +1639,7 @@ CREATE OR REPLACE PROCEDURE "CarManager_DB".update_car(IN param_id integer, IN p
 AS $procedure$
 	BEGIN
 		UPDATE "CarManager_DB".car
-		SET
+		SET 
 			license_plate = param_license_plate,
 			price = param_price,
 			car_model_fk = param_model_fk
@@ -1655,7 +1656,7 @@ CREATE OR REPLACE PROCEDURE "CarManager_DB".update_car(IN param_id integer, IN p
 AS $procedure$
 	BEGIN
 		UPDATE "CarManager_DB".car
-		SET
+		SET 
 			license_plate = param_license_plate,
 			price = param_price
 		WHERE
@@ -1722,7 +1723,7 @@ CREATE OR REPLACE PROCEDURE "CarManager_DB".update_model(IN param_id integer, IN
  LANGUAGE plpgsql
 AS $procedure$
 	BEGIN
-		UPDATE "CarManager_DB".Model
+		UPDATE "CarManager_DB".Model 
 		SET
 			"name" = param_name,
 			"type" = param_type,
@@ -1755,7 +1756,7 @@ AS $procedure$
 		SET sold = true
 		WHERE id = param_car_fk;
 
-		UPDATE "CarManager_DB".sales
+		UPDATE "CarManager_DB".sales 
 		SET
 			price = param_price,
 			discount = param_discount,
@@ -1778,10 +1779,10 @@ BEGIN
     -- Update all columns, and conditionally update the "date" field
     UPDATE "CarManager_DB".service
     SET
-        "date" = CASE
-                    WHEN param_tires = TRUE AND param_engine = TRUE
-                        AND param_brakes = TRUE AND param_oil = TRUE
-                        AND param_battery = TRUE THEN now()
+        "date" = CASE 
+                    WHEN param_tires = TRUE AND param_engine = TRUE 
+                        AND param_brakes = TRUE AND param_oil = TRUE 
+                        AND param_battery = TRUE THEN now() 
                     ELSE "date"  -- Keeps the original date if condition is not met
                  END,
         tires = param_tires,
