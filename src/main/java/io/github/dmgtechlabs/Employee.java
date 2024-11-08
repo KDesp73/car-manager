@@ -132,6 +132,10 @@ public class Employee extends Person implements Dao, UIObject {
 	public static List<Employee> selectAll() {
 		return select(Functions.SELECT_ALL_EMPLOYEES + "__");
 	}
+	
+	public static List<Employee> selectByEmail(String email) {
+		return select(Database.SCHEMA + ".select_employees_by_email", email);
+	}
 
 	@Override
 	public String UIString() {
@@ -170,6 +174,11 @@ public class Employee extends Person implements Dao, UIObject {
 		return sb.toString();
 	}
 
+	/**
+	 * new String[]{"Salary", "Name", "Birth Year", "Gender", "Email"}
+	 * 
+	 * @return 
+	 */
 	@Override
 	public Object[] objArray() {
 		return new Object[]{

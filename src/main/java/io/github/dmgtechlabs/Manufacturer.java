@@ -19,7 +19,7 @@ import java.util.logging.Logger;
  *
  * @author thanasis
  */
-public class Manufacturer implements Dao {
+public class Manufacturer implements Dao, UIObject {
 
 	private int id;
 	private String name;
@@ -130,8 +130,27 @@ public class Manufacturer implements Dao {
 		return "Manufacturer{" + "id=" + id + ", name=" + name + ", location=" + location + '}';
 	}
 	
+	@Override
 	public String UIString() {
 		return this.name;
+	}
+
+	@Override
+	public String toHTML() {
+		throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+	}
+
+	/**
+	 * new String[]{"Name", "Location"}
+	 * 
+	 * @return 
+	 */
+	@Override
+	public Object[] objArray() {
+		return new Object[]{
+			this.name,
+			this.location
+		};
 	}
 
 }

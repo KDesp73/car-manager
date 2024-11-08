@@ -799,7 +799,7 @@
                                                   </Group>
                                                   <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
                                                   <Group type="103" groupAlignment="0" attributes="0">
-                                                      <Component id="EmployeesByEmailButton" alignment="1" min="-2" max="-2" attributes="0"/>
+                                                      <Component id="employeesByEmailButton" alignment="1" min="-2" max="-2" attributes="0"/>
                                                       <Component id="carsByPriceButton" alignment="1" min="-2" max="-2" attributes="0"/>
                                                   </Group>
                                               </Group>
@@ -809,9 +809,9 @@
                                                   <Component id="jButton9" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="1" attributes="0">
-                                                  <Component id="locationsComboBox" min="-2" pref="311" max="-2" attributes="0"/>
+                                                  <Component id="carsByServiceComboBox" min="-2" pref="311" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
-                                                  <Component id="jButton8" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="carsByServiceButton" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                           </Group>
                                           <Group type="102" alignment="1" attributes="0">
@@ -885,7 +885,7 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel10" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="EmployeesByEmailButton" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="employeesByEmailButton" alignment="3" min="-2" max="-2" attributes="0"/>
                           <Component id="employeesByEmailTextField" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
@@ -898,8 +898,8 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel12" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="locationsComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton8" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="carsByServiceComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="carsByServiceButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
@@ -1056,10 +1056,13 @@
                 <Property name="text" type="java.lang.String" value="Search Employees By Email"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JButton" name="EmployeesByEmailButton">
+            <Component class="javax.swing.JButton" name="employeesByEmailButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Run"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="employeesByEmailButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel11">
               <Properties>
@@ -1076,17 +1079,15 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel12">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Search Manufacturer By Location"/>
+                <Property name="text" type="java.lang.String" value="Search Cars By Service                      "/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="locationsComboBox">
+            <Component class="javax.swing.JComboBox" name="carsByServiceComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                  <StringArray count="4">
-                    <StringItem index="0" value="Item 1"/>
-                    <StringItem index="1" value="Item 2"/>
-                    <StringItem index="2" value="Item 3"/>
-                    <StringItem index="3" value="Item 4"/>
+                  <StringArray count="2">
+                    <StringItem index="0" value="Completed"/>
+                    <StringItem index="1" value="Not Completed"/>
                   </StringArray>
                 </Property>
               </Properties>
@@ -1094,10 +1095,13 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton8">
+            <Component class="javax.swing.JButton" name="carsByServiceButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Run"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="carsByServiceButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel13">
               <Properties>

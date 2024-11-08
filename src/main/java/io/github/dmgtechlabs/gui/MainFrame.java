@@ -2,6 +2,7 @@ package io.github.dmgtechlabs.gui;//GEN-LINE:variables//GEN-LINE:variables//GEN-
 
 import io.github.dmgtechlabs.Car;
 import io.github.dmgtechlabs.Customer;
+import io.github.dmgtechlabs.Email;
 import io.github.dmgtechlabs.Employee;
 import io.github.dmgtechlabs.Manufacturer;
 import io.github.dmgtechlabs.Model;
@@ -352,9 +353,7 @@ public class MainFrame extends javax.swing.JFrame {
 			this.manufacturersComboBox1.addItem(m.UIString());
 		}
 		
-		this.employeesByEmailTextField.setInputVerifier(new EmailVerifier());
 		GUIUtils.setPlaceholder(this.employeesByEmailTextField, "Email");
-		this.customersByEmailTextField.setInputVerifier(new EmailVerifier());
 		GUIUtils.setPlaceholder(this.customersByEmailTextField, "Email");
 		this.carPriceTextFormattedField.addKeyListener(new KeyAdapter() {
 			@Override
@@ -436,12 +435,12 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         customersByEmailButton = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
-        EmployeesByEmailButton = new javax.swing.JButton();
+        employeesByEmailButton = new javax.swing.JButton();
         jLabel11 = new javax.swing.JLabel();
         carsByPriceButton = new javax.swing.JButton();
         jLabel12 = new javax.swing.JLabel();
-        locationsComboBox = new javax.swing.JComboBox<>();
-        jButton8 = new javax.swing.JButton();
+        carsByServiceComboBox = new javax.swing.JComboBox<>();
+        carsByServiceButton = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
         combobox = new javax.swing.JComboBox<>();
         jButton9 = new javax.swing.JButton();
@@ -860,7 +859,12 @@ public class MainFrame extends javax.swing.JFrame {
 
         jLabel10.setText("Search Employees By Email");
 
-        EmployeesByEmailButton.setText("Run");
+        employeesByEmailButton.setText("Run");
+        employeesByEmailButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                employeesByEmailButtonActionPerformed(evt);
+            }
+        });
 
         jLabel11.setText("Search Cars By Price");
 
@@ -871,11 +875,16 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel12.setText("Search Manufacturer By Location");
+        jLabel12.setText("Search Cars By Service                      ");
 
-        locationsComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        carsByServiceComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Completed", "Not Completed" }));
 
-        jButton8.setText("Run");
+        carsByServiceButton.setText("Run");
+        carsByServiceButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carsByServiceButtonActionPerformed(evt);
+            }
+        });
 
         jLabel13.setText("Search Model By Manufacturer");
 
@@ -945,16 +954,16 @@ public class MainFrame extends javax.swing.JFrame {
                                                 .addComponent(carPriceTextFormattedField, javax.swing.GroupLayout.PREFERRED_SIZE, 228, javax.swing.GroupLayout.PREFERRED_SIZE))
                                             .addGap(136, 136, 136)
                                             .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                                .addComponent(EmployeesByEmailButton, javax.swing.GroupLayout.Alignment.TRAILING)
+                                                .addComponent(employeesByEmailButton, javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(carsByPriceButton, javax.swing.GroupLayout.Alignment.TRAILING)))
                                         .addGroup(searchPanelLayout.createSequentialGroup()
                                             .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(136, 136, 136)
                                             .addComponent(jButton9))
                                         .addGroup(searchPanelLayout.createSequentialGroup()
-                                            .addComponent(locationsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(carsByServiceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(136, 136, 136)
-                                            .addComponent(jButton8)))
+                                            .addComponent(carsByServiceButton)))
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, searchPanelLayout.createSequentialGroup()
                                         .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(employeesComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -1009,7 +1018,7 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel10)
-                    .addComponent(EmployeesByEmailButton)
+                    .addComponent(employeesByEmailButton)
                     .addComponent(employeesByEmailTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
@@ -1020,8 +1029,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel12)
-                    .addComponent(locationsComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton8))
+                    .addComponent(carsByServiceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(carsByServiceButton))
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
@@ -1369,7 +1378,12 @@ public class MainFrame extends javax.swing.JFrame {
         if(this.customersByEmailTextField.getText().isEmpty()) return;
 		
 		String email = this.customersByEmailTextField.getText();
-		List<Customer> result = Customer.selectByEmail(email);
+		if(!new Email(email).validate()) {
+			JOptionPane.showMessageDialog(this, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		var result = Customer.selectByEmail(email);
 		
 		this.resultCountLabel.setText(Integer.toString(result.size()));
 		
@@ -1381,7 +1395,7 @@ public class MainFrame extends javax.swing.JFrame {
 		if(this.carPriceTextFormattedField.getText().isEmpty()) return;
 		
 		float price = Float.parseFloat(this.carPriceTextFormattedField.getText());
-		List<Car> result = switch(this.carPriceComparisonComboBox.getSelectedIndex()){
+		var result = switch(this.carPriceComparisonComboBox.getSelectedIndex()){
 			case 0 -> Car.selectCarsByPriceGreater(price);
 			case 1 -> Car.selectCarsByPriceLess(price);
 			case 2 -> Car.selectCarsByPrice(price);
@@ -1393,6 +1407,36 @@ public class MainFrame extends javax.swing.JFrame {
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_carsByPriceButtonActionPerformed
+
+    private void employeesByEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesByEmailButtonActionPerformed
+		 if(this.employeesByEmailTextField.getText().isEmpty()) return;
+		
+		String email = this.employeesByEmailTextField.getText();
+		if(!new Email(email).validate()) {
+			JOptionPane.showMessageDialog(this, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+		
+		var result = Employee.selectByEmail(email);
+		
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+		
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Salary", "Name", "Birth Year", "Gender", "Email"}, false);
+		this.searchResultsTable.setModel(tableModel);
+    }//GEN-LAST:event_employeesByEmailButtonActionPerformed
+
+    private void carsByServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByServiceButtonActionPerformed
+		var result = switch(this.carsByServiceComboBox.getSelectedIndex()) {
+			case 0 -> Car.selectCarsByServiceCompleted(true);
+			case 1 -> Car.selectCarsByServiceCompleted(false);
+			default -> null;
+		};
+		
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+		
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()),  new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
+		this.searchResultsTable.setModel(tableModel);
+    }//GEN-LAST:event_carsByServiceButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -1407,7 +1451,6 @@ public class MainFrame extends javax.swing.JFrame {
 	}
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton EmployeesByEmailButton;
     private javax.swing.JMenuItem aboutMenuItem;
     private javax.swing.JButton addCarButton;
     private javax.swing.JMenuItem addCarMenuItem;
@@ -1425,6 +1468,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton carsByManufacturerButton;
     private javax.swing.JButton carsByModelButton;
     private javax.swing.JButton carsByPriceButton;
+    private javax.swing.JButton carsByServiceButton;
+    private javax.swing.JComboBox<String> carsByServiceComboBox;
     private javax.swing.JButton carsBySoldButton;
     private javax.swing.JEditorPane carsEditorPane;
     private javax.swing.JList<String> carsList;
@@ -1449,6 +1494,7 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JButton editSaleButton;
     private javax.swing.JList<String> employeeList;
     private javax.swing.JMenuItem employeeLogsMenuItem;
+    private javax.swing.JButton employeesByEmailButton;
     private javax.swing.JFormattedTextField employeesByEmailTextField;
     private javax.swing.JComboBox<String> employeesComboBox;
     private javax.swing.JEditorPane employeesEditorPane;
@@ -1458,7 +1504,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane formListContainer;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
-    private javax.swing.JButton jButton8;
     private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -1485,7 +1530,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane7;
     private javax.swing.JScrollPane jScrollPane8;
     private javax.swing.JScrollPane jScrollPane9;
-    private javax.swing.JComboBox<String> locationsComboBox;
     private javax.swing.JMenu logsMenu;
     private javax.swing.JComboBox<String> manufacturersComboBox1;
     private javax.swing.JComboBox<String> manufacturersComboBox2;

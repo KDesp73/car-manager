@@ -157,6 +157,11 @@ public class Customer extends Person implements Dao, UIObject {
 		return sb.toString();
 	}
 
+	/**
+	 * new String[]{"Name", "Birth Year", "Gender", "Email"}
+	 * 
+	 * @return 
+	 */
 	@Override
 	public Object[] objArray() {
 		return new Object[]{

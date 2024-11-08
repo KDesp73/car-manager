@@ -184,6 +184,11 @@ public class Sale implements Dao, UIObject {
 		return sb.toString();
 	}
 
+	/**
+	 * new String[]{"Price", "Discount", "Customer Name", "Salesman Name", "License Plate"}
+	 * 
+	 * @return 
+	 */
 	@Override
 	public Object[] objArray() {
 		return new Object[]{

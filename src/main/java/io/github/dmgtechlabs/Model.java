@@ -17,7 +17,7 @@ import kdesp73.databridge.helpers.SQLogger;
  *
  * @author kdesp73
  */
-public class Model extends Manufacturer implements Dao {
+public class Model extends Manufacturer implements Dao, UIObject {
 
 	public static enum Type {
 		Sedan,
@@ -248,5 +248,21 @@ public class Model extends Manufacturer implements Dao {
 	@Override
 	public String UIString(){ 
 		return this.name + " " + this.year + " (" + this.type + " " + this.hp + "hp)";
+	}
+	
+	/**
+	 * new String[]{"Name", "Type", "Year", "WD", "Hp"}
+	 * 
+	 * @return 
+	 */
+	@Override
+	public Object[] objArray() {
+		return new Object[]{
+			this.name,
+			this.type,
+			this.year,
+			this.wd.toString().substring(1),
+			this.hp
+		};
 	}
 }

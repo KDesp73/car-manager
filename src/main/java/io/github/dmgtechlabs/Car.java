@@ -182,6 +182,11 @@ public class Car extends Model implements Dao, UIObject {
 		return select(Database.SCHEMA + ".select_cars_by_price", price);
 	}
 	
+	public static List<Car> selectCarsByServiceCompleted(boolean completed) {
+		if(completed) return select(Database.SCHEMA + ".select_cars_by_service_completed");
+		return select(Database.SCHEMA + ".select_cars_by_service_not_completed");
+	}
+	
 	@Override
 	public String UIString() {
 		return this.licensePlate + " - " + this.price + "$ " + this.getManufacturerName() + " " + this.getName();
