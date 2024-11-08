@@ -300,7 +300,6 @@ public class MainFrame extends javax.swing.JFrame {
 
 		this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		this.setMinimumSize(new Dimension(1048, 715));
-//		this.setResizable(false);
 		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
 
 		this.cardLayout = (CardLayout) this.cardContainer.getLayout();
