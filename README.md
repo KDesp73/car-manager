@@ -4,7 +4,7 @@ A Car Dealership management system written in Java (with Java Swing)
 
 ## ER Diagram
 
-![ER](./docs/'iee2021035 - CarManager_DB.png')
+
 
 ## Authors
 
