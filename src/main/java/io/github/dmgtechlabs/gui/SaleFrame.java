@@ -32,7 +32,7 @@ public class SaleFrame extends javax.swing.JFrame {
 		initComponents();
 		GUIUtils.commonSetup(this);
 		this.setResizable(false);
-
+		
 		this.cars = Car.selectCarsBySold(false);
 		this.employees = Employee.selectAll();
 		this.customers = Customer.selectAll();
@@ -99,6 +99,7 @@ public class SaleFrame extends javax.swing.JFrame {
         jButton1.setText("jButton1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
+        setPreferredSize(new java.awt.Dimension(687, 530));
 
         jLabel6.setText("Discount");
 
