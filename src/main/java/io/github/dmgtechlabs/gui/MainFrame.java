@@ -1540,7 +1540,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 		this.resultCountLabel.setText(Integer.toString(result.size()));
 
-		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name", "Licence Plate"}, false);
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer", "Employee", "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_salesByCustomerActionPerformed
 
@@ -1559,7 +1559,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 		this.resultCountLabel.setText(Integer.toString(result.size()));
 
-		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name", "Licence Plate"}, false);
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer", "Employee", "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_salesByEmployeeButtonActionPerformed
 
