@@ -19,6 +19,7 @@ import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 import java.util.List;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.DefaultListModel;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
@@ -376,6 +377,22 @@ public class MainFrame extends javax.swing.JFrame {
 				}
 			}
 		});
+		this.salesByMonthComboBox.setModel(
+			new DefaultComboBoxModel(new String[]{
+				"January",
+				"February",
+				"March",
+				"April", 
+				"May", 
+				"June", 
+				"July", 
+				"August", 
+				"September", 
+				"Octomber", 
+				"November", 
+				"December"
+			})
+		);
 
 		Actions.frame = this;
 		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
@@ -450,8 +467,8 @@ public class MainFrame extends javax.swing.JFrame {
         carsByServiceComboBox = new javax.swing.JComboBox<>();
         carsByServiceButton = new javax.swing.JButton();
         jLabel13 = new javax.swing.JLabel();
-        combobox = new javax.swing.JComboBox<>();
-        jButton9 = new javax.swing.JButton();
+        salesByMonthComboBox = new javax.swing.JComboBox<>();
+        salesByMonthButton = new javax.swing.JButton();
         jLabel14 = new javax.swing.JLabel();
         carsBySoldButton = new javax.swing.JButton();
         customersByEmailTextField = new javax.swing.JFormattedTextField();
@@ -908,11 +925,16 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
-        jLabel13.setText("Search Model By Manufacturer");
+        jLabel13.setText("Search Sale By Month");
 
-        combobox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        salesByMonthComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
-        jButton9.setText("Run");
+        salesByMonthButton.setText("Run");
+        salesByMonthButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salesByMonthButtonActionPerformed(evt);
+            }
+        });
 
         jLabel14.setText("Search Cars By Sold");
 
@@ -984,9 +1006,9 @@ public class MainFrame extends javax.swing.JFrame {
                                                 .addComponent(employeesByEmailButton, javax.swing.GroupLayout.Alignment.TRAILING)
                                                 .addComponent(carsByPriceButton, javax.swing.GroupLayout.Alignment.TRAILING)))
                                         .addGroup(searchPanelLayout.createSequentialGroup()
-                                            .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                            .addComponent(salesByMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(136, 136, 136)
-                                            .addComponent(jButton9))
+                                            .addComponent(salesByMonthButton))
                                         .addGroup(searchPanelLayout.createSequentialGroup()
                                             .addComponent(carsByServiceComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 311, javax.swing.GroupLayout.PREFERRED_SIZE)
                                             .addGap(136, 136, 136)
@@ -1061,8 +1083,8 @@ public class MainFrame extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton9))
+                    .addComponent(salesByMonthComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(salesByMonthButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -1479,26 +1501,14 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsByServiceButtonActionPerformed
 
     private void carsByModelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByModelButtonActionPerformed
-		int selectedModelId = 0;
-
-		for (int i = 0; i < this.models.size(); i++) {
-			if (this.models.get(i).UIString().equals(this.modelsComboBox.getSelectedItem().toString())) {
-				selectedModelId = this.models.get(i).getId();
-				break;
-			}
-		}
+		int selectedModelId = this.models.get(this.modelsComboBox.getSelectedIndex()).getId();
 
 		var result = Car.selectCarByModel(selectedModelId);
-
-		for (int i = 0; i < result.size(); i++) {
-			System.out.println(result.get(i));
-		}
 
 		this.resultCountLabel.setText(Integer.toString(result.size()));
 
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
 		this.searchResultsTable.setModel(tableModel);
-
     }//GEN-LAST:event_carsByModelButtonActionPerformed
 
     private void carsByManufacturerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByManufacturerButtonActionPerformed
@@ -1545,15 +1555,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_salesByCustomerActionPerformed
 
     private void salesByEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByEmployeeButtonActionPerformed
-		int selectedEmployeeId = 0;
-
-		for (int i = 0; i < this.employees.size(); i++) {
-			if (this.employees.get(i).UIString().equals(this.employeesComboBox.getSelectedItem().toString())) {
-				System.out.println("Here");
-				selectedEmployeeId = this.employees.get(i).getEmployeeId();
-				break;
-			}
-		}
+		int selectedEmployeeId = this.employees.get(this.employeesComboBox.getSelectedIndex()).getEmployeeId();
 
 		var result = Sale.selectSaleByEmployee(selectedEmployeeId);
 
@@ -1562,6 +1564,16 @@ public class MainFrame extends javax.swing.JFrame {
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer", "Employee", "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_salesByEmployeeButtonActionPerformed
+
+    private void salesByMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByMonthButtonActionPerformed
+		int month = this.salesByMonthComboBox.getSelectedIndex()+1;
+		var result = Sale.selectByMonth(month);
+		
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+		
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer", "Employee", "Licence Plate"}, false);
+		this.searchResultsTable.setModel(tableModel);
+    }//GEN-LAST:event_salesByMonthButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
@@ -1601,7 +1613,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JMenuItem carsLogsMenuItem;
     private javax.swing.JPanel carsPanel;
     private javax.swing.JMenuItem carsRefreshMenuItem;
-    private javax.swing.JComboBox<String> combobox;
     private javax.swing.JComboBox<String> customerComboBox;
     private javax.swing.JList<String> customerList;
     private javax.swing.JButton customersByEmailButton;
@@ -1629,7 +1640,6 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane formListContainer;
     private javax.swing.JMenu helpMenu;
     private javax.swing.JMenuItem helpMenuItem;
-    private javax.swing.JButton jButton9;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -1663,6 +1673,8 @@ public class MainFrame extends javax.swing.JFrame {
     private javax.swing.JLabel resultCountLabel;
     private javax.swing.JButton salesByCustomer;
     private javax.swing.JButton salesByEmployeeButton;
+    private javax.swing.JButton salesByMonthButton;
+    private javax.swing.JComboBox<String> salesByMonthComboBox;
     private javax.swing.JEditorPane salesEditorPane;
     private javax.swing.JList<String> salesList;
     private javax.swing.JPanel salesPanel;

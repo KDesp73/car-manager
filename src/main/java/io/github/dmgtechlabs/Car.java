@@ -19,6 +19,7 @@ public class Car extends Model implements Dao, UIObject {
 	private String licensePlate;
 	private float price;
 	private Service service;
+	private boolean sold;
 
 	public Car(String licencePlate, float price, int modelId) {
 		super(modelId);

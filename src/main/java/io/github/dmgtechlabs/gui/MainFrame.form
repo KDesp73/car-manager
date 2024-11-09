@@ -804,9 +804,9 @@
                                                   </Group>
                                               </Group>
                                               <Group type="102" attributes="0">
-                                                  <Component id="combobox" min="-2" pref="311" max="-2" attributes="0"/>
+                                                  <Component id="salesByMonthComboBox" min="-2" pref="311" max="-2" attributes="0"/>
                                                   <EmptySpace min="-2" pref="136" max="-2" attributes="0"/>
-                                                  <Component id="jButton9" min="-2" max="-2" attributes="0"/>
+                                                  <Component id="salesByMonthButton" min="-2" max="-2" attributes="0"/>
                                               </Group>
                                               <Group type="102" alignment="1" attributes="0">
                                                   <Component id="carsByServiceComboBox" min="-2" pref="311" max="-2" attributes="0"/>
@@ -904,8 +904,8 @@
                       <EmptySpace type="separate" max="-2" attributes="0"/>
                       <Group type="103" groupAlignment="3" attributes="0">
                           <Component id="jLabel13" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="combobox" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="jButton9" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="salesByMonthComboBox" alignment="3" min="-2" max="-2" attributes="0"/>
+                          <Component id="salesByMonthButton" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace pref="61" max="32767" attributes="0"/>
                       <Group type="103" groupAlignment="0" max="-2" attributes="0">
@@ -1102,10 +1102,10 @@
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel13">
               <Properties>
-                <Property name="text" type="java.lang.String" value="Search Model By Manufacturer"/>
+                <Property name="text" type="java.lang.String" value="Search Sale By Month"/>
               </Properties>
             </Component>
-            <Component class="javax.swing.JComboBox" name="combobox">
+            <Component class="javax.swing.JComboBox" name="salesByMonthComboBox">
               <Properties>
                 <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
                   <StringArray count="4">
@@ -1120,10 +1120,13 @@
                 <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value="&lt;String&gt;"/>
               </AuxValues>
             </Component>
-            <Component class="javax.swing.JButton" name="jButton9">
+            <Component class="javax.swing.JButton" name="salesByMonthButton">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Run"/>
               </Properties>
+              <Events>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="salesByMonthButtonActionPerformed"/>
+              </Events>
             </Component>
             <Component class="javax.swing.JLabel" name="jLabel14">
               <Properties>
