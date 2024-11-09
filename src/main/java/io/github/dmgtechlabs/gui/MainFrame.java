@@ -1479,39 +1479,39 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsByServiceButtonActionPerformed
 
     private void carsByModelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByModelButtonActionPerformed
-        int selectedModelId = 0;
-		
+		int selectedModelId = 0;
+
 		for (int i = 0; i < this.models.size(); i++) {
 			if (this.models.get(i).UIString().equals(this.modelsComboBox.getSelectedItem().toString())) {
 				selectedModelId = this.models.get(i).getId();
 				break;
 			}
 		}
-		
+
 		var result = Car.selectCarByModel(selectedModelId);
-		
+
 		for (int i = 0; i < result.size(); i++) {
 			System.out.println(result.get(i));
 		}
-		
+
 		this.resultCountLabel.setText(Integer.toString(result.size()));
-		
+
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
 		this.searchResultsTable.setModel(tableModel);
-		
+
     }//GEN-LAST:event_carsByModelButtonActionPerformed
 
     private void carsByManufacturerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByManufacturerButtonActionPerformed
-        var result = Car.selectCarByManufacturer(this.manufacturersComboBox2.getSelectedItem().toString());
-		
+		var result = Car.selectCarByManufacturer(this.manufacturersComboBox2.getSelectedItem().toString());
+
 		this.resultCountLabel.setText(Integer.toString(result.size()));
-		
+
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_carsByManufacturerButtonActionPerformed
 
     private void carsBySoldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsBySoldButtonActionPerformed
-        var result = switch (this.soldComboBox.getSelectedIndex()) {
+		var result = switch (this.soldComboBox.getSelectedIndex()) {
 			case 0 ->
 				Car.selectCarsBySold(true);
 			case 1 ->
@@ -1519,46 +1519,47 @@ public class MainFrame extends javax.swing.JFrame {
 			default ->
 				null;
 		};
-		
+
 		this.resultCountLabel.setText(Integer.toString(result.size()));
-		
+
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_carsBySoldButtonActionPerformed
 
     private void salesByCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByCustomerActionPerformed
 		int selectedCustomerId = 0;
-		
+
 		for (int i = 0; i < this.customers.size(); i++) {
 			if (this.customers.get(i).UIString().equals(this.customerComboBox.getSelectedItem().toString())) {
 				selectedCustomerId = this.customers.get(i).getId();
 				break;
 			}
 		}
-		
+
 		var result = Sale.selectSaleByCustomer(selectedCustomerId);
-		
+
 		this.resultCountLabel.setText(Integer.toString(result.size()));
-		
-		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name",  "Licence Plate"}, false);
+
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name", "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_salesByCustomerActionPerformed
 
     private void salesByEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByEmployeeButtonActionPerformed
-        int selectedEmployeeId = 0;
-		
+		int selectedEmployeeId = 0;
+
 		for (int i = 0; i < this.employees.size(); i++) {
 			if (this.employees.get(i).UIString().equals(this.employeesComboBox.getSelectedItem().toString())) {
-				selectedEmployeeId = this.employees.get(i).getId();
+				System.out.println("Here");
+				selectedEmployeeId = this.employees.get(i).getEmployeeId();
 				break;
 			}
 		}
-		
+
 		var result = Sale.selectSaleByEmployee(selectedEmployeeId);
-		
+
 		this.resultCountLabel.setText(Integer.toString(result.size()));
-		
-		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name",  "Licence Plate"}, false);
+
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name", "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_salesByEmployeeButtonActionPerformed
 
