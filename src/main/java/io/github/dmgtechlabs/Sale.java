@@ -112,7 +112,7 @@ public class Sale implements Dao, UIObject {
 			id
 		);
 	}
-	
+
 	private static List<Sale> select(String functionName, Object... params) {
 		List<Sale> result = new ArrayList<>();
 		try (PostgresConnection db = Database.connection()) {
@@ -160,10 +160,18 @@ public class Sale implements Dao, UIObject {
 		return select(Functions.SELECT_ALL_SALES + "__");
 	}
 
+	public static List<Sale> selectSaleByCustomer(int customer) {
+		return select(Database.SCHEMA + ".select_sales_by_customer", customer);
+	}
+
+	public static List<Sale> selectSaleByEmployee(int employee) {
+		return select(Database.SCHEMA + ".select_sales_by_employee", employee);
+	}
+
 	public static Sale selectById(int id) {
 		return select(Database.SCHEMA + ".select_sale_by_id", id).get(0);
 	}
-	
+
 	@Override
 	public String UIString() {
 		return this.customer.getLname() + " " + this.car.getLicencePlate() + " " + this.finalPrice + "$";
@@ -172,7 +180,7 @@ public class Sale implements Dao, UIObject {
 	@Override
 	public String toHTML() {
 		StringBuilder sb = new StringBuilder();
-		
+
 		sb.append(Utils.HTML.header(1, "Sold " + this.car.getLicencePlate() + " for " + this.finalPrice + "$"));
 		sb.append(Utils.HTML.header(2, "Details"));
 		sb.append(Utils.HTML.ul(
@@ -180,14 +188,15 @@ public class Sale implements Dao, UIObject {
 			"Sold by: " + this.employee.getName(),
 			"Sold to: " + this.customer.getName()
 		));
-		
+
 		return sb.toString();
 	}
 
 	/**
-	 * new String[]{"Price", "Discount", "Customer Name", "Salesman Name", "License Plate"}
-	 * 
-	 * @return 
+	 * new String[]{"Price", "Discount", "Customer Name", "Salesman Name",
+	 * "License Plate"}
+	 *
+	 * @return
 	 */
 	@Override
 	public Object[] objArray() {

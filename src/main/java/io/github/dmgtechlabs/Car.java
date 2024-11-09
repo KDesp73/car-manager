@@ -165,6 +165,14 @@ public class Car extends Model implements Dao, UIObject {
 	public static List<Car> selectAllCars() {
 		return select(Functions.SELECT_ALL_CARS + "__");	
 	}
+	
+	public static List<Car> selectCarByModel(int model) {
+		return select(Database.SCHEMA + ".select_cars_by_model", model);
+	}
+	
+	public static List<Car> selectCarByManufacturer(String manufacturer) {
+		return select(Database.SCHEMA + ".select_cars_by_manufacturer", manufacturer);
+	}
 
 	public static List<Car> selectCarsBySold(boolean sold) {
 		return select(Database.SCHEMA + ".select_cars_by_sold", sold);

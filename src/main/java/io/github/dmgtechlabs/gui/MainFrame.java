@@ -66,44 +66,44 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void editCar() {
-			if(frame.carsList.getSelectedIndex() < 0) {
+			if (frame.carsList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			frame.carFrame = new CarFrame(frame.cars.get(frame.carsList.getSelectedIndex()));
 			GUIUtils.addWindowClosedListener(frame.carFrame, refreshCarsRunnable());
 			GUIUtils.showFrame(frame.carFrame);
 		}
 
 		public static void editCustomer() {
-			if(frame.customerList.getSelectedIndex() < 0) {
+			if (frame.customerList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			frame.customerFrame = new CustomerFrame(frame.customers.get(frame.customerList.getSelectedIndex()));
 			GUIUtils.addWindowClosedListener(frame.customerFrame, refreshCustomersRunnable());
 			GUIUtils.showFrame(frame.customerFrame);
 		}
 
 		public static void editEmployee() {
-			if(frame.employeeList.getSelectedIndex() < 0) {
+			if (frame.employeeList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			frame.employeeFrame = new EmployeeFrame(frame.employees.get(frame.employeeList.getSelectedIndex()));
 			GUIUtils.addWindowClosedListener(frame.employeeFrame, refreshEmployeesRunnable());
 			GUIUtils.showFrame(frame.employeeFrame);
 		}
 
 		public static void editSale() {
-			if(frame.salesList.getSelectedIndex() < 0) {
+			if (frame.salesList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			if (frame.salesList.getSelectedIndex() < 0) {
 				return;
 			}
@@ -113,11 +113,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteCar() {
-			if(frame.carsList.getSelectedIndex() < 0) {
+			if (frame.carsList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			var car = frame.cars.get(frame.carsList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -134,11 +134,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteCustomer() {
-			if(frame.customerList.getSelectedIndex() < 0) {
+			if (frame.customerList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			var customer = frame.customers.get(frame.customerList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -155,11 +155,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteEmployee() {
-			if(frame.employeeList.getSelectedIndex() < 0) {
+			if (frame.employeeList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			var employee = frame.employees.get(frame.employeeList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -176,11 +176,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void deleteSale() {
-			if(frame.salesList.getSelectedIndex() < 0) {
+			if (frame.salesList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			var sale = frame.sales.get(frame.salesList.getSelectedIndex());
 			int option = JOptionPane.showConfirmDialog(
 				frame,
@@ -197,11 +197,11 @@ public class MainFrame extends javax.swing.JFrame {
 		}
 
 		public static void updateService() {
-			if(frame.carsList.getSelectedIndex() < 0) {
+			if (frame.carsList.getSelectedIndex() < 0) {
 				JOptionPane.showMessageDialog(frame, "Please select an item first", "Warning", JOptionPane.WARNING_MESSAGE);
 				return;
 			}
-			
+
 			frame.serviceFrame = new ServiceFrame(frame.cars.get(frame.carsList.getSelectedIndex()).getService());
 			GUIUtils.addWindowClosedListener(frame.serviceFrame, refreshCarsRunnable());
 			GUIUtils.showFrame(frame.serviceFrame);
@@ -285,7 +285,7 @@ public class MainFrame extends javax.swing.JFrame {
 
 	// Cars Card
 	private List<Car> cars;
-	
+
 	// Search Card
 	private List<Model> models;
 	private List<Manufacturer> manufacturers;
@@ -314,7 +314,7 @@ public class MainFrame extends javax.swing.JFrame {
 		this.cardLayout.addLayoutComponent(this.employeesPanel, "Employees");
 		this.cardLayout.addLayoutComponent(this.customersPanel, "Customers");
 		this.cardLayout.addLayoutComponent(this.searchPanel, "Search");
-		
+
 		//Customers Card
 		this.customerList.setFixedCellHeight(25);
 		this.customers = Customer.selectAll();
@@ -352,7 +352,16 @@ public class MainFrame extends javax.swing.JFrame {
 		for (Manufacturer m : this.manufacturers) {
 			this.manufacturersComboBox1.addItem(m.UIString());
 		}
-		
+		for (Manufacturer m : this.manufacturers) {
+			this.manufacturersComboBox2.addItem(m.UIString());
+		}
+		for (Customer c : this.customers) {
+			this.customerComboBox.addItem(c.UIString());
+		}
+		for (Employee e : this.employees) {
+			this.employeesComboBox.addItem(e.UIString());
+		}
+
 		GUIUtils.setPlaceholder(this.employeesByEmailTextField, "Email");
 		GUIUtils.setPlaceholder(this.customersByEmailTextField, "Email");
 		this.carPriceTextFormattedField.addKeyListener(new KeyAdapter() {
@@ -367,8 +376,7 @@ public class MainFrame extends javax.swing.JFrame {
 				}
 			}
 		});
-		
-		
+
 		Actions.frame = this;
 		GUIUtils.addKeyBinding(this.rootPane, "F5", Actions.refreshAllRunnable());
 	}
@@ -829,24 +837,38 @@ public class MainFrame extends javax.swing.JFrame {
         });
 
         carsByModelButton.setText("Run");
+        carsByModelButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carsByModelButtonActionPerformed(evt);
+            }
+        });
 
         jLabel4.setText("Search Cars By Manufacturer");
 
-        manufacturersComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         carsByManufacturerButton.setText("Run");
+        carsByManufacturerButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carsByManufacturerButtonActionPerformed(evt);
+            }
+        });
 
         jLabel7.setText("Search Sales By Customer");
 
-        customerComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         salesByCustomer.setText("Run");
+        salesByCustomer.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salesByCustomerActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("Search Sales By Employee");
 
-        employeesComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         salesByEmployeeButton.setText("Run");
+        salesByEmployeeButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                salesByEmployeeButtonActionPerformed(evt);
+            }
+        });
 
         jLabel9.setText("Search Customers By Email");
 
@@ -895,8 +917,13 @@ public class MainFrame extends javax.swing.JFrame {
         jLabel14.setText("Search Cars By Sold");
 
         carsBySoldButton.setText("Run");
+        carsBySoldButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                carsBySoldButtonActionPerformed(evt);
+            }
+        });
 
-        soldComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        soldComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Sold", "Not Sold" }));
 
         jLabel15.setText("Result Count:");
 
@@ -914,9 +941,9 @@ public class MainFrame extends javax.swing.JFrame {
                             .addGroup(searchPanelLayout.createSequentialGroup()
                                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel14)
-                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel3)
-                                    .addComponent(jLabel4))
+                                    .addComponent(jLabel4)
+                                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 194, javax.swing.GroupLayout.PREFERRED_SIZE))
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                                     .addGroup(searchPanelLayout.createSequentialGroup()
@@ -1036,7 +1063,7 @@ public class MainFrame extends javax.swing.JFrame {
                     .addComponent(jLabel13)
                     .addComponent(combobox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jButton9))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 47, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
                 .addGroup(searchPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(resultCountLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
@@ -1362,7 +1389,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_deleteSaleButtonActionPerformed
 
     private void manufacturersComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_manufacturersComboBox1ActionPerformed
-        this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturersComboBox1.getSelectedIndex()).getManufacturerName());
+		this.models = Model.selectByManufacturer(this.manufacturers.get(this.manufacturersComboBox1.getSelectedIndex()).getManufacturerName());
 
 		this.modelsComboBox.removeAllItems();
 		for (Model m : this.models) {
@@ -1375,68 +1402,165 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_serviceCarButtonActionPerformed
 
     private void customersByEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_customersByEmailButtonActionPerformed
-        if(this.customersByEmailTextField.getText().isEmpty()) return;
-		
+		if (this.customersByEmailTextField.getText().isEmpty()) {
+			return;
+		}
+
 		String email = this.customersByEmailTextField.getText();
-		if(!new Email(email).validate()) {
+		if (!new Email(email).validate()) {
 			JOptionPane.showMessageDialog(this, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE);
 			return;
 		}
-		
+
 		var result = Customer.selectByEmail(email);
-		
+
 		this.resultCountLabel.setText(Integer.toString(result.size()));
-		
+
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Name", "Birth Year", "Gender", "Email"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_customersByEmailButtonActionPerformed
 
     private void carsByPriceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByPriceButtonActionPerformed
-		if(this.carPriceTextFormattedField.getText().isEmpty()) return;
-		
+		if (this.carPriceTextFormattedField.getText().isEmpty()) {
+			return;
+		}
+
 		float price = Float.parseFloat(this.carPriceTextFormattedField.getText());
-		var result = switch(this.carPriceComparisonComboBox.getSelectedIndex()){
-			case 0 -> Car.selectCarsByPriceGreater(price);
-			case 1 -> Car.selectCarsByPriceLess(price);
-			case 2 -> Car.selectCarsByPrice(price);
-			default -> null;
+		var result = switch (this.carPriceComparisonComboBox.getSelectedIndex()) {
+			case 0 ->
+				Car.selectCarsByPriceGreater(price);
+			case 1 ->
+				Car.selectCarsByPriceLess(price);
+			case 2 ->
+				Car.selectCarsByPrice(price);
+			default ->
+				null;
+		};
+
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
+		this.searchResultsTable.setModel(tableModel);
+    }//GEN-LAST:event_carsByPriceButtonActionPerformed
+
+    private void employeesByEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesByEmailButtonActionPerformed
+		if (this.employeesByEmailTextField.getText().isEmpty()) {
+			return;
+		}
+
+		String email = this.employeesByEmailTextField.getText();
+		if (!new Email(email).validate()) {
+			JOptionPane.showMessageDialog(this, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE);
+			return;
+		}
+
+		var result = Employee.selectByEmail(email);
+
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Salary", "Name", "Birth Year", "Gender", "Email"}, false);
+		this.searchResultsTable.setModel(tableModel);
+    }//GEN-LAST:event_employeesByEmailButtonActionPerformed
+
+    private void carsByServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByServiceButtonActionPerformed
+		var result = switch (this.carsByServiceComboBox.getSelectedIndex()) {
+			case 0 ->
+				Car.selectCarsByServiceCompleted(true);
+			case 1 ->
+				Car.selectCarsByServiceCompleted(false);
+			default ->
+				null;
+		};
+
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
+		this.searchResultsTable.setModel(tableModel);
+    }//GEN-LAST:event_carsByServiceButtonActionPerformed
+
+    private void carsByModelButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByModelButtonActionPerformed
+        int selectedModelId = 0;
+		
+		for (int i = 0; i < this.models.size(); i++) {
+			if (this.models.get(i).UIString().equals(this.modelsComboBox.getSelectedItem().toString())) {
+				selectedModelId = this.models.get(i).getId();
+				break;
+			}
+		}
+		
+		var result = Car.selectCarByModel(selectedModelId);
+		
+		for (int i = 0; i < result.size(); i++) {
+			System.out.println(result.get(i));
+		}
+		
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+		
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
+		this.searchResultsTable.setModel(tableModel);
+		
+    }//GEN-LAST:event_carsByModelButtonActionPerformed
+
+    private void carsByManufacturerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByManufacturerButtonActionPerformed
+        var result = Car.selectCarByManufacturer(this.manufacturersComboBox2.getSelectedItem().toString());
+		
+		this.resultCountLabel.setText(Integer.toString(result.size()));
+		
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
+		this.searchResultsTable.setModel(tableModel);
+    }//GEN-LAST:event_carsByManufacturerButtonActionPerformed
+
+    private void carsBySoldButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsBySoldButtonActionPerformed
+        var result = switch (this.soldComboBox.getSelectedIndex()) {
+			case 0 ->
+				Car.selectCarsBySold(true);
+			case 1 ->
+				Car.selectCarsBySold(false);
+			default ->
+				null;
 		};
 		
 		this.resultCountLabel.setText(Integer.toString(result.size()));
 		
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
 		this.searchResultsTable.setModel(tableModel);
-    }//GEN-LAST:event_carsByPriceButtonActionPerformed
+    }//GEN-LAST:event_carsBySoldButtonActionPerformed
 
-    private void employeesByEmailButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_employeesByEmailButtonActionPerformed
-		 if(this.employeesByEmailTextField.getText().isEmpty()) return;
+    private void salesByCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByCustomerActionPerformed
+		int selectedCustomerId = 0;
 		
-		String email = this.employeesByEmailTextField.getText();
-		if(!new Email(email).validate()) {
-			JOptionPane.showMessageDialog(this, "Please enter a valid email", "Error", JOptionPane.ERROR_MESSAGE);
-			return;
+		for (int i = 0; i < this.customers.size(); i++) {
+			if (this.customers.get(i).UIString().equals(this.customerComboBox.getSelectedItem().toString())) {
+				selectedCustomerId = this.customers.get(i).getId();
+				break;
+			}
 		}
 		
-		var result = Employee.selectByEmail(email);
+		var result = Sale.selectSaleByCustomer(selectedCustomerId);
 		
 		this.resultCountLabel.setText(Integer.toString(result.size()));
 		
-		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Salary", "Name", "Birth Year", "Gender", "Email"}, false);
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name",  "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
-    }//GEN-LAST:event_employeesByEmailButtonActionPerformed
+    }//GEN-LAST:event_salesByCustomerActionPerformed
 
-    private void carsByServiceButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carsByServiceButtonActionPerformed
-		var result = switch(this.carsByServiceComboBox.getSelectedIndex()) {
-			case 0 -> Car.selectCarsByServiceCompleted(true);
-			case 1 -> Car.selectCarsByServiceCompleted(false);
-			default -> null;
-		};
+    private void salesByEmployeeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByEmployeeButtonActionPerformed
+        int selectedEmployeeId = 0;
+		
+		for (int i = 0; i < this.employees.size(); i++) {
+			if (this.employees.get(i).UIString().equals(this.employeesComboBox.getSelectedItem().toString())) {
+				selectedEmployeeId = this.employees.get(i).getId();
+				break;
+			}
+		}
+		
+		var result = Sale.selectSaleByEmployee(selectedEmployeeId);
 		
 		this.resultCountLabel.setText(Integer.toString(result.size()));
 		
-		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()),  new String[]{"License Plate", "Price", "Model", "Type", "WD", "Hp"}, false);
+		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer Name", "Employee Name",  "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
-    }//GEN-LAST:event_carsByServiceButtonActionPerformed
+    }//GEN-LAST:event_salesByEmployeeButtonActionPerformed
 
 	/**
 	 * @param args the command line arguments
