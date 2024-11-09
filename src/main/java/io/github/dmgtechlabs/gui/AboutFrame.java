@@ -44,9 +44,9 @@ public final class AboutFrame extends javax.swing.JFrame {
 		this.setGithubURL(githubURL);
 		
 		int size = 20;
-		GUIMethods.loadImage(nameLabel, Images.developerWhite, new Dimension(size, size));
-		GUIMethods.loadImage(emailLabel, Images.mailWhite, new Dimension(size, size));
-		GUIMethods.loadImage(githubLabel, Images.githubWhite, new Dimension(size, size));
+		GUIMethods.loadImage(nameLabel, Images.developer, new Dimension(size, size));
+		GUIMethods.loadImage(emailLabel, Images.mail, new Dimension(size, size));
+		GUIMethods.loadImage(githubLabel, Images.github, new Dimension(size, size));
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -65,7 +65,6 @@ public final class AboutFrame extends javax.swing.JFrame {
         nameLabel = new javax.swing.JLabel();
         emailLabel = new javax.swing.JLabel();
         githubLabel = new javax.swing.JLabel();
-        messageLabel = new javax.swing.JLabel();
         descriptionIndicatorLabel = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -118,10 +117,6 @@ public final class AboutFrame extends javax.swing.JFrame {
             }
         });
 
-        messageLabel.setFont(new java.awt.Font("Dialog", 0, 14)); // NOI18N
-        messageLabel.setText("Thank you for using my application!");
-        messageLabel.setName("fg"); // NOI18N
-
         descriptionIndicatorLabel.setFont(new java.awt.Font("Dialog", 0, 18)); // NOI18N
         descriptionIndicatorLabel.setText("Description");
         descriptionIndicatorLabel.setName("fg"); // NOI18N
@@ -134,7 +129,6 @@ public final class AboutFrame extends javax.swing.JFrame {
                 .addContainerGap(18, Short.MAX_VALUE)
                 .addGroup(backgroundLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(descriptionIndicatorLabel)
-                    .addComponent(messageLabel)
                     .addComponent(githubLabel)
                     .addComponent(emailLabel)
                     .addComponent(contactInfoIndicatorLabel)
@@ -171,9 +165,7 @@ public final class AboutFrame extends javax.swing.JFrame {
                 .addComponent(emailLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(githubLabel)
-                .addGap(18, 18, 18)
-                .addComponent(messageLabel)
-                .addGap(18, 18, 18))
+                .addGap(56, 56, 56))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -270,7 +262,6 @@ public final class AboutFrame extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JLabel licenseIndicatorLabel;
     private javax.swing.JTextArea licenseTextArea;
-    private javax.swing.JLabel messageLabel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JLabel projectNameLabel;
     private javax.swing.JLabel versionLabel;

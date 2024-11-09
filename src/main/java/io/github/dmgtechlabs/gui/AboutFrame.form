@@ -45,7 +45,6 @@
                   <EmptySpace pref="18" max="32767" attributes="0"/>
                   <Group type="103" groupAlignment="0" max="-2" attributes="0">
                       <Component id="descriptionIndicatorLabel" min="-2" max="-2" attributes="0"/>
-                      <Component id="messageLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="githubLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="emailLabel" min="-2" max="-2" attributes="0"/>
                       <Component id="contactInfoIndicatorLabel" min="-2" max="-2" attributes="0"/>
@@ -87,9 +86,7 @@
                   <Component id="emailLabel" min="-2" max="-2" attributes="0"/>
                   <EmptySpace type="unrelated" max="-2" attributes="0"/>
                   <Component id="githubLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace type="separate" max="-2" attributes="0"/>
-                  <Component id="messageLabel" min="-2" max="-2" attributes="0"/>
-                  <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
+                  <EmptySpace min="-2" pref="56" max="-2" attributes="0"/>
               </Group>
           </Group>
         </DimensionLayout>
@@ -186,15 +183,6 @@
           <Events>
             <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="githubLabelMouseClicked"/>
           </Events>
-        </Component>
-        <Component class="javax.swing.JLabel" name="messageLabel">
-          <Properties>
-            <Property name="font" type="java.awt.Font" editor="org.netbeans.beaninfo.editors.FontEditor">
-              <Font name="Dialog" size="14" style="0"/>
-            </Property>
-            <Property name="text" type="java.lang.String" value="Thank you for using my application!"/>
-            <Property name="name" type="java.lang.String" value="fg" noResource="true"/>
-          </Properties>
         </Component>
         <Component class="javax.swing.JLabel" name="descriptionIndicatorLabel">
           <Properties>
