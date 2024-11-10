@@ -1537,14 +1537,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_carsBySoldButtonActionPerformed
 
     private void salesByCustomerActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByCustomerActionPerformed
-		int selectedCustomerId = 0;
-
-		for (int i = 0; i < this.customers.size(); i++) {
-			if (this.customers.get(i).UIString().equals(this.customerComboBox.getSelectedItem().toString())) {
-				selectedCustomerId = this.customers.get(i).getId();
-				break;
-			}
-		}
+		int selectedCustomerId = this.customers.get(this.customerComboBox.getSelectedIndex()).getId();
 
 		var result = Sale.selectSaleByCustomer(selectedCustomerId);
 
