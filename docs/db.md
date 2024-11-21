@@ -1,15 +1,24 @@
 # db
 
+## Saved Queries
+
+- [ ] Car
+- [ ] Customer
+- [ ] Employee
+- [x] Manufacturer
+- [ ] Model
+- [ ] Person
+- [ ] Sale
+- [ ] Service
+
 ## Requirements
 
-- [ ] 5 tables
-- [ ] Postgresql
+- [x] 5 tables
+- [x] Postgresql
 - [ ] Log file
-- [ ] Dynamic queries (forms)
+- [x] Dynamic queries (forms)
 
 ## Paper
 
-- [ ] ER
+- [x] ER
 - [ ] 2000 words
-- [ ] 
-
