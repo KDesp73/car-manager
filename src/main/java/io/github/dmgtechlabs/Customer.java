@@ -121,9 +121,9 @@ public class Customer extends Person implements Dao, UIObject {
 				result.add(c);
 			}
 			rs.close();
-			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select all customers", SQLogger.SQLOperation.SELECT, null);
+			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL(functionName + " ran successfully", SQLogger.SQLOperation.SELECT, null);
 		} catch (SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log(functionName + " failed", ex);
 		}
 
 		return result;
@@ -159,8 +159,8 @@ public class Customer extends Person implements Dao, UIObject {
 
 	/**
 	 * new String[]{"Name", "Birth Year", "Gender", "Email"}
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	@Override
 	public Object[] objArray() {
