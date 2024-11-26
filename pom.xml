@@ -22,9 +22,9 @@
 	<dependencies>
 		<!--Themes-->
 		<dependency>
-			<groupId>kdesp73</groupId>
-			<artifactId>SwingThemesLibrary</artifactId>
-			<version>1.0.1-SNAPSHOT</version>
+			<groupId>io.github.kdesp73</groupId>
+			<artifactId>SwingPaint</artifactId>
+			<version>1.1.1</version>
 		</dependency>
 		<dependency>
 			<groupId>com.formdev</groupId>
