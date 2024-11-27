@@ -72,8 +72,8 @@ public class Employee extends Person implements Dao, UIObject {
 	@Override
 	public boolean insert() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.INSERT, 
+			this,
+			SQLogger.SQLOperation.INSERT,
 			Functions.INSERT_EMPLOYEE,
 			salary, super.getFname(), super.getLname(), super.getBirthYear(), super.getGender().ordinal(), super.getEmail()
 		);
@@ -98,7 +98,7 @@ public class Employee extends Person implements Dao, UIObject {
 			this.id
 		);
 	}
-	
+
 	private static List<Employee> select(String functionName, Object... params) {
 		List<Employee> result = new ArrayList<>();
 		try (PostgresConnection db = Database.connection()) {
@@ -121,9 +121,9 @@ public class Employee extends Person implements Dao, UIObject {
 				result.add(e);
 			}
 			rs.close();
-			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select all employees", SQLogger.SQLOperation.SELECT, null);
+			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL(functionName + " ran successfully", SQLogger.SQLOperation.SELECT, null);
 		} catch (SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectAll failed", ex);
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log(functionName + " failed", ex);
 		}
 
 		return result;
@@ -132,7 +132,7 @@ public class Employee extends Person implements Dao, UIObject {
 	public static List<Employee> selectAll() {
 		return select(Functions.SELECT_ALL_EMPLOYEES + "__");
 	}
-	
+
 	public static List<Employee> selectByEmail(String email) {
 		return select(Database.SCHEMA + ".select_employees_by_email", email);
 	}
@@ -141,17 +141,17 @@ public class Employee extends Person implements Dao, UIObject {
 	public String UIString() {
 		return this.getFname() + " " + this.getLname() + " " + this.getBirthYear() + " " + this.getGender() + " " + this.getEmail() + " " + salary;
 	}
-	
+
 	public static String[] listToArray(List<Employee> list) {
 		String[] result = new String[list.size()];
-		
+
 		for(int i = 0; i < list.size(); i++){
 			result[i] = list.get(i).UIString();
 		}
-		
+
 		return result;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Employee{" + "id=" + id + ", salary=" + salary + ", personId=" + personId + '}' + super.toString();
@@ -160,8 +160,8 @@ public class Employee extends Person implements Dao, UIObject {
 	@Override
 	public String toHTML() {
 		Person person = (Person) this;
-		
-		StringBuilder sb = new StringBuilder();		
+
+		StringBuilder sb = new StringBuilder();
 		sb.append(Utils.HTML.header(1, "Info"));
 		sb.append(Utils.HTML.ul(
 			"First name: " + person.getFname(),
@@ -170,14 +170,14 @@ public class Employee extends Person implements Dao, UIObject {
 			"Gender: " + person.getGender().name(),
 			"Email: " + person.getEmail(),
 			"Salary: " + this.salary + "$"
-		));		
+		));
 		return sb.toString();
 	}
 
 	/**
 	 * new String[]{"Salary", "Name", "Birth Year", "Gender", "Email"}
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	@Override
 	public Object[] objArray() {

@@ -31,8 +31,8 @@ public class Manufacturer implements Dao, UIObject {
 	public Manufacturer(int id) {
 		this.id = id;
 	}
-	
-	
+
+
 	public Manufacturer(String name) {
 		this.name = name;
 	}
@@ -85,8 +85,8 @@ public class Manufacturer implements Dao, UIObject {
 	@Override
 	public boolean delete() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.DELETE, 
+			this,
+			SQLogger.SQLOperation.DELETE,
 			Functions.DELETE_MANUFACTURER,
 			name
 		);
@@ -99,24 +99,24 @@ public class Manufacturer implements Dao, UIObject {
 
 		SQLogger.getLogger().logSQL("Populating Manufacturer", SQLogger.SQLOperation.INSERT, null);
 	}
-	
+
 	private static List<Manufacturer> select(String functionName, Object... params) {
 		List<Manufacturer> result = new ArrayList<>();
 		try(PostgresConnection db = Database.connection()){
 			ResultSet rs = db.callFunction(functionName, params);
 			if(rs.isClosed()) return null;
-			
+
 			while(rs.next()){
 				result.add(new Manufacturer(rs.getInt("id"), rs.getString("name"), rs.getString("location")));
 			}
 			rs.close();
-			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL("select manufacturers by location", SQLogger.SQLOperation.SELECT, null);
+			SQLogger.getLogger(SQLogger.LogLevel.ALL).logSQL(functionName + " run successfully", SQLogger.SQLOperation.SELECT, null);
 		} catch (RuntimeException | SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log("selectByLocation failed", ex);
+			SQLogger.getLogger(SQLogger.LogLevel.ERRO).log(functionName + " failed", ex);
 		}
 		return result;
 	}
-	
+
 	public static List<Manufacturer> selectByLocation(String location) {
 		return select(Functions.SELECT_MANUFACTURERS_BY_LOCATION, location);
 	}
@@ -129,7 +129,7 @@ public class Manufacturer implements Dao, UIObject {
 	public String toString() {
 		return "Manufacturer{" + "id=" + id + ", name=" + name + ", location=" + location + '}';
 	}
-	
+
 	@Override
 	public String UIString() {
 		return this.name;
@@ -142,8 +142,8 @@ public class Manufacturer implements Dao, UIObject {
 
 	/**
 	 * new String[]{"Name", "Location"}
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	@Override
 	public Object[] objArray() {

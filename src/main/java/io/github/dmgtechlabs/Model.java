@@ -46,7 +46,7 @@ public class Model extends Manufacturer implements Dao, UIObject {
 	private int year;
 	private int hp;
 	private WheelDrive wd;
-	
+
 	public Model() {}
 
 	public Model(int id) {
@@ -61,7 +61,7 @@ public class Model extends Manufacturer implements Dao, UIObject {
 		this.hp = hp;
 		this.wd = wd;
 	}
-	
+
 	public Model(int id, String name, Type type, int year, int hp, WheelDrive wd, String manufacturerName) {
 		super(manufacturerName);
 		this.id = id;
@@ -71,7 +71,7 @@ public class Model extends Manufacturer implements Dao, UIObject {
 		this.hp = hp;
 		this.wd = wd;
 	}
-	
+
 	public Model(String name, Type type, int year, int hp, WheelDrive wd, String manufacturerName) {
 		super(manufacturerName);
 		this.name = name;
@@ -89,7 +89,7 @@ public class Model extends Manufacturer implements Dao, UIObject {
 		this.hp = hp;
 		this.wd = WheelDrive._2WD;
 	}
-	
+
 	public Model(String name, int year, String manufacturerName) {
 		super(manufacturerName);
 		this.name = name;
@@ -115,7 +115,7 @@ public class Model extends Manufacturer implements Dao, UIObject {
 		this.hp = hp;
 		this.wd = WheelDrive._2WD;
 	}
-	
+
 	public Model(int modelId, String modelName, Type modelType, int modelYear, WheelDrive modelWd, int modelHp, int manufacturerId, String manufacturerName, String manufacturerLocation) {
 		super(manufacturerId, manufacturerName, manufacturerLocation);
 		this.id = modelId;
@@ -172,8 +172,8 @@ public class Model extends Manufacturer implements Dao, UIObject {
 	@Override
 	public boolean insert() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.INSERT, 
+			this,
+			SQLogger.SQLOperation.INSERT,
 			Functions.INSERT_MODEL,
 			name, type.ordinal(), year, hp, wd.ordinal(), super.getId()
 		);
@@ -182,8 +182,8 @@ public class Model extends Manufacturer implements Dao, UIObject {
 	@Override
 	public boolean update(Object... values) {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.UPDATE, 
+			this,
+			SQLogger.SQLOperation.UPDATE,
 			Functions.UPDATE_MODEL,
 			Utils.appendFront(id, values)
 		);
@@ -192,13 +192,13 @@ public class Model extends Manufacturer implements Dao, UIObject {
 	@Override
 	public boolean delete() {
 		return Database.DaoFunctionWrapper(
-			this, 
-			SQLogger.SQLOperation.DELETE, 
+			this,
+			SQLogger.SQLOperation.DELETE,
 			Functions.DELETE_MODEL,
 			this.id
 		);
 	}
-	
+
 	public static void populate() {
 		PostgresConnection db = Database.connection();
 		db.callProcedure(Database.SCHEMA + ".populate_model");
@@ -206,13 +206,13 @@ public class Model extends Manufacturer implements Dao, UIObject {
 
 		SQLogger.getLogger().logSQL("Populating Model", SQLogger.SQLOperation.INSERT, null);
 	}
-	
+
 	private static List<Model> select(String functionName, Object... params) {
 		List<Model> result = new ArrayList<>();
 		try(PostgresConnection db = Database.connection()){
 			ResultSet rs = db.callFunction(functionName, params);
 			if(rs.isClosed()) return null;
-			
+
 			while(rs.next()) {
 				result.add(new Model(
 					rs.getInt("model_id"),
@@ -225,9 +225,9 @@ public class Model extends Manufacturer implements Dao, UIObject {
 				));
 			}
 			rs.close();
-			
+
 		} catch(RuntimeException | SQLException ex) {
-			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log("Select models by manufacturer failed", ex);
+			SQLogger.getLogger(SQLogger.LogLevel.ALL, SQLogger.LogType.ALL).log(functionName + " failed", ex);
 		}
 		return result;
 	}
@@ -235,25 +235,25 @@ public class Model extends Manufacturer implements Dao, UIObject {
 	public static List<Model> selectAllModels() {
 		return select(Functions.SELECT_ALL_MODELS);
 	}
-	
+
 	public static List<Model> selectByManufacturer(String man) {
 		return select(Database.SCHEMA + ".select_models_by_manufacturer", man);
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Model{" + "id=" + id + ", name=" + name + ", type=" + type + ", year=" + year + ", hp=" + hp + ", wd=" + wd + '}' + super.toString();
 	}
 
 	@Override
-	public String UIString(){ 
+	public String UIString(){
 		return this.name + " " + this.year + " (" + this.type + " " + this.hp + "hp)";
 	}
-	
+
 	/**
 	 * new String[]{"Name", "Type", "Year", "WD", "Hp"}
-	 * 
-	 * @return 
+	 *
+	 * @return
 	 */
 	@Override
 	public Object[] objArray() {
