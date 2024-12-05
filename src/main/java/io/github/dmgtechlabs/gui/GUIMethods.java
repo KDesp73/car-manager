@@ -18,8 +18,6 @@ import java.nio.file.StandardCopyOption;
 import javax.swing.JLabel;
 import org.imgscalr.Scalr;
 
-import kdesp73.themeLib.*;
-import java.util.regex.Pattern;
 import javax.imageio.ImageIO;
 import javax.swing.ImageIcon;
 import javax.swing.JEditorPane;
@@ -99,11 +97,11 @@ public class GUIMethods {
 	public static void loadImage(JLabel imageLabel, BufferedImage image, Dimension dimension) {
 		imageLabel.setIcon(new ImageIcon(resizeImage(image, dimension.width, dimension.height)));
 	}
-	
+
 	public static void loadImage(JLabel imageLabel, BufferedImage image, int width, int height) {
 		imageLabel.setIcon(new ImageIcon(resizeImage(image, width, height)));
 	}
-	
+
 	public static void loadImage(JLabel imageLabel, String imagePath, Dimension dimension) {
 		try {
 			imageLabel.setIcon(new ImageIcon(resizeImage(ImageIO.read(new File(imagePath)), dimension.width, dimension.height)));
@@ -111,7 +109,7 @@ public class GUIMethods {
 			Logger.getLogger(GUIMethods.class.getName()).log(Level.SEVERE, null, ex);
 		}
 	}
-	
+
 	public static void loadImage(JLabel imageLabel, String imagePath, int width, int height) {
 		try {
 			imageLabel.setIcon(new ImageIcon(resizeImage(ImageIO.read(new File(imagePath)), width, height)));
@@ -209,12 +207,5 @@ public class GUIMethods {
 	public static BufferedImage resizeImage(BufferedImage originalImage, int targetWidth, int targetHeight) {
 		return Scalr.resize(originalImage, Scalr.Method.AUTOMATIC, Scalr.Mode.AUTOMATIC, targetWidth, targetHeight,
 				Scalr.OP_ANTIALIAS);
-	}
-
-	public static ThemeCollection getThemes() {
-		ThemeCollection themeCollection = new ThemeCollection();
-		themeCollection.loadThemes(new File(System.getProperty("user.dir").replaceAll(Pattern.quote("\\"), "/") + "/themes/"));
-
-		return themeCollection;
 	}
 }
