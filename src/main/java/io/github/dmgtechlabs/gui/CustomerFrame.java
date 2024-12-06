@@ -189,6 +189,7 @@ public class CustomerFrame extends javax.swing.JFrame {
 	private void clearForm() {
 		this.fnameTextField.setText("");
 		this.lnameTextField.setText("");
+		this.emailTextFormattedField.setText("");
 		this.birthYearSpinner.setValue(0);
 		this.genderComboBox.setSelectedIndex(0);
 	}
@@ -199,6 +200,19 @@ public class CustomerFrame extends javax.swing.JFrame {
 		int birthYear = (int) this.birthYearSpinner.getValue();
 		Gender gender = int2Gender(this.genderComboBox.getSelectedIndex());
 		String email = this.emailTextFormattedField.getText();
+		
+		if(fname.isBlank() || "First Name".equalsIgnoreCase(fname)){
+			GUIUtils.logUserError(this, "Provide First Name");
+			return;
+		}
+		if(lname.isBlank() || "Last Name".equalsIgnoreCase(lname)){
+			GUIUtils.logUserError(this, "Provide Last Name");
+			return;
+		}
+		if(!new Email(email).validate()){
+			GUIUtils.logUserError(this, "Invalid email");
+			return;
+		}
 		
 		if (this.customer == null) {
 			Customer c = new Customer(
@@ -213,7 +227,7 @@ public class CustomerFrame extends javax.swing.JFrame {
 				JOptionPane.showMessageDialog(this, "Employee " + c.getFname() + " " + c.getLname() + " added successfully");
 				this.clearForm();
 			} else {
-				JOptionPane.showMessageDialog(this, "Failed to add employee", "Error", JOptionPane.ERROR_MESSAGE);
+				JOptionPane.showMessageDialog(this, "Failed to add customer", "Error", JOptionPane.ERROR_MESSAGE);
 			}
 		} else {
 			if (customer.update(

@@ -24,6 +24,10 @@ public class SaleFrame extends javax.swing.JFrame {
 	private List<Car> cars;
 	private List<Employee> employees;
 	private List<Customer> customers;
+	
+	public boolean carsEmpty(){
+		return this.cars.isEmpty();
+	}
 
 	/**
 	 * Creates new form InsertSaleFrame
@@ -37,6 +41,11 @@ public class SaleFrame extends javax.swing.JFrame {
 		this.employees = Employee.selectAll();
 		this.customers = Customer.selectAll();
 
+		if(this.cars.isEmpty()){
+			GUIUtils.logUserError(null, "No cars to sell. Add more cars");
+			this.dispose();
+		}
+		
 		for (Car car : cars) {
 			this.carComboBox.addItem(car.UIString());
 		}

@@ -213,12 +213,30 @@ public class EmployeeFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_cancelButtonActionPerformed
 
     private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
-		Float salary = Float.valueOf(this.salaryFormattedTextField.getText());
 		String fname = this.fnameTextField.getText();
 		String lname = this.lnameTextField.getText();
 		int birthYear = (int) this.birthYearSpinner.getValue();
 		Gender gender = int2Gender(this.genderComboBox.getSelectedIndex());
 		String email = this.emailTextFormattedField.getText();
+		
+		if(fname.isBlank() || "First Name".equalsIgnoreCase(fname)){
+			GUIUtils.logUserError(this, "Provide First Name");
+			return;
+		}
+		if(lname.isBlank() || "Last Name".equalsIgnoreCase(lname)){
+			GUIUtils.logUserError(this, "Provide Last Name");
+			return;
+		}
+		if(!new Email(email).validate()){
+			GUIUtils.logUserError(this, "Invalid email");
+			return;
+		}
+		
+		if(this.salaryFormattedTextField.getText().isBlank() || this.salaryFormattedTextField.getText().equalsIgnoreCase("Salary")){
+			GUIUtils.logUserError(this, "Specify employee salary");
+			return;
+		}
+		Float salary = Float.valueOf(this.salaryFormattedTextField.getText());
 		
 		if (this.employee == null) {
 			Employee e = new Employee(

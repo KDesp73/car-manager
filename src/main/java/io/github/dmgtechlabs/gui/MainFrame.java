@@ -62,8 +62,11 @@ public class MainFrame extends javax.swing.JFrame {
 
 		public static void addSale() {
 			frame.saleFrame = new SaleFrame();
-			GUIUtils.addWindowClosedListener(frame.saleFrame, refreshSalesRunnable());
-			GUIUtils.showFrame(frame.saleFrame);
+
+			if (!frame.saleFrame.carsEmpty()) {
+				GUIUtils.addWindowClosedListener(frame.saleFrame, refreshSalesRunnable());
+				GUIUtils.showFrame(frame.saleFrame);
+			}
 		}
 
 		public static void editCar() {
@@ -379,19 +382,19 @@ public class MainFrame extends javax.swing.JFrame {
 		});
 		this.salesByMonthComboBox.setModel(
 			new DefaultComboBoxModel(new String[]{
-				"January",
-				"February",
-				"March",
-				"April", 
-				"May", 
-				"June", 
-				"July", 
-				"August", 
-				"September", 
-				"Octomber", 
-				"November", 
-				"December"
-			})
+			"January",
+			"February",
+			"March",
+			"April",
+			"May",
+			"June",
+			"July",
+			"August",
+			"September",
+			"Octomber",
+			"November",
+			"December"
+		})
 		);
 
 		Actions.frame = this;
@@ -1559,11 +1562,11 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_salesByEmployeeButtonActionPerformed
 
     private void salesByMonthButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_salesByMonthButtonActionPerformed
-		int month = this.salesByMonthComboBox.getSelectedIndex()+1;
+		int month = this.salesByMonthComboBox.getSelectedIndex() + 1;
 		var result = Sale.selectByMonth(month);
-		
+
 		this.resultCountLabel.setText(Integer.toString(result.size()));
-		
+
 		var tableModel = GUIUtils.makeTableModel(UIObject.tableData(result.stream().map(obj -> (UIObject) obj).toList()), new String[]{"Price", "Discount", "Customer", "Employee", "Licence Plate"}, false);
 		this.searchResultsTable.setModel(tableModel);
     }//GEN-LAST:event_salesByMonthButtonActionPerformed
