@@ -15,6 +15,7 @@ import static io.github.dmgtechlabs.gui.LogsFrame.LogType.MODELS;
 import static io.github.dmgtechlabs.gui.LogsFrame.LogType.SALES;
 import static io.github.dmgtechlabs.gui.LogsFrame.LogType.SERVICES;
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.FocusAdapter;
@@ -31,6 +32,7 @@ import javax.swing.InputMap;
 import javax.swing.JComponent;
 import javax.swing.JEditorPane;
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JTextField;
 import javax.swing.KeyStroke;
 import javax.swing.UIManager;
@@ -42,6 +44,10 @@ import javax.swing.table.DefaultTableModel;
  * @author kdesp73
  */
 public class GUIUtils {
+	public static void logUserError(Component parent, String err){
+		JOptionPane.showMessageDialog(parent, err, "Error", JOptionPane.ERROR_MESSAGE);
+	}
+	
 	public static DefaultTableModel makeTableModel(Object[][]data, String[] columns, boolean cellEditable) {
 		DefaultTableModel model = new DefaultTableModel(data, columns) {
 			@Override

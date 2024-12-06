@@ -203,9 +203,18 @@ public class CarFrame extends javax.swing.JFrame {
     private void actionButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_actionButtonActionPerformed
 		this.printForm();
 		String licensePlate = this.licensePlateTextField.getText();
-		float discount = Float.parseFloat(this.priceTextFormattedField.getText());
 		int modelId = this.models.get(this.modelComboBox.getSelectedIndex()).getId();
 		
+		if(licensePlate.isBlank()){
+			GUIUtils.logUserError(this, "Empty License Plate");
+			return;
+		}
+		
+		if(this.priceTextFormattedField.getText().isBlank() || this.priceTextFormattedField.getText().equalsIgnoreCase("Price")){
+			GUIUtils.logUserError(this, "Empty Price");
+			return;
+		}
+		float discount = Float.parseFloat(this.priceTextFormattedField.getText());
 		
 		if (this.car != null) {
 			if (this.car.update(
