@@ -29,3 +29,4 @@ dependency-reduced-pom.xml
 sqlogger.log
 .idea
 *.log
+.mvn
