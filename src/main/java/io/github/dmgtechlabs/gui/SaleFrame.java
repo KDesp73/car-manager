@@ -42,7 +42,7 @@ public class SaleFrame extends javax.swing.JFrame {
 		this.customers = Customer.selectAll();
 
 		if(this.cars.isEmpty()){
-			GUIUtils.logUserError(null, "No cars to sell. Add more cars");
+			GUIUtils.logUserError(null, "No cars suitable for sale. Add or repair more cars");
 			this.dispose();
 		}
 		
