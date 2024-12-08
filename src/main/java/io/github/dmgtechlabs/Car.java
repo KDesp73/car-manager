@@ -179,6 +179,10 @@ public class Car extends Model implements Dao, UIObject {
 		return select(Database.SCHEMA + ".select_cars_by_sold", sold);
 	}
 	
+	public static List<Car> selectCarsBySoldAndRepaired(boolean sold) {
+		return select(Database.SCHEMA + ".select_cars_by_sold_and_repaired", sold);
+	}
+	
 	public static List<Car> selectCarsByPriceGreater(float price) {
 		return select(Database.SCHEMA + ".select_cars_by_price_greater", price);
 	}
