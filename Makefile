@@ -1,5 +1,10 @@
 # Variables
 MVN = ./mvnw
+
+ifeq ($(OS),Windows_NT)
+	MVN = ./mvnw.cmd
+endif
+
 JAVA = java
 JAR_FILE = target/car-manager-0.0.1.jar
 MAIN_CLASS = io.github.dmgtechlabs.App
