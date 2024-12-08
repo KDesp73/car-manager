@@ -1,5 +1,5 @@
 # Variables
-MVN = mvn
+MVN = ./mvnw
 JAVA = java
 JAR_FILE = target/car-manager-0.0.1.jar
 MAIN_CLASS = io.github.dmgtechlabs.App
