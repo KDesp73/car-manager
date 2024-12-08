@@ -214,12 +214,12 @@ public class CarFrame extends javax.swing.JFrame {
 			GUIUtils.logUserError(this, "Empty Price");
 			return;
 		}
-		float discount = Float.parseFloat(this.priceTextFormattedField.getText());
+		float price = Float.parseFloat(this.priceTextFormattedField.getText());
 		
 		if (this.car != null) {
 			if (this.car.update(
 				licensePlate,
-				discount,
+				price,
 				modelId
 			)) {
 				JOptionPane.showMessageDialog(this, "Edited Car (" + car.getLicencePlate() + ") successfully");
@@ -232,7 +232,7 @@ public class CarFrame extends javax.swing.JFrame {
 
 		Car c = new Car(
 			licensePlate,
-			discount,
+			price,
 			modelId
 		);
 
