@@ -186,7 +186,7 @@ CREATE TABLE employee (
 
 -- Table Triggers
 
-create trigger employee_logs_trigger after
+create trigger employee_logs_trigger before
 insert
     or
 delete
@@ -237,7 +237,7 @@ CREATE TABLE car (
 
 -- Table Triggers
 
-create trigger car_logs_trigger after
+create trigger car_logs_trigger before
 insert
     or
 delete
@@ -522,6 +522,56 @@ AS $procedure$
 $procedure$
 ;
 
+-- DROP PROCEDURE "CarManager_DB".grant_schema_privileges(text);
+
+CREATE OR REPLACE PROCEDURE "CarManager_DB".grant_schema_privileges(IN user_name text)
+ LANGUAGE plpgsql
+AS $procedure$
+BEGIN
+    -- Grant USAGE on the schema
+    EXECUTE format('GRANT USAGE ON SCHEMA "CarManager_DB" TO %I;', user_name);
+
+    -- Grant privileges on existing tables
+    EXECUTE format(
+        'GRANT SELECT, INSERT, UPDATE, DELETE ON ALL TABLES IN SCHEMA "CarManager_DB" TO %I;',
+        user_name
+    );
+
+    -- Grant privileges on existing sequences
+    EXECUTE format(
+        'GRANT USAGE, SELECT ON ALL SEQUENCES IN SCHEMA "CarManager_DB" TO %I;',
+        user_name
+    );
+
+    -- Grant privileges on existing functions
+    EXECUTE format(
+        'GRANT EXECUTE ON ALL FUNCTIONS IN SCHEMA "CarManager_DB" TO %I;',
+        user_name
+    );
+
+    -- Set default privileges for future tables
+    EXECUTE format(
+        'ALTER DEFAULT PRIVILEGES IN SCHEMA "CarManager_DB" GRANT SELECT, INSERT, UPDATE, DELETE ON TABLES TO %I;',
+        user_name
+    );
+
+    -- Set default privileges for future sequences
+    EXECUTE format(
+        'ALTER DEFAULT PRIVILEGES IN SCHEMA "CarManager_DB" GRANT USAGE, SELECT ON SEQUENCES TO %I;',
+        user_name
+    );
+
+    -- Set default privileges for future functions
+    EXECUTE format(
+        'ALTER DEFAULT PRIVILEGES IN SCHEMA "CarManager_DB" GRANT EXECUTE ON FUNCTIONS TO %I;',
+        user_name
+    );
+
+    RAISE NOTICE 'Privileges granted to user %', user_name;
+END;
+$procedure$
+;
+
 -- DROP PROCEDURE "CarManager_DB".insert_car(varchar, float4, int4);
 
 CREATE OR REPLACE PROCEDURE "CarManager_DB".insert_car(IN param_license_plate character varying, IN param_price real, IN param_model_id integer)
@@ -548,6 +598,22 @@ BEGIN
         service_id
     );
 END;
+$procedure$
+;
+
+-- DROP PROCEDURE "CarManager_DB".insert_customer(int4);
+
+CREATE OR REPLACE PROCEDURE "CarManager_DB".insert_customer(IN param_person_id integer)
+ LANGUAGE plpgsql
+AS $procedure$
+	BEGIN
+		INSERT INTO "CarManager_DB".Customer (
+			customer_person_fk
+		)
+		VALUES (
+			param_person_id
+		);
+	END;
 $procedure$
 ;
 
@@ -606,22 +672,6 @@ AS $procedure$
 			param_email
 		);
 
-		INSERT INTO "CarManager_DB".Customer (
-			customer_person_fk
-		)
-		VALUES (
-			param_person_id
-		);
-	END;
-$procedure$
-;
-
--- DROP PROCEDURE "CarManager_DB".insert_customer(int4);
-
-CREATE OR REPLACE PROCEDURE "CarManager_DB".insert_customer(IN param_person_id integer)
- LANGUAGE plpgsql
-AS $procedure$
-	BEGIN
 		INSERT INTO "CarManager_DB".Customer (
 			customer_person_fk
 		)
@@ -1487,6 +1537,49 @@ END;
 $function$
 ;
 
+-- DROP FUNCTION "CarManager_DB".select_cars_by_sold_and_repaired(bool);
+
+CREATE OR REPLACE FUNCTION "CarManager_DB".select_cars_by_sold_and_repaired(param_sold boolean)
+ RETURNS TABLE(car_id integer, car_license_plate character varying, car_price real, model_id integer, model_name character varying, model_type integer, model_year integer, model_wd integer, model_hp integer, manufacturer_id integer, manufacturer_name character varying, manufacturer_location character varying, service_id integer, service_date date, service_tires boolean, service_engine boolean, service_brakes boolean, service_oil boolean, service_battery boolean)
+ LANGUAGE plpgsql
+AS $function$
+BEGIN
+    RETURN QUERY (
+        SELECT
+            car.id AS car_id,
+            car.license_plate AS car_license_plate,
+            car.price AS car_price,
+            model.id AS model_id,
+            model.name AS model_name,
+            model.type AS model_type,
+            model.year AS model_year,
+            model.wd AS model_wd,
+            model.hp AS model_hp,
+            manufacturer.id AS manufacturer_id,
+            manufacturer.name AS manufacturer_name,
+            manufacturer.location AS manufacturer_location,
+            service.id AS service_id,
+            service.date AS service_date,
+            service.tires AS service_tires,
+            service.engine AS service_engine,
+            service.brakes AS service_brakes,
+            service.oil AS service_oil,
+            service.battery AS service_battery
+        FROM "CarManager_DB".car car
+        JOIN "CarManager_DB".model model ON model.id = car.car_model_fk
+        JOIN "CarManager_DB".manufacturer manufacturer ON manufacturer.id = model.model_manufacturer_fk
+        JOIN "CarManager_DB".service service ON service.id = car.car_service_fk
+        WHERE car.sold = param_sold
+          AND service.tires = true
+          AND service.engine = true
+          AND service.brakes = true
+          AND service.oil = true
+          AND service.battery = true
+    );
+END;
+$function$
+;
+
 -- DROP FUNCTION "CarManager_DB".select_customer_by_id(int4);
 
 CREATE OR REPLACE FUNCTION "CarManager_DB".select_customer_by_id(_customer_id integer)
@@ -1839,6 +1932,22 @@ end;
 $function$
 ;
 
+-- DROP PROCEDURE "CarManager_DB".update_car(int4, varchar, float4);
+
+CREATE OR REPLACE PROCEDURE "CarManager_DB".update_car(IN param_id integer, IN param_license_plate character varying, IN param_price real)
+ LANGUAGE plpgsql
+AS $procedure$
+	BEGIN
+		UPDATE "CarManager_DB".car
+		SET
+			license_plate = param_license_plate,
+			price = param_price
+		WHERE
+			id = param_id;
+	END;
+$procedure$
+;
+
 -- DROP PROCEDURE "CarManager_DB".update_car(int4, varchar, float4, int4);
 
 CREATE OR REPLACE PROCEDURE "CarManager_DB".update_car(IN param_id integer, IN param_license_plate character varying, IN param_price real, IN param_model_fk integer)
@@ -1850,22 +1959,6 @@ AS $procedure$
 			license_plate = param_license_plate,
 			price = param_price,
 			car_model_fk = param_model_fk
-		WHERE
-			id = param_id;
-	END;
-$procedure$
-;
-
--- DROP PROCEDURE "CarManager_DB".update_car(int4, varchar, float4);
-
-CREATE OR REPLACE PROCEDURE "CarManager_DB".update_car(IN param_id integer, IN param_license_plate character varying, IN param_price real)
- LANGUAGE plpgsql
-AS $procedure$
-	BEGIN
-		UPDATE "CarManager_DB".car
-		SET
-			license_plate = param_license_plate,
-			price = param_price
 		WHERE
 			id = param_id;
 	END;
@@ -1886,6 +1979,17 @@ AS $procedure$
 $procedure$
 ;
 
+-- DROP PROCEDURE "CarManager_DB".update_employee(int4, float4);
+
+CREATE OR REPLACE PROCEDURE "CarManager_DB".update_employee(IN param_id integer, IN param_salary real)
+ LANGUAGE plpgsql
+AS $procedure$
+	begin
+		update "CarManager_DB".Employee set salary = param_salary where id = param_id;
+	end;
+$procedure$
+;
+
 -- DROP PROCEDURE "CarManager_DB".update_employee(int4, float4, varchar, varchar, int4, int4, varchar);
 
 CREATE OR REPLACE PROCEDURE "CarManager_DB".update_employee(IN param_id integer, IN param_salary real, IN param_fname character varying, IN param_lname character varying, IN param_birth_year integer, IN param_gender integer, IN param_email character varying)
@@ -1898,17 +2002,6 @@ AS $procedure$
 
 		update "CarManager_DB".Employee set salary = param_salary where id = param_id;
 		update "CarManager_DB".Person set fname = param_fname, lname = param_lname, birth_year = param_birth_year, gender = param_gender, email = param_email where id = person_fk;
-	end;
-$procedure$
-;
-
--- DROP PROCEDURE "CarManager_DB".update_employee(int4, float4);
-
-CREATE OR REPLACE PROCEDURE "CarManager_DB".update_employee(IN param_id integer, IN param_salary real)
- LANGUAGE plpgsql
-AS $procedure$
-	begin
-		update "CarManager_DB".Employee set salary = param_salary where id = param_id;
 	end;
 $procedure$
 ;
