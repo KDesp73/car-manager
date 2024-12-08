@@ -21,7 +21,7 @@
 ## Paper
 
 - [x] ER
-- [ ] 2000 words
+- [x] 2000 words
 
 ## Used saved procedures/functions
 
